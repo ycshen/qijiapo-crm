@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.brp.entity.CustomerEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+    <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    
+    <result column="customerName" property="customerName" jdbcType="VARCHAR" />
+    <result column="createUserId" property="createUserId" jdbcType="VARCHAR" />
+    <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR" />
+    <result column="customerLevel" property="customerLevel" jdbcType="INTEGER" />
+    <result column="trade" property="trade" jdbcType="INTEGER" />
+  </resultMap> 
+     
+  <sql id="Base_Column_List" >
+	  id,createUser,updateUser,createTime, updateTime,
+   	  customerName,createUserId,updateUserId,customerLevel,trade
+  </sql>
+  <insert id="insertConfig" parameterType="com.brp.entity.ConfigEntity" >
+    insert customer
+   		(createUser,updateUser,createTime, updateTime,
+   		 customerName,createUserId,updateUserId,customerLevel,trade) 
+    values
+    	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+    	#{customerName,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{customerLevel,jdbcType=Integer},#{trade,jdbcType=Integer})
+  </insert>
+  
+</mapper>

@@ -23,11 +23,19 @@ public class MyBaseApiUrl {
 	private String mybase_login_url;
 	public static String mybase_login;
 	
+	//company
+	@Value("${mybase.getSecretById}")
+	private String mybase_getSecretById_url;
+	public static String mybase_getSecretById;
+	
 	@PostConstruct
 	public void init() {
 		mybase_login = this.mybase_login_url;
 		//user
 		mybase = this.mybase_url;
+		
+		//company
+		mybase_getSecretById = this.mybase_getSecretById_url;
 	}
 	
 }

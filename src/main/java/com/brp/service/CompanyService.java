@@ -14,8 +14,12 @@ import com.brp.util.query.PositionQuery;
  * @author <a href="mailto:shenyuchuan@itiaoling.com">申鱼川</a>
  */
 public interface CompanyService {
+	/**
+	 * 该接口需要改造，不然secret很容易暴露
+	 * @param cid
+	 * @return
+	 */
 	String getSecretByCid(String cid);
-	
-	
+
 }
 

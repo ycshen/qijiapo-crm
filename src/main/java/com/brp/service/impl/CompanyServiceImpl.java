@@ -1,8 +1,12 @@
 package com.brp.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.brp.service.CompanyService;
+import com.brp.util.api.MyBaseApiUtils;
+import com.brp.util.api.model.ApiCode;
 
 /** 
  * <p>Project: MyBase</p> 
@@ -17,8 +21,25 @@ public class CompanyServiceImpl implements CompanyService{
 
 	@Override
 	public String getSecretByCid(String cid) {
-		// TODO Auto-generated method stub
-		return null;
+		String result = MyBaseApiUtils.getSecretById(cid);
+		String secret = StringUtils.EMPTY;
+		if(StringUtils.isNotBlank(result)){
+			JSONObject jsonObject = JSONObject.parseObject(result);
+			if(jsonObject != null){
+				Object codeObj = jsonObject.get("code");
+				if(codeObj != null){
+					String code = codeObj.toString();
+					if (ApiCode.OK.toString().equals(code)) {
+						Object dataObj = jsonObject.get("data");
+						if(dataObj != null){
+							secret = dataObj.toString();
+						}
+					}
+				}
+			}
+		}
+		
+		return secret;
 	}
 	
 	

@@ -54,5 +54,24 @@ public class MyBaseApiUtils {
 		return result;
 	}
 	
+	
+	
+	public static String getSecretById(String id){
+		String result = StringUtils.EMPTY;
+		try {	
+			String url = getMyBaseUrl() + MyBaseApiUrl.mybase_getSecretById;	
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("id", id);
+			Map<String,Object> maps = SHA1Utils.getSha1Map();
+			maps.put("id", id);
+			String secret = SHA1Utils.SHA1(maps);
+			jsonObject.put("secret", secret);
+			result = HttpUtils.postUrl(url, jsonObject);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }
 
