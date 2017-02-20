@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
+import com.alibaba.fastjson.JSONObject;
+
 /** 
  * <p>Project: BRP</p> 
  * <p>Title: HttpUtils.java</p> 
@@ -49,6 +51,24 @@ public class HttpUtils{
         headers.setContentType(type);
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());        
         HttpEntity<String> formEntity = new HttpEntity<String>(postData, headers);
+        return restTemplate.postForObject(url, formEntity, String.class);
+	}
+	
+	/**
+	 * 发送post请求返回字符串(带sha1加密CID)
+	 * @param url post-URL:
+	 * @param postData post的数据
+	 * @return 返回post请求响应的数据
+	 * @throws Exception 
+	 */
+	public static String postUrl(String url, JSONObject jsonObject) throws Exception{
+		jsonObject.put("cId", SHA1Utils.getCId());
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+        headers.setContentType(type);
+        headers.add("Accept", MediaType.APPLICATION_JSON.toString());        
+        HttpEntity<String> formEntity = new HttpEntity<String>(jsonObject.toJSONString(), headers);
         return restTemplate.postForObject(url, formEntity, String.class);
 	}
 }

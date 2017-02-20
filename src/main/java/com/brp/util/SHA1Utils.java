@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /** 
  * <p>Project: MyBase</p> 
@@ -102,25 +101,27 @@ public class SHA1Utils {
 	}
 	
 	/**
-	 * 生成秘钥
+	 * 获取加密map
 	 * @return
-	 * @throws Exception
 	 */
-	public static String getSecret() throws Exception {
-		String uuid = UUID.randomUUID().toString().toUpperCase().replace("-", "");
-		return  uuid;
+	public static Map<String,Object> getSha1Map(){
+		String secret = CommonUtils.getPropertyByKey("secret");
+		String cId = CommonUtils.getPropertyByKey("cId");
+		Map<String,Object> maps = new HashMap<String, Object>();
+		maps.put("secret", secret);
+		maps.put("cId", cId);
+		
+		return maps; 
 	}
 	
 	/**
-	 * 生成秘钥
+	 * 获取Cid
 	 * @return
-	 * @throws Exception
 	 */
-	public static String getSecretPassword(String password) throws Exception {
-		Map<String, Object> maps = new HashMap<String, Object>();
-		maps.put("password", password);
-		String sha1Pass = SHA1Utils.SHA1(maps);
+	public static String getCId(){
+		String cId = CommonUtils.getPropertyByKey("cId");
 		
-		return  sha1Pass;
+		
+		return cId; 
 	}
 }
