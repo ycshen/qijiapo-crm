@@ -1,6 +1,5 @@
 package com.brp.api;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.brp.base.Status;
 import com.brp.base.enums.PositionEnum;
 import com.brp.entity.PositionEntity;
 import com.brp.service.CompanyService;
