@@ -2,11 +2,9 @@ package com.brp.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.brp.entity.PositionEntity;
-import com.brp.mapper.PositionMapper;
 import com.brp.service.PositionService;
 import com.brp.util.query.PositionQuery;
 
@@ -20,50 +18,55 @@ import com.brp.util.query.PositionQuery;
  */
 @Service
 public class PositionServiceImpl implements PositionService{
-	@Autowired
-	private PositionMapper positionMapper;
 
 	@Override
 	public void insertPosition(PositionEntity position) {
-		positionMapper.insertPosition(position);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public List<PositionEntity> getPositionList(PositionQuery positionQuery) {
-		return positionMapper.getPositionList(positionQuery);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void updatePosition(PositionEntity position) {
-		positionMapper.updatePosition(position);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public PositionEntity getPositionById(Integer id) {
-		return positionMapper.getPositionById(id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void deletePositionById(String id) {
-		positionMapper.deletePositionById(id);
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public PositionEntity getPositionByQuery(PositionQuery positionQuery) {
-		return positionMapper.getPositionByQuery(positionQuery);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public PositionQuery getPositionPage(PositionQuery positionQuery) {
-		List<PositionEntity> list = positionMapper.getPositionPage(positionQuery);
-		positionQuery.setItems(list);
-		return positionQuery;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public PositionEntity getPositionByIdWithoutIsdelete(Integer id) {
-		return positionMapper.getPositionByIdWithoutIsdelete(id);
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
 	
 }
 
