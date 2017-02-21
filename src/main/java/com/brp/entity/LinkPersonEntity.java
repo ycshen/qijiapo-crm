@@ -1,5 +1,5 @@
 package com.brp.entity;
 
-public class LinkPersonEntity {
+public class LinkPersonEntity extends BaseEntity{
 
 }
