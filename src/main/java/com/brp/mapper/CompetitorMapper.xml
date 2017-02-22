@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.CompetitorMapper" >
+  <resultMap id="BaseResultMap" type="com.brp.entity.CompetitorEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+    <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="provinceId" property="provinceId" jdbcType="VARCHAR" />
+    <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+    <result column="cityId" property="cityId" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+  </resultMap> 
+     
+  <sql id="Base_Column_List" >
+	  id,createUser,updateUser,createTime, updateTime,
+   	  postcode,provinceId,provinceName,cityId,cityName
+  </sql>
+  <insert id="insertCompetitor" parameterType="com.brp.entity.CompetitorEntity" >
+    insert customer
+   		(createUser,updateUser,createTime, updateTime,
+   		 postcode,provinceId,provinceName,cityId,cityName) 
+    values
+    	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+    	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR})
+  </insert>
+  
+</mapper>

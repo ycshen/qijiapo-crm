@@ -40,11 +40,13 @@ public class BaseEntity implements Serializable {
 	private String provinceName;
 	private String cityId;
 	private String cityName;
+	
 	private String areaId;
 	private String areaName;
 	private String facsimile; //传真
 	private String weibo; //微博
 	private String remark; //备注
+	
 	private Integer isDelete;
 	public Long getId() {
 		return id;
