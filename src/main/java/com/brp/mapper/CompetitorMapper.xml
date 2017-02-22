@@ -13,19 +13,73 @@
     <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
     <result column="cityId" property="cityId" jdbcType="VARCHAR" />
     <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    
+    <result column="areaId" property="areaId" jdbcType="VARCHAR" />
+    <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+    <result column="facsimile" property="facsimile" jdbcType="VARCHAR" />
+    <result column="weibo" property="weibo" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+    
+    <result column="competitorName" property="competitorName" jdbcType="VARCHAR" />
+    <result column="beyondDept" property="beyondDept" jdbcType="VARCHAR" />
+    <result column="beyondDeptName" property="beyondDeptName" jdbcType="VARCHAR" />
+    <result column="beyondDeptType" property="beyondDeptType" jdbcType="VARCHAR" />
+    <result column="address" property="remark" jdbcType="VARCHAR" />
+    
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="staffNum" property="staffNum" jdbcType="INTEGER" />
+    <result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="beyondOf" property="beyondOf" jdbcType="VARCHAR" />
+    
+    <result column="beyondOfName" property="beyondOfName" jdbcType="VARCHAR" />
+    
   </resultMap> 
      
   <sql id="Base_Column_List" >
 	  id,createUser,updateUser,createTime, updateTime,
-   	  postcode,provinceId,provinceName,cityId,cityName
+   	  postcode,provinceId,provinceName,cityId,cityName,
+   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+   	  competitorName,beyondDept,beyondDeptName,beyondDeptType,address,
+   	  website,staffNum,saleMoney,mobile,beyondOf,
+   	  beyondOfName
+   	  
   </sql>
   <insert id="insertCompetitor" parameterType="com.brp.entity.CompetitorEntity" >
-    insert customer
+    insert competitor
    		(createUser,updateUser,createTime, updateTime,
-   		 postcode,provinceId,provinceName,cityId,cityName) 
+   		 postcode,provinceId,provinceName,cityId,cityName,
+   		  areaId,areaName,facsimile,weibo,remark,isDelete,
+	   	  competitorName,beyondDept,beyondDeptName,beyondDeptType,address,
+	   	  website,staffNum,saleMoney,mobile,beyondOf,
+	   	  beyondOfName
+   		 ) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
-    	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR})
+    	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
+    	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+    	#{competitorName,jdbcType=VARCHAR},#{beyondDept,jdbcType=VARCHAR},#{beyondDeptName,jdbcType=VARCHAR},#{beyondDeptType,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+    	#{website,jdbcType=VARCHAR},#{staffNum,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR},#{beyondOf,jdbcType=VARCHAR},
+    	#{beyondOfName,jdbcType=VARCHAR}
+    	)
   </insert>
+   <select id="getCompetitorPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.CompetitorQuery" >
+         select 
+         <include refid="Base_Column_List" />
+         from competitor
+         where 1=1
+         <!--  <trim prefix=" " suffix="" suffixOverrides="" >
+		     <if test="level != null and level != ''" >
+		       and level =  #{level}
+		      </if>
+		      <if test="companyName != '' and companyName != null" >
+		       and company_name = #{companyName}
+		      </if>
+		     
+		 </trim> --> 
+		 
+         order by createTime desc
+    </select>
   
 </mapper>

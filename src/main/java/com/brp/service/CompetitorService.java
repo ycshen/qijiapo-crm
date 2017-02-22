@@ -1,7 +1,7 @@
 package com.brp.service;
 
 import com.brp.entity.CompetitorEntity;
-import com.brp.entity.CustomerEntity;
+import com.brp.util.query.CompetitorQuery;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -13,6 +13,6 @@ import com.brp.entity.CustomerEntity;
  */
 public interface CompetitorService {
 	void insertCompetitor(CompetitorEntity competitor);
-	
+	CompetitorQuery getCompetitorPage(CompetitorQuery competitorQuery);
 }
 

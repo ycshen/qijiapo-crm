@@ -19,13 +19,13 @@
 	  id,createUser,updateUser,createTime, updateTime,
    	  customerName,createUserId,updateUserId,customerLevel,trade
   </sql>
-  <insert id="insertConfig" parameterType="com.brp.entity.ConfigEntity" >
+  <insert id="insertCustomer" parameterType="com.brp.entity.CustomerEntity" >
     insert customer
    		(createUser,updateUser,createTime, updateTime,
    		 customerName,createUserId,updateUserId,customerLevel,trade) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
-    	#{customerName,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{customerLevel,jdbcType=Integer},#{trade,jdbcType=Integer})
+    	#{customerName,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{customerLevel,jdbcType=INTEGER},#{trade,jdbcType=INTEGER})
   </insert>
   
 </mapper>

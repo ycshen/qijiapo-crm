@@ -39,7 +39,7 @@ public class CustomerApi {
 	private CompanyService companyService;
 	@RequestMapping(value = "/insertCustomer", method = RequestMethod.POST)
 	@ResponseBody
-	public String getPositionByCompanyId(@RequestBody JSONObject jsonObject){
+	public String insertCustomer(@RequestBody JSONObject jsonObject){
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String customer = jsonObject.getString("customer");

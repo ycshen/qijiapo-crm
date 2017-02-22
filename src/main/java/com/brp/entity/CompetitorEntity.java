@@ -6,32 +6,40 @@ package com.brp.entity;
  */
 public class CompetitorEntity extends BaseEntity{
 	private String competitorName; //竞争对手名称
-	private String beyondUser; //竞争对手所有人
-	private String beyondUserType; //竞争对手类型 1-个人 2-团队or部门 3-公司
+	private String beyondDept; //竞争对手所属部门
+	private String beyondDeptName; //竞争对手所属部门
+	private String beyondDeptType; //竞争对手所属部门类型 1-部门 2-公司
 	private String address;
 	private String website; //公司网址
 	private Integer staffNum; //员工数量
 	private String saleMoney; //公司销售额
-	private String postcode; //邮编
 	private String mobile; //电话
 	private String beyondOf; //所属人
+	private String beyondOfName; //所属人名称
 	public String getCompetitorName() {
 		return competitorName;
 	}
 	public void setCompetitorName(String competitorName) {
 		this.competitorName = competitorName;
 	}
-	public String getBeyondUser() {
-		return beyondUser;
+	public String getBeyondDept() {
+		return beyondDept;
 	}
-	public void setBeyondUser(String beyondUser) {
-		this.beyondUser = beyondUser;
+	public void setBeyondDept(String beyondDept) {
+		this.beyondDept = beyondDept;
 	}
-	public String getBeyondUserType() {
-		return beyondUserType;
+	public String getBeyondDeptType() {
+		return beyondDeptType;
 	}
-	public void setBeyondUserType(String beyondUserType) {
-		this.beyondUserType = beyondUserType;
+	
+	public String getBeyondDeptName() {
+		return beyondDeptName;
+	}
+	public void setBeyondDeptName(String beyondDeptName) {
+		this.beyondDeptName = beyondDeptName;
+	}
+	public void setBeyondDeptType(String beyondDeptType) {
+		this.beyondDeptType = beyondDeptType;
 	}
 	public String getAddress() {
 		return address;
@@ -57,12 +65,7 @@ public class CompetitorEntity extends BaseEntity{
 	public void setSaleMoney(String saleMoney) {
 		this.saleMoney = saleMoney;
 	}
-	public String getPostcode() {
-		return postcode;
-	}
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
+	
 	public String getMobile() {
 		return mobile;
 	}
@@ -75,5 +78,12 @@ public class CompetitorEntity extends BaseEntity{
 	public void setBeyondOf(String beyondOf) {
 		this.beyondOf = beyondOf;
 	}
+	public String getBeyondOfName() {
+		return beyondOfName;
+	}
+	public void setBeyondOfName(String beyondOfName) {
+		this.beyondOfName = beyondOfName;
+	}
+	
 	
 }

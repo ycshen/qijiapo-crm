@@ -1,8 +1,11 @@
 package com.brp.mapper;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.brp.entity.CompetitorEntity;
+import com.brp.util.query.CompetitorQuery;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -15,5 +18,6 @@ import com.brp.entity.CompetitorEntity;
 @Repository
 public interface CompetitorMapper {
 	void insertCompetitor(CompetitorEntity competitor);
+	List<CompetitorEntity> getCompetitorPage(CompetitorQuery competitorQuery);
 }
 
