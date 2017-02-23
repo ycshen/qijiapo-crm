@@ -25,7 +25,7 @@
     <result column="beyondDept" property="beyondDept" jdbcType="VARCHAR" />
     <result column="beyondDeptName" property="beyondDeptName" jdbcType="VARCHAR" />
     <result column="beyondDeptType" property="beyondDeptType" jdbcType="VARCHAR" />
-    <result column="address" property="remark" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
     
     <result column="website" property="website" jdbcType="VARCHAR" />
     <result column="staffNum" property="staffNum" jdbcType="INTEGER" />
@@ -68,7 +68,7 @@
          select 
          <include refid="Base_Column_List" />
          from competitor
-         where 1=1
+         where isDelete = 0
          <!--  <trim prefix=" " suffix="" suffixOverrides="" >
 		     <if test="level != null and level != ''" >
 		       and level =  #{level}
@@ -81,5 +81,18 @@
 		 
          order by createTime desc
     </select>
-  
+    
+    <select id="getCompetitorById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+         select 
+         <include refid="Base_Column_List" />
+         from competitor
+         where 
+         id=#{id} and isDelete=0 
+    </select>
+  	<select id="deleteCompetitorById"  parameterType="java.lang.String" >
+         update competitor set isDelete=1 where id=#{id} limit 1;
+    </select>
+    <select id="batchDeleteCompetitor"  parameterType="java.lang.String" >
+         update competitor set isDelete=1 where id in ${id};
+    </select>
 </mapper>

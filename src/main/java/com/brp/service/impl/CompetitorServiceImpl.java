@@ -2,6 +2,7 @@ package com.brp.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,31 @@ public class CompetitorServiceImpl implements CompetitorService{
 		}
 		
 		return competitorQuery;
+	}
+
+	@Override
+	public CompetitorEntity getCompetitorById(String id) {
+		return competitorMapper.getCompetitorById(id);
+	}
+
+	@Override
+	public void deleteCompetitorById(String id) {
+		competitorMapper.deleteCompetitorById(id);
+	}
+
+	@Override
+	public void batchDeleteCompetitor(List<String> idList) {
+		if(idList != null && idList.size() > 0){
+			String inId = "";
+			for (String id : idList) {
+				inId += id + ",";
+			}
+			
+			if(StringUtils.isNotBlank(inId)){
+				inId = inId.substring(0, inId.length() - 1);
+				competitorMapper.batchDeleteCompetitor(inId);
+			}
+		}
 	}
 
 	

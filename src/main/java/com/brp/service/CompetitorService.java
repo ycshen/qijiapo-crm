@@ -1,5 +1,7 @@
 package com.brp.service;
 
+import java.util.List;
+
 import com.brp.entity.CompetitorEntity;
 import com.brp.util.query.CompetitorQuery;
 
@@ -14,5 +16,8 @@ import com.brp.util.query.CompetitorQuery;
 public interface CompetitorService {
 	void insertCompetitor(CompetitorEntity competitor);
 	CompetitorQuery getCompetitorPage(CompetitorQuery competitorQuery);
+	CompetitorEntity getCompetitorById(String id);
+	void deleteCompetitorById(String id);
+	void batchDeleteCompetitor(List<String> idList);
 }
 

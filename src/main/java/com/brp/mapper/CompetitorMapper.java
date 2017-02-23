@@ -19,5 +19,8 @@ import com.brp.util.query.CompetitorQuery;
 public interface CompetitorMapper {
 	void insertCompetitor(CompetitorEntity competitor);
 	List<CompetitorEntity> getCompetitorPage(CompetitorQuery competitorQuery);
+	CompetitorEntity getCompetitorById(String id);
+	void deleteCompetitorById(String id);
+	void batchDeleteCompetitor(String inId);
 }
 
