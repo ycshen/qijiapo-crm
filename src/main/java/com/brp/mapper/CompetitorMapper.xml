@@ -46,7 +46,7 @@
    	  beyondOfName
    	  
   </sql>
-  <insert id="insertCompetitor" parameterType="com.brp.entity.CompetitorEntity" >
+  <insert id="insertCompetitor" parameterType="com.brp.entity.CompetitorEntity" useGeneratedKeys="true" keyProperty="id">
     insert competitor
    		(createUser,updateUser,createTime, updateTime,
    		 postcode,provinceId,provinceName,cityId,cityName,

@@ -71,6 +71,7 @@ public class CompetitorApi {
 				CompetitorEntity competitorObj = JSONObject.parseObject(competitor, CompetitorEntity.class);
 				competitorObj.setIsDelete(0);
 				competitorService.insertCompetitor(competitorObj);
+				jsonData.setData(competitorObj.getId().toString());
 				jsonData.setCode(ApiCode.OK);
 				jsonData.setMessage("操作成功");
 			}else{
