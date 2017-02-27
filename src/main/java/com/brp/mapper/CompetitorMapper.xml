@@ -95,4 +95,97 @@
     <select id="batchDeleteCompetitor"  parameterType="java.lang.String" >
          update competitor set isDelete=1 where id in ${id};
     </select>
+    <update id="updateCompetitor" parameterType="com.brp.entity.CompetitorEntity">
+    	update competitor set 
+    	<if test="createUser != null">
+    		createUser = #{createUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="createUser != null">
+    		createUser = #{createUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="updateUser != null">
+    		updateUser = #{updateUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="createTime != null">
+    		createTime = #{createTime, jdbcType=TIMESTAMP},
+    	</if>
+    	<if test="updateTime != null">
+    		updateTime = #{updateTime, jdbcType=TIMESTAMP},
+    	</if>
+    	
+    	<if test="postcode != null">
+    		postcode = #{postcode, jdbcType=VARCHAR},
+    	</if>
+    	<if test="provinceId != null">
+    		provinceId = #{provinceId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="provinceName != null">
+    		provinceName = #{provinceName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="cityId != null">
+    		cityId = #{cityId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="cityName != null">
+    		cityName = #{cityName, jdbcType=VARCHAR},
+    	</if>
+    	
+    	<if test="areaId != null">
+    		areaId = #{areaId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="areaName != null">
+    		areaName = #{areaName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="facsimile != null">
+    		facsimile = #{facsimile, jdbcType=VARCHAR},
+    	</if>
+    	<if test="weibo != null">
+    		weibo = #{weibo, jdbcType=VARCHAR},
+    	</if>
+    	<if test="remark != null">
+    		remark = #{remark, jdbcType=VARCHAR},
+    	</if>
+    	<if test="isDelete != null">
+    		isDelete = #{isDelete, jdbcType=INTEGER},
+    	</if>
+    	
+    	
+    	<if test="competitorName != null">
+    		competitorName = #{competitorName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="beyondDept != null">
+    		beyondDept = #{beyondDept, jdbcType=VARCHAR},
+    	</if>
+    	<if test="beyondDeptName != null">
+    		beyondDeptName = #{beyondDeptName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="beyondDeptType != null">
+    		beyondDeptType = #{beyondDeptType, jdbcType=VARCHAR},
+    	</if>
+    	<if test="address != null">
+    		address = #{address, jdbcType=VARCHAR},
+    	</if>
+    	
+    	<if test="website != null">
+    		website = #{website, jdbcType=VARCHAR},
+    	</if>
+    	<if test="staffNum != null">
+    		staffNum = #{staffNum, jdbcType=INTEGER},
+    	</if>
+    	<if test="saleMoney != null">
+    		saleMoney = #{saleMoney, jdbcType=VARCHAR},
+    	</if>
+    	<if test="mobile != null">
+    		mobile = #{mobile, jdbcType=VARCHAR},
+    	</if>
+    	<if test="address != null">
+    		beyondOf = #{beyondOf, jdbcType=VARCHAR},
+    	</if>
+    	
+    	
+    	<if test="beyondOfName != null">
+    		beyondOfName = #{beyondOfName, jdbcType=VARCHAR},
+    	</if>
+    	id = #{id}
+    	where id = #{id} limit 1
+    </update>
 </mapper>

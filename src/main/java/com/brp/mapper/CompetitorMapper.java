@@ -22,5 +22,6 @@ public interface CompetitorMapper {
 	CompetitorEntity getCompetitorById(String id);
 	void deleteCompetitorById(String id);
 	void batchDeleteCompetitor(String inId);
+	void updateCompetitor(CompetitorEntity competitor);
 }
 

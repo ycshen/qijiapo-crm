@@ -1,5 +1,6 @@
 package com.brp.api;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -284,6 +285,56 @@ public class CompetitorApi {
 			if(auth && StringUtils.isNotBlank(idList)){
 				List<String> list = JSONObject.parseArray(idList, String.class);
 				competitorService.batchDeleteCompetitor(list);
+				jsonData.setCode(ApiCode.OK);
+				jsonData.setMessage("操作成功");
+			}else{
+				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+				jsonData.setMessage("参数异常");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonData.setCode(ApiCode.EXCEPTION);
+			jsonData.setMessage("操作失败");
+		}
+		
+		String result = JsonUtils.json2Str(jsonData);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/updateCompetitor", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateCompetitor(@RequestBody JSONObject jsonObject){
+		JsonData<String> jsonData = new JsonData<String>();
+		try{
+			String competitor = jsonObject.getString("competitor");
+			String secret = jsonObject.getString("secret");
+			String cId = jsonObject.getString("cId");
+			
+			boolean auth = false;
+			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
+				String mybaseSecret = companyService.getSecretByCid(cId);
+				Map<String,Object> maps = new HashMap<String, Object>();
+				maps.put("competitor", competitor);
+				maps.put("secret", mybaseSecret);
+				maps.put("cId", cId);
+				String md5 = SHA1Utils.SHA1(maps);
+				if(md5.equals(secret)){
+					auth = true;
+				}else{
+					jsonData.setCode(ApiCode.AUTH_FAIL);
+					jsonData.setMessage("验证失败");
+				}
+			}else{
+				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+				jsonData.setMessage("参数异常");
+			}
+			
+			if(auth && StringUtils.isNotBlank(competitor)){
+				CompetitorEntity competitorObj = JSONObject.parseObject(competitor, CompetitorEntity.class);
+				competitorObj.setIsDelete(0);
+				competitorObj.setUpdateTime(new Date());
+				competitorService.updateCompetitor(competitorObj);
 				jsonData.setCode(ApiCode.OK);
 				jsonData.setMessage("操作成功");
 			}else{

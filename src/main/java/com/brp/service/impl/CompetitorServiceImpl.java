@@ -64,6 +64,11 @@ public class CompetitorServiceImpl implements CompetitorService{
 		}
 	}
 
+	@Override
+	public void updateCompetitor(CompetitorEntity competitor) {
+		competitorMapper.updateCompetitor(competitor);
+	}
+
 	
 	
 
