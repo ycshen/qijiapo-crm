@@ -69,15 +69,20 @@
          <include refid="Base_Column_List" />
          from competitor
          where isDelete = 0
-         <!--  <trim prefix=" " suffix="" suffixOverrides="" >
-		     <if test="level != null and level != ''" >
-		       and level =  #{level}
+         <trim prefix=" " suffix="" suffixOverrides="" >
+		      <if test="areaId != null and areaId != ''" >
+		       and areaId =  #{areaId}
 		      </if>
-		      <if test="companyName != '' and companyName != null" >
-		       and company_name = #{companyName}
+		      <if test="cityId != null and cityId != ''" >
+		       and cityId =  #{cityId}
 		      </if>
-		     
-		 </trim> --> 
+		      <if test="provinceId != null and provinceId != ''" >
+		       and provinceId =  #{provinceId}
+		      </if>
+		      <if test="competitorName != '' and competitorName != null" >
+		       and competitorName like '%${competitorName}%'
+		      </if>
+		 </trim>
 		 
          order by createTime desc
     </select>

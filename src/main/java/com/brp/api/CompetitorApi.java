@@ -95,22 +95,17 @@ public class CompetitorApi {
 	public String getCompetitorPage(@RequestBody JSONObject jsonObject){
 		JsonData<List<CompetitorEntity>> jsonData = new JsonData<List<CompetitorEntity>>();
 		try{
-			String id = jsonObject.getString("id");
+			String query = jsonObject.getString("query");
 			String secret = jsonObject.getString("secret");
 			String cId = jsonObject.getString("cId");
-			String pageSize = jsonObject.getString("pageSize");
-			String currentPage = jsonObject.getString("currentPage");
-			/*String companyName = jsonObject.getString("companyName");*/
 			
 			boolean auth = false;
 			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
 				String mybaseSecret = companyService.getSecretByCid(cId);
 				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("id", id);
+				maps.put("query", query);
 				maps.put("secret", mybaseSecret);
 				maps.put("cId", cId);
-				maps.put("pageSize", pageSize);
-				maps.put("currentPage", currentPage);
 				String md5 = SHA1Utils.SHA1(maps);
 				if(md5.equals(secret)){
 					auth = true;
@@ -123,19 +118,19 @@ public class CompetitorApi {
 				jsonData.setMessage("参数异常");
 			}
 			
-			if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
-				CompetitorQuery competitorQuery = new CompetitorQuery();
-				competitorQuery.setCompanyId(Long.parseLong(id));
-				if(StringUtils.isBlank(currentPage)){
-					currentPage = "1";
+			if(auth){
+				CompetitorQuery competitorQuery = JSONObject.parseObject(query, CompetitorQuery.class);
+
+				Integer page =  competitorQuery.getPage();
+				if(page == null){
+					competitorQuery.setPage(1);
 				}
 				
-				competitorQuery.setPage(Integer.parseInt(currentPage));
-				if(StringUtils.isBlank(pageSize)){
-					pageSize = "20";
+				Integer size =  competitorQuery.getSize();
+				if(size == null){
+					competitorQuery.setSize(10);
 				}
 				
-				competitorQuery.setSize(Integer.parseInt(pageSize));
 				competitorQuery = competitorService.getCompetitorPage(competitorQuery);
 				jsonData.setCode(ApiCode.OK);
 				jsonData.setMessage("操作成功");
