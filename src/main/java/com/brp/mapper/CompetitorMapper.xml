@@ -89,12 +89,12 @@
          where 
          id=#{id} and isDelete=0 
     </select>
-  	<select id="deleteCompetitorById"  parameterType="java.lang.String" >
+  	<update id="deleteCompetitorById"  parameterType="java.lang.String" >
          update competitor set isDelete=1 where id=#{id} limit 1;
-    </select>
-    <select id="batchDeleteCompetitor"  parameterType="java.lang.String" >
-         update competitor set isDelete=1 where id in ${id};
-    </select>
+    </update>
+    <update id="batchDeleteCompetitor"  parameterType="java.lang.String">
+         update competitor set isDelete=1 where id in (${inId});
+    </update>
     <update id="updateCompetitor" parameterType="com.brp.entity.CompetitorEntity">
     	update competitor set 
     	<if test="createUser != null">

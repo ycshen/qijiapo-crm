@@ -2,6 +2,7 @@ package com.brp.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.brp.entity.CompetitorEntity;
@@ -21,7 +22,7 @@ public interface CompetitorMapper {
 	List<CompetitorEntity> getCompetitorPage(CompetitorQuery competitorQuery);
 	CompetitorEntity getCompetitorById(String id);
 	void deleteCompetitorById(String id);
-	void batchDeleteCompetitor(String inId);
+	void batchDeleteCompetitor(@Param("inId")String inId);
 	void updateCompetitor(CompetitorEntity competitor);
 }
 
