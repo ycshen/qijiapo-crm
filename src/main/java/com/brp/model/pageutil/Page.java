@@ -12,6 +12,42 @@ public class Page<T> {
 	private List<T> items;// 对应的当前页记录
 	private Boolean isPage = true;
 	private Map<String, Object> params = new HashMap<>();// 其他的参数我们把它分装成一个Map对象
+	private String roleType = "3"; //数据权限类型 3-默认查看本人以及下属的数据  2-本部门以及下级部门的数据 1-全部数据
+	private String userId; //登录人的userId
+	private String departmentId;
+	private String companyId;
+	
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
 
 	public Integer getPage() {
 		return page;

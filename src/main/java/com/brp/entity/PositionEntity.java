@@ -8,16 +8,10 @@ package com.brp.entity;
  * @author <a href="mailto:shenyuchuan@itiaoling.com">申鱼川</a>
  */
 public class PositionEntity extends BaseEntity{
-	private Long companyId;
 	private Integer positionType; // 1.用户自定义 2.系统定义
 	private String postionName;
 	private Integer isDelete;
-	public Long getCompanyId() {
-		return companyId;
-	}
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
+	
 	public Integer getPositionType() {
 		return positionType;
 	}

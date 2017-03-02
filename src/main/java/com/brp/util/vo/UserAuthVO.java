@@ -11,12 +11,7 @@ import com.brp.entity.BaseEntity;
  * @author <a href="mailto:shenyuchuan@itiaoling.com">申鱼川</a>
  */
 public class UserAuthVO extends BaseEntity{
-	private Long companyId;
-	private String companyName;
-	private Integer departmentId;
-	private String departmentName;
 	private Integer status;
-	private String userName;
 	private String telphone;
 	private String password;
 	private String mobile;
@@ -26,17 +21,11 @@ public class UserAuthVO extends BaseEntity{
 	private String positionName;
 	private String email;
 	private Integer authUserId;
-	public Long getCompanyId() {
-		return companyId;
+	public Integer getStatus() {
+		return status;
 	}
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	public String getTelphone() {
 		return telphone;
@@ -50,35 +39,11 @@ public class UserAuthVO extends BaseEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getCompanyName() {
-		return companyName;
-	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-	public Integer getDepartmentId() {
-		return departmentId;
-	}
-	public void setDepartmentId(Integer departmentId) {
-		this.departmentId = departmentId;
-	}
-	public String getDepartmentName() {
-		return departmentName;
-	}
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
-	}
 	public String getMobile() {
 		return mobile;
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
 	}
 	public String getUserCode() {
 		return userCode;
@@ -116,6 +81,5 @@ public class UserAuthVO extends BaseEntity{
 	public void setAuthUserId(Integer authUserId) {
 		this.authUserId = authUserId;
 	}
-	
 }
 

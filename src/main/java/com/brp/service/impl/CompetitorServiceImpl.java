@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.brp.base.RoleEnum;
 import com.brp.entity.CompetitorEntity;
 import com.brp.mapper.CompetitorMapper;
 import com.brp.service.CompetitorService;
@@ -31,10 +32,23 @@ public class CompetitorServiceImpl implements CompetitorService{
 
 	@Override
 	public CompetitorQuery getCompetitorPage(CompetitorQuery competitorQuery) {
+		String roleTypeStr = competitorQuery.getRoleType();
+		Integer roleType = StringUtils.isNotBlank(roleTypeStr) ? Integer.parseInt(roleTypeStr) : 3;
+		if(roleType == RoleEnum.ADMIN.getRoleId()){
+			
+ 		}else if(roleType == RoleEnum.DEP.getRoleId()){
+ 			//重置department
+ 			String subDepartmentId = "";
+ 			competitorQuery.setDepartmentId(subDepartmentId);
+ 		}else{
+ 			//默认是USR，看自己的数据
+ 			
+ 		}
 		List<CompetitorEntity> list = competitorMapper.getCompetitorPage(competitorQuery);
 		if(list != null && list.size() > 0){
 			competitorQuery.setItems(list);
 		}
+		
 		
 		return competitorQuery;
 	}

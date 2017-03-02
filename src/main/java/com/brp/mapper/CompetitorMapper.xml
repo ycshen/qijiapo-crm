@@ -22,46 +22,45 @@
     <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
     
     <result column="competitorName" property="competitorName" jdbcType="VARCHAR" />
-    <result column="beyondDept" property="beyondDept" jdbcType="VARCHAR" />
-    <result column="beyondDeptName" property="beyondDeptName" jdbcType="VARCHAR" />
-    <result column="beyondDeptType" property="beyondDeptType" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     
     <result column="website" property="website" jdbcType="VARCHAR" />
     <result column="staffNum" property="staffNum" jdbcType="INTEGER" />
     <result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
-    <result column="beyondOf" property="beyondOf" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
     
-    <result column="beyondOfName" property="beyondOfName" jdbcType="VARCHAR" />
-    
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
   </resultMap> 
      
   <sql id="Base_Column_List" >
 	  id,createUser,updateUser,createTime, updateTime,
    	  postcode,provinceId,provinceName,cityId,cityName,
    	  areaId,areaName,facsimile,weibo,remark,isDelete,
-   	  competitorName,beyondDept,beyondDeptName,beyondDeptType,address,
-   	  website,staffNum,saleMoney,mobile,beyondOf,
-   	  beyondOfName
-   	  
+   	  competitorName,departmentId,departmentName,address,
+   	  website,staffNum,saleMoney,mobile,userId,
+   	  userName,companyId,companyName
   </sql>
   <insert id="insertCompetitor" parameterType="com.brp.entity.CompetitorEntity" useGeneratedKeys="true" keyProperty="id">
     insert competitor
    		(createUser,updateUser,createTime, updateTime,
-   		 postcode,provinceId,provinceName,cityId,cityName,
-   		  areaId,areaName,facsimile,weibo,remark,isDelete,
-	   	  competitorName,beyondDept,beyondDeptName,beyondDeptType,address,
-	   	  website,staffNum,saleMoney,mobile,beyondOf,
-	   	  beyondOfName
+   	  postcode,provinceId,provinceName,cityId,cityName,
+   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+   	  competitorName,departmentId,departmentName,address,
+   	  website,staffNum,saleMoney,mobile,userId,
+   	  userName,companyId,companyName
    		 ) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
     	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
     	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
-    	#{competitorName,jdbcType=VARCHAR},#{beyondDept,jdbcType=VARCHAR},#{beyondDeptName,jdbcType=VARCHAR},#{beyondDeptType,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
-    	#{website,jdbcType=VARCHAR},#{staffNum,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR},#{beyondOf,jdbcType=VARCHAR},
-    	#{beyondOfName,jdbcType=VARCHAR}
+    	#{competitorName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+    	#{website,jdbcType=VARCHAR},#{staffNum,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+    	#{userName,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR}
     	)
   </insert>
    <select id="getCompetitorPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.CompetitorQuery" >
@@ -157,14 +156,11 @@
     	<if test="competitorName != null">
     		competitorName = #{competitorName, jdbcType=VARCHAR},
     	</if>
-    	<if test="beyondDept != null">
-    		beyondDept = #{beyondDept, jdbcType=VARCHAR},
+    	<if test="departmentId != null">
+    		departmentId = #{departmentId, jdbcType=VARCHAR},
     	</if>
-    	<if test="beyondDeptName != null">
-    		beyondDeptName = #{beyondDeptName, jdbcType=VARCHAR},
-    	</if>
-    	<if test="beyondDeptType != null">
-    		beyondDeptType = #{beyondDeptType, jdbcType=VARCHAR},
+    	<if test="departmentName != null">
+    		departmentName = #{departmentName, jdbcType=VARCHAR},
     	</if>
     	<if test="address != null">
     		address = #{address, jdbcType=VARCHAR},
@@ -182,13 +178,19 @@
     	<if test="mobile != null">
     		mobile = #{mobile, jdbcType=VARCHAR},
     	</if>
-    	<if test="address != null">
-    		beyondOf = #{beyondOf, jdbcType=VARCHAR},
+    	<if test="userId != null">
+    		userId = #{userId, jdbcType=VARCHAR},
     	</if>
     	
     	
-    	<if test="beyondOfName != null">
-    		beyondOfName = #{beyondOfName, jdbcType=VARCHAR},
+    	<if test="userName != null">
+    		userName = #{userName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="companyId != null">
+    		companyId = #{companyId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="companyName != null">
+    		companyName = #{companyName, jdbcType=VARCHAR},
     	</if>
     	id = #{id}
     	where id = #{id} limit 1
