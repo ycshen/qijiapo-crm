@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.brp.base.RoleEnum;
 import com.brp.entity.CompetitorEntity;
 import com.brp.service.CompanyService;
 import com.brp.service.CompetitorService;
@@ -120,7 +121,12 @@ public class CompetitorApi {
 			
 			if(auth){
 				CompetitorQuery competitorQuery = JSONObject.parseObject(query, CompetitorQuery.class);
-
+				String roleTypeStr = competitorQuery.getRoleType();
+				if(StringUtils.isBlank(roleTypeStr)){
+					roleTypeStr = "3";
+					competitorQuery.setRoleType(roleTypeStr);
+				}
+				
 				Integer page =  competitorQuery.getPage();
 				if(page == null){
 					competitorQuery.setPage(1);

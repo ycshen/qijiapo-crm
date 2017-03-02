@@ -81,6 +81,15 @@
 		      <if test="competitorName != '' and competitorName != null" >
 		       and competitorName like '%${competitorName}%'
 		      </if>
+		      <if test="roleType == 1">
+		      	and companyId = #{companyId}
+		      </if>
+		      <if test="roleType == 2">
+		      	and departmentId in (${departmentId})
+		      </if>
+		      <if test="roleType == 3">
+		      	and userId = #{userId}
+		      </if>
 		 </trim>
 		 
          order by createTime desc
