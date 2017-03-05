@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.brp.entity.ProductEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+    <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="provinceId" property="provinceId" jdbcType="VARCHAR" />
+    <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+    <result column="cityId" property="cityId" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    
+    <result column="areaId" property="areaId" jdbcType="VARCHAR" />
+    <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+    <result column="facsimile" property="facsimile" jdbcType="VARCHAR" />
+    <result column="weibo" property="weibo" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+    
+    
+    <result column="createUserId" property="createUserId" jdbcType="VARCHAR" />
+    <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
+    
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    
+    <result column="productName" property="productName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="saleUnit" property="saleUnit" jdbcType="VARCHAR" />
+    <result column="productDesc" property="productDesc" jdbcType="VARCHAR" />
+    
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="imgPath" property="imgPath" jdbcType="VARCHAR" />
+  </resultMap> 
+     
+  <sql id="Base_Column_List" >
+	  id,createUser,updateUser,createTime, updateTime,
+   	  postcode,provinceId,provinceName,cityId,cityName,
+   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+   	  productName,departmentId,departmentName,address,
+   	  website,staffNum,saleMoney,mobile,userId,
+   	  userName,companyId,companyName
+  </sql>
+  <insert id="insertProduct" parameterType="com.brp.entity.ProductEntity" useGeneratedKeys="true" keyProperty="id">
+    insert product
+   		(createUser,updateUser,createTime, updateTime,
+   	  postcode,provinceId,provinceName,cityId,cityName,
+   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+   	  productName,departmentId,departmentName,address,
+   	  website,staffNum,saleMoney,mobile,userId,
+   	  userName,companyId,companyName
+   		 ) 
+    values
+    	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+    	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
+    	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+    	#{productName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+    	#{website,jdbcType=VARCHAR},#{staffNum,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+    	#{userName,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR}
+    	)
+  </insert>
+   <select id="getProductPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ProductQuery" >
+         select 
+         <include refid="Base_Column_List" />
+         from product
+         where isDelete = 0
+         <trim prefix=" " suffix="" suffixOverrides="" >
+		      <if test="areaId != null and areaId != ''" >
+		       and areaId =  #{areaId}
+		      </if>
+		      <if test="cityId != null and cityId != ''" >
+		       and cityId =  #{cityId}
+		      </if>
+		      <if test="provinceId != null and provinceId != ''" >
+		       and provinceId =  #{provinceId}
+		      </if>
+		      <if test="productName != '' and productName != null" >
+		       and productName like '%${productName}%'
+		      </if>
+		      <if test="roleType == 1">
+		      	and companyId = #{companyId}
+		      </if>
+		      <if test="roleType == 2">
+		      	and departmentId in (${departmentId})
+		      </if>
+		      <if test="roleType == 3">
+		      	and userId = #{userId}
+		      </if>
+		 </trim>
+		 
+         order by createTime desc
+    </select>
+    
+    <select id="getProductById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+         select 
+         <include refid="Base_Column_List" />
+         from product
+         where 
+         id=#{id} and isDelete=0 
+    </select>
+  	<update id="deleteProductById"  parameterType="java.lang.String" >
+         update product set isDelete=1 where id=#{id} limit 1;
+    </update>
+    <update id="batchDeleteProduct"  parameterType="java.lang.String">
+         update product set isDelete=1 where id in (${inId});
+    </update>
+    <update id="updateProduct" parameterType="com.brp.entity.ProductEntity">
+    	update product set 
+    	<if test="createUser != null">
+    		createUser = #{createUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="createUser != null">
+    		createUser = #{createUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="updateUser != null">
+    		updateUser = #{updateUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="createTime != null">
+    		createTime = #{createTime, jdbcType=TIMESTAMP},
+    	</if>
+    	<if test="updateTime != null">
+    		updateTime = #{updateTime, jdbcType=TIMESTAMP},
+    	</if>
+    	
+    	<if test="postcode != null">
+    		postcode = #{postcode, jdbcType=VARCHAR},
+    	</if>
+    	<if test="provinceId != null">
+    		provinceId = #{provinceId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="provinceName != null">
+    		provinceName = #{provinceName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="cityId != null">
+    		cityId = #{cityId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="cityName != null">
+    		cityName = #{cityName, jdbcType=VARCHAR},
+    	</if>
+    	
+    	<if test="areaId != null">
+    		areaId = #{areaId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="areaName != null">
+    		areaName = #{areaName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="facsimile != null">
+    		facsimile = #{facsimile, jdbcType=VARCHAR},
+    	</if>
+    	<if test="weibo != null">
+    		weibo = #{weibo, jdbcType=VARCHAR},
+    	</if>
+    	<if test="remark != null">
+    		remark = #{remark, jdbcType=VARCHAR},
+    	</if>
+    	<if test="isDelete != null">
+    		isDelete = #{isDelete, jdbcType=INTEGER},
+    	</if>
+    	
+    	
+    	<if test="productName != null">
+    		productName = #{productName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="departmentId != null">
+    		departmentId = #{departmentId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="departmentName != null">
+    		departmentName = #{departmentName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="address != null">
+    		address = #{address, jdbcType=VARCHAR},
+    	</if>
+    	
+    	<if test="website != null">
+    		website = #{website, jdbcType=VARCHAR},
+    	</if>
+    	<if test="staffNum != null">
+    		staffNum = #{staffNum, jdbcType=INTEGER},
+    	</if>
+    	<if test="saleMoney != null">
+    		saleMoney = #{saleMoney, jdbcType=VARCHAR},
+    	</if>
+    	<if test="mobile != null">
+    		mobile = #{mobile, jdbcType=VARCHAR},
+    	</if>
+    	<if test="userId != null">
+    		userId = #{userId, jdbcType=VARCHAR},
+    	</if>
+    	
+    	
+    	<if test="userName != null">
+    		userName = #{userName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="companyId != null">
+    		companyId = #{companyId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="companyName != null">
+    		companyName = #{companyName, jdbcType=VARCHAR},
+    	</if>
+    	id = #{id}
+    	where id = #{id} limit 1
+    </update>
+</mapper>

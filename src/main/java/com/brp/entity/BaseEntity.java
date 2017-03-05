@@ -20,6 +20,7 @@ public class BaseEntity implements Serializable {
 	 * 创建人账号
 	 */
 	private String createUser;
+	private String createUserId;
 	/**
 	 * 创建时间
 	 */
@@ -29,6 +30,7 @@ public class BaseEntity implements Serializable {
 	 * 更新人账号
 	 */
 	private String updateUser;
+	private String updateUserId;
 	/**
 	 * 更新时间
 	 */
