@@ -31,13 +31,12 @@
     <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="companyName" property="companyName" jdbcType="VARCHAR" />
-    
     <result column="productName" property="productName" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="VARCHAR" />
-    <result column="saleUnit" property="saleUnit" jdbcType="VARCHAR" />
-    <result column="productDesc" property="productDesc" jdbcType="VARCHAR" />
     
-    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="saleUnit" property="saleUnit" jdbcType="VARCHAR" />
+    <result column="productDesc" property="productDesc" jdbcType="VARCHAR" />    
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="imgPath" property="imgPath" jdbcType="VARCHAR" />
   </resultMap> 
      
@@ -45,26 +44,26 @@
 	  id,createUser,updateUser,createTime, updateTime,
    	  postcode,provinceId,provinceName,cityId,cityName,
    	  areaId,areaName,facsimile,weibo,remark,isDelete,
-   	  productName,departmentId,departmentName,address,
-   	  website,staffNum,saleMoney,mobile,userId,
-   	  userName,companyId,companyName
+   	  createUserId,updateUserId,userId,userName,departmentId,
+   	  departmentName,companyId,companyName,productName,price,
+   	  saleUnit,productDesc,status,imgPath
   </sql>
   <insert id="insertProduct" parameterType="com.brp.entity.ProductEntity" useGeneratedKeys="true" keyProperty="id">
     insert product
    		(createUser,updateUser,createTime, updateTime,
    	  postcode,provinceId,provinceName,cityId,cityName,
    	  areaId,areaName,facsimile,weibo,remark,isDelete,
-   	  productName,departmentId,departmentName,address,
-   	  website,staffNum,saleMoney,mobile,userId,
-   	  userName,companyId,companyName
+   	  createUserId,updateUserId,userId,userName,departmentId,
+   	  departmentName,companyId,companyName,productName,price,
+   	  saleUnit,productDesc,status,imgPath
    		 ) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
     	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
     	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
-    	#{productName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
-    	#{website,jdbcType=VARCHAR},#{staffNum,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
-    	#{userName,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR}
+    	#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},
+    	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{productName,jdbcType=VARCHAR},#{price,jdbcType=VARCHAR},
+    	#{saleUnit,jdbcType=VARCHAR},#{productDesc,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{imgPath,jdbcType=VARCHAR}
     	)
   </insert>
    <select id="getProductPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ProductQuery" >
@@ -73,15 +72,7 @@
          from product
          where isDelete = 0
          <trim prefix=" " suffix="" suffixOverrides="" >
-		      <if test="areaId != null and areaId != ''" >
-		       and areaId =  #{areaId}
-		      </if>
-		      <if test="cityId != null and cityId != ''" >
-		       and cityId =  #{cityId}
-		      </if>
-		      <if test="provinceId != null and provinceId != ''" >
-		       and provinceId =  #{provinceId}
-		      </if>
+		     
 		      <if test="productName != '' and productName != null" >
 		       and productName like '%${productName}%'
 		      </if>
