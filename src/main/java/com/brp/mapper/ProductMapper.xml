@@ -155,7 +155,9 @@
     	<if test="isDelete != null">
     		isDelete = #{isDelete, jdbcType=INTEGER},
     	</if>
-    	
+    	<if test="productDesc != null">
+    		productDesc = #{productDesc, jdbcType=VARCHAR},
+    	</if>
     	
     	<if test="productName != null">
     		productName = #{productName, jdbcType=VARCHAR},
@@ -166,22 +168,8 @@
     	<if test="departmentName != null">
     		departmentName = #{departmentName, jdbcType=VARCHAR},
     	</if>
-    	<if test="address != null">
-    		address = #{address, jdbcType=VARCHAR},
-    	</if>
     	
-    	<if test="website != null">
-    		website = #{website, jdbcType=VARCHAR},
-    	</if>
-    	<if test="staffNum != null">
-    		staffNum = #{staffNum, jdbcType=INTEGER},
-    	</if>
-    	<if test="saleMoney != null">
-    		saleMoney = #{saleMoney, jdbcType=VARCHAR},
-    	</if>
-    	<if test="mobile != null">
-    		mobile = #{mobile, jdbcType=VARCHAR},
-    	</if>
+    	
     	<if test="userId != null">
     		userId = #{userId, jdbcType=VARCHAR},
     	</if>
