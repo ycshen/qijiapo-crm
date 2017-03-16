@@ -2,6 +2,222 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.brp.mapper.AttnMapper" >
     <resultMap id="BaseResultMap" type="com.brp.mapper.AttnMapper">
-        
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+        <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+
+        <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+        <result column="provinceId" property="provinceId" jdbcType="VARCHAR" />
+        <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+        <result column="cityId" property="cityId" jdbcType="VARCHAR" />
+        <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+
+        <result column="areaId" property="areaId" jdbcType="VARCHAR" />
+        <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+        <result column="facsimile" property="facsimile" jdbcType="VARCHAR" />
+        <result column="weibo" property="weibo" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+
+        <result column="AttnName" property="AttnName" jdbcType="VARCHAR" />
+        <result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+
+        <!--<result column="website" property="website" jdbcType="VARCHAR" />-->
+        <!--<result column="staffNum" property="staffNum" jdbcType="INTEGER" />-->
+        <!--<result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />-->
+        <!--<result column="mobile" property="mobile" jdbcType="VARCHAR" />-->
+        <!--<result column="userId" property="userId" jdbcType="VARCHAR" />-->
+        <result column="userId" property="userId" jdbcType="VARCHAR" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+        <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+
+        <result column="attnName" property="attnName" jdbcType="VARCHAR" />
+        <result column="duy" property="duy" jdbcType="VARCHAR" />
+        <result column="phoneNum" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="mobilePhoneNum" property="mobilePhoneNum" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="VARCHAR" />
+        <result column="birthDay" property="birthDay" jdbcType="DATE" />
+        <result column="attnType" property="attnType" jdbcType="VARCHAR" />
     </resultMap>
+
+    <sql id="Base_Column_List" >
+        id,createUser,updateUser,createTime, updateTime,
+        postcode,provinceId,provinceName,cityId,cityName,
+        areaId,areaName,facsimile,weibo,remark,isDelete,
+        attnName,departmentId,departmentName,userId,
+        userName,companyId,companyName,duy,phoneNum,mobilePhoneNum,
+        email,address,gender,birthDay,attnType
+    </sql>
+    <insert id="insertAttn" parameterType="com.brp.entity.AttnEntity" useGeneratedKeys="true" keyProperty="id">
+        insert attn
+        (createUser,updateUser,createTime, updateTime,
+        postcode,provinceId,provinceName,cityId,cityName,
+        areaId,areaName,facsimile,weibo,remark,isDelete,
+        attnName,departmentId,departmentName,userId,
+        userName,companyId,companyName,duy,phoneNum,mobilePhoneNum,
+        email,address,gender,birthDay,attnType
+        )
+        values
+        ( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+        #{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
+        #{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+        #{attnName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{duy,jdbcType=VARCHAR},#{phoneNum,jdbcType=VARCHAR},#{mobilePhoneNum,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{birthDay,jdbcType=DATE},#{attnType,jdbcType=VARCHAR}
+        )
+    </insert>
+    <select id="getAttnPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.AttnQuery" >
+        select
+        <include refid="Base_Column_List" />
+        from Attn
+        where isDelete = 0
+        <trim prefix=" " suffix="" suffixOverrides="" >
+            <if test="areaId != null and areaId != ''" >
+                and areaId =  #{areaId}
+            </if>
+            <if test="cityId != null and cityId != ''" >
+                and cityId =  #{cityId}
+            </if>
+            <if test="provinceId != null and provinceId != ''" >
+                and provinceId =  #{provinceId}
+            </if>
+            <if test="AttnName != '' and AttnName != null" >
+                and AttnName like '%${AttnName}%'
+            </if>
+            <if test="roleType == 1">
+                and companyId = #{companyId}
+            </if>
+            <if test="roleType == 2">
+                and departmentId in (${departmentId})
+            </if>
+            <if test="roleType == 3">
+                and userId = #{userId}
+            </if>
+        </trim>
+
+        order by createTime desc
+    </select>
+    <select id="getAttnById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from Attn
+        where
+        id=#{id} and isDelete=0
+    </select>
+    <update id="deleteAttnById"  parameterType="java.lang.String" >
+        update Attn set isDelete=1 where id=#{id} limit 1;
+    </update>
+    <update id="batchDeleteAttn"  parameterType="java.lang.String">
+        update Attn set isDelete=1 where id in (${inId});
+    </update>
+    <update id="updateAttn" parameterType="com.brp.entity.AttnEntity">
+        update Attn set
+        <if test="createUser != null">
+            createUser = #{createUser, jdbcType=VARCHAR},
+        </if>
+        <if test="createUser != null">
+            createUser = #{createUser, jdbcType=VARCHAR},
+        </if>
+        <if test="updateUser != null">
+            updateUser = #{updateUser, jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null">
+            createTime = #{createTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            updateTime = #{updateTime, jdbcType=TIMESTAMP},
+        </if>
+
+        <if test="postcode != null">
+            postcode = #{postcode, jdbcType=VARCHAR},
+        </if>
+        <if test="provinceId != null">
+            provinceId = #{provinceId, jdbcType=VARCHAR},
+        </if>
+        <if test="provinceName != null">
+            provinceName = #{provinceName, jdbcType=VARCHAR},
+        </if>
+        <if test="cityId != null">
+            cityId = #{cityId, jdbcType=VARCHAR},
+        </if>
+        <if test="cityName != null">
+            cityName = #{cityName, jdbcType=VARCHAR},
+        </if>
+
+        <if test="areaId != null">
+            areaId = #{areaId, jdbcType=VARCHAR},
+        </if>
+        <if test="areaName != null">
+            areaName = #{areaName, jdbcType=VARCHAR},
+        </if>
+        <if test="facsimile != null">
+            facsimile = #{facsimile, jdbcType=VARCHAR},
+        </if>
+        <if test="weibo != null">
+            weibo = #{weibo, jdbcType=VARCHAR},
+        </if>
+        <if test="remark != null">
+            remark = #{remark, jdbcType=VARCHAR},
+        </if>
+        <if test="isDelete != null">
+            isDelete = #{isDelete, jdbcType=INTEGER},
+        </if>
+
+
+        <if test="AttnName != null">
+            AttnName = #{AttnName, jdbcType=VARCHAR},
+        </if>
+        <if test="departmentId != null">
+            departmentId = #{departmentId, jdbcType=VARCHAR},
+        </if>
+        <if test="departmentName != null">
+            departmentName = #{departmentName, jdbcType=VARCHAR},
+        </if>
+        <if test="address != null">
+            address = #{address, jdbcType=VARCHAR},
+        </if>
+
+        <if test="duy != null">
+            website = #{website, jdbcType=VARCHAR},
+        </if>
+        <if test="phoneNum != null">
+            staffNum = #{staffNum, jdbcType=INTEGER},
+        </if>
+        <if test="mobilePhoneNum != null">
+            saleMoney = #{saleMoney, jdbcType=VARCHAR},
+        </if>
+        <if test="email != null">
+            mobile = #{mobile, jdbcType=VARCHAR},
+        </if>
+        <if test="gender != null">
+            staffNum = #{staffNum, jdbcType=INTEGER},
+        </if>
+        <if test="birthDay != null">
+            saleMoney = #{saleMoney, jdbcType=VARCHAR},
+        </if>
+        <if test="attnType != null">
+            mobile = #{mobile, jdbcType=VARCHAR},
+        </if>
+
+        <if test="userId != null">
+            userId = #{userId, jdbcType=VARCHAR},
+        </if>
+        <if test="userName != null">
+            userName = #{userName, jdbcType=VARCHAR},
+        </if>
+        <if test="companyId != null">
+            companyId = #{companyId, jdbcType=VARCHAR},
+        </if>
+        <if test="companyName != null">
+            companyName = #{companyName, jdbcType=VARCHAR},
+        </if>
+        id = #{id}
+        where id = #{id} limit 1
+    </update>
 </mapper>
