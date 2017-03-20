@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface AttnMapper {
 
-    void insertAttn(AttnEntity Attn);
-    List<AttnEntity> getAttnPage(AttnQuery AttnQuery);
+    void insertAttn(AttnEntity attn);
+    List<AttnEntity> getAttnPage(AttnQuery attnQuery);
     AttnEntity getAttnById(String id);
     void deleteAttnById(String id);
     void batchDeleteAttn(@Param("inId")String inId);
