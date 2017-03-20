@@ -1,5 +1,9 @@
 package com.brp.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 /**
  * Created by fengyue on 2017/3/2.
  */
@@ -14,7 +18,8 @@ public class AttnEntity extends BaseEntity {
     private String email;//邮箱
     private String address;//地址
     private String gender;//性别
-    private String birthDay;//生日
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthDay;//生日
 
     public String getAttnType() {
         return attnType;
@@ -80,11 +85,11 @@ public class AttnEntity extends BaseEntity {
         this.gender = gender;
     }
 
-    public String getBirthDay() {
+    public Date getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(String birthDay) {
+    public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
     }
 }

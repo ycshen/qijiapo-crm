@@ -19,40 +19,32 @@
         <result column="facsimile" property="facsimile" jdbcType="VARCHAR" />
         <result column="weibo" property="weibo" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
-        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
 
-        <result column="AttnName" property="AttnName" jdbcType="VARCHAR" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
         <result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
         <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
-        <result column="address" property="address" jdbcType="VARCHAR" />
-
-        <!--<result column="website" property="website" jdbcType="VARCHAR" />-->
-        <!--<result column="staffNum" property="staffNum" jdbcType="INTEGER" />-->
-        <!--<result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />-->
-        <!--<result column="mobile" property="mobile" jdbcType="VARCHAR" />-->
-        <!--<result column="userId" property="userId" jdbcType="VARCHAR" />-->
         <result column="userId" property="userId" jdbcType="VARCHAR" />
+
         <result column="userName" property="userName" jdbcType="VARCHAR" />
         <result column="companyId" property="companyId" jdbcType="VARCHAR" />
         <result column="companyName" property="companyName" jdbcType="VARCHAR" />
 
         <result column="attnName" property="attnName" jdbcType="VARCHAR" />
-        <result column="duy" property="duy" jdbcType="VARCHAR" />
+        <result column="duty" property="duty" jdbcType="VARCHAR" />
         <result column="phoneNum" property="phoneNum" jdbcType="VARCHAR" />
         <result column="mobilePhoneNum" property="mobilePhoneNum" jdbcType="VARCHAR" />
         <result column="email" property="email" jdbcType="VARCHAR" />
+
         <result column="gender" property="gender" jdbcType="VARCHAR" />
-        <result column="birthDay" property="birthDay" jdbcType="DATE" />
+        <result column="birthDay" property="birthDay" jdbcType="TIMESTAMP" />
         <result column="attnType" property="attnType" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
         id,createUser,updateUser,createTime, updateTime,
-        postcode,provinceId,provinceName,cityId,cityName,
-        areaId,areaName,facsimile,weibo,remark,isDelete,
-        attnName,departmentId,departmentName,userId,
-        userName,companyId,companyName,duy,phoneNum,mobilePhoneNum,
-        email,address,gender,birthDay,attnType
+        postcode,provinceId,provinceName,cityId,cityName
+
     </sql>
     <insert id="insertAttn" parameterType="com.brp.entity.AttnEntity" useGeneratedKeys="true" keyProperty="id">
         insert attn
@@ -60,7 +52,7 @@
         postcode,provinceId,provinceName,cityId,cityName,
         areaId,areaName,facsimile,weibo,remark,isDelete,
         attnName,departmentId,departmentName,userId,
-        userName,companyId,companyName,duy,phoneNum,mobilePhoneNum,
+        userName,companyId,companyName,duty,phoneNum,mobilePhoneNum,
         email,address,gender,birthDay,attnType
         )
         values
@@ -68,14 +60,14 @@
         #{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
         #{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
         #{attnName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
-        #{userName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{duy,jdbcType=VARCHAR},#{phoneNum,jdbcType=VARCHAR},#{mobilePhoneNum,jdbcType=VARCHAR},
-        #{email,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{birthDay,jdbcType=DATE},#{attnType,jdbcType=VARCHAR}
+        #{userName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{duty,jdbcType=VARCHAR},#{phoneNum,jdbcType=VARCHAR},#{mobilePhoneNum,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{birthDay,jdbcType=TIMESTAMP},#{attnType,jdbcType=VARCHAR}
         )
     </insert>
     <select id="getAttnPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.AttnQuery" >
         select
         <include refid="Base_Column_List" />
-        from Attn
+        from attn
         where isDelete = 0
         <trim prefix=" " suffix="" suffixOverrides="" >
             <if test="areaId != null and areaId != ''" >
@@ -87,8 +79,8 @@
             <if test="provinceId != null and provinceId != ''" >
                 and provinceId =  #{provinceId}
             </if>
-            <if test="AttnName != '' and AttnName != null" >
-                and AttnName like '%${AttnName}%'
+            <if test="attnName != '' and attnName != null" >
+                and attnName like '%${attnName}%'
             </if>
             <if test="roleType == 1">
                 and companyId = #{companyId}
@@ -111,13 +103,13 @@
         id=#{id} and isDelete=0
     </select>
     <update id="deleteAttnById"  parameterType="java.lang.String" >
-        update Attn set isDelete=1 where id=#{id} limit 1;
+        update attn set isDelete=1 where id=#{id} limit 1;
     </update>
     <update id="batchDeleteAttn"  parameterType="java.lang.String">
-        update Attn set isDelete=1 where id in (${inId});
+        update attn set isDelete=1 where id in (${inId});
     </update>
     <update id="updateAttn" parameterType="com.brp.entity.AttnEntity">
-        update Attn set
+        update attn set
         <if test="createUser != null">
             createUser = #{createUser, jdbcType=VARCHAR},
         </if>
@@ -170,8 +162,8 @@
         </if>
 
 
-        <if test="AttnName != null">
-            AttnName = #{AttnName, jdbcType=VARCHAR},
+        <if test="attnName != null">
+            attnName = #{attnName, jdbcType=VARCHAR},
         </if>
         <if test="departmentId != null">
             departmentId = #{departmentId, jdbcType=VARCHAR},
@@ -183,7 +175,7 @@
             address = #{address, jdbcType=VARCHAR},
         </if>
 
-        <if test="duy != null">
+        <if test="duty != null">
             website = #{website, jdbcType=VARCHAR},
         </if>
         <if test="phoneNum != null">
