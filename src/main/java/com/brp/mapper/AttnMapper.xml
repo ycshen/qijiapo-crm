@@ -43,8 +43,11 @@
 
     <sql id="Base_Column_List" >
         id,createUser,updateUser,createTime, updateTime,
-        postcode,provinceId,provinceName,cityId,cityName
-
+        postcode,provinceId,provinceName,cityId,cityName,
+        areaId,areaName,facsimile,weibo,remark,isDelete,
+        departmentId,departmentName,userId,
+        userName,companyId,companyName,attnName,duty,phoneNum,mobilePhoneNum,
+        email,address,gender,birthDay,attnType
     </sql>
     <insert id="insertAttn" parameterType="com.brp.entity.AttnEntity" useGeneratedKeys="true" keyProperty="id">
         insert attn
@@ -176,7 +179,7 @@
         </if>
 
         <if test="duty != null">
-            website = #{website, jdbcType=VARCHAR},
+            duty = #{duty, jdbcType=VARCHAR},
         </if>
         <if test="phoneNum != null">
             staffNum = #{staffNum, jdbcType=INTEGER},
