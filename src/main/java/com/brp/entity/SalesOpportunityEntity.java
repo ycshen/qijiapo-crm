@@ -8,8 +8,9 @@ import java.util.Date;
  *
  */
 public class SalesOpportunityEntity extends BaseEntity{
+	private String customerId; //客户ID
 	private String customerName; //客户名称
-	private String oppotunityType; //机会类型
+	private Integer oppotunityType; //机会类型
 	private String saleMoney; //销售金额
 	private Date endOppoTime; //结单日期
 	private Integer saleStage;//销售阶段
@@ -17,22 +18,26 @@ public class SalesOpportunityEntity extends BaseEntity{
 	private Date stageUpdateTime; //阶段更新时间
 	private String marketActivityId; //市场活动
 	private Integer lockStatus; //锁定状态
-	private String failStage; //输单阶段
+	private Integer failStage; //输单阶段
 	private Integer failOrderReason; //输单原因
 	private String failDesc; //输单描述
-	private String remark; //备注
 	private String productId; //产品
-	private Date lastUpdateTime; //最新修改日
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
 	public String getCustomerName() {
 		return customerName;
 	}
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public String getOppotunityType() {
+	public Integer getOppotunityType() {
 		return oppotunityType;
 	}
-	public void setOppotunityType(String oppotunityType) {
+	public void setOppotunityType(Integer oppotunityType) {
 		this.oppotunityType = oppotunityType;
 	}
 	public String getSaleMoney() {
@@ -77,10 +82,10 @@ public class SalesOpportunityEntity extends BaseEntity{
 	public void setLockStatus(Integer lockStatus) {
 		this.lockStatus = lockStatus;
 	}
-	public String getFailStage() {
+	public Integer getFailStage() {
 		return failStage;
 	}
-	public void setFailStage(String failStage) {
+	public void setFailStage(Integer failStage) {
 		this.failStage = failStage;
 	}
 	public Integer getFailOrderReason() {
@@ -95,22 +100,10 @@ public class SalesOpportunityEntity extends BaseEntity{
 	public void setFailDesc(String failDesc) {
 		this.failDesc = failDesc;
 	}
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
 	public String getProductId() {
 		return productId;
 	}
 	public void setProductId(String productId) {
 		this.productId = productId;
-	}
-	public Date getLastUpdateTime() {
-		return lastUpdateTime;
-	}
-	public void setLastUpdateTime(Date lastUpdateTime) {
-		this.lastUpdateTime = lastUpdateTime;
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.brp.mapper.AttnMapper" >
-    <resultMap id="BaseResultMap" type="com.brp.mapper.AttnMapper">
+    <resultMap id="BaseResultMap" type="com.brp.entity.AttnEntity">
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="createUser" property="createUser" jdbcType="VARCHAR" />
         <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
@@ -98,7 +98,7 @@
     <select id="getAttnById" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />
-        from Attn
+        from attn
         where
         id=#{id} and isDelete=0
     </select>
