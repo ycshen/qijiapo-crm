@@ -31,6 +31,8 @@
     <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
     <result column="companyId" property="companyId" jdbcType="VARCHAR" />
     <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    <result column="salesOpportunityName" property="salesOpportunityName" jdbcType="VARCHAR" />
+    <result column="oppoSource" property="oppoSource" jdbcType="INTEGER" />
   </resultMap> 
      
   <sql id="Base_Column_List" >
@@ -38,7 +40,8 @@
    	  postcode,provinceId,provinceName,cityId,cityName,
    	  areaId,areaName,facsimile,weibo,remark,isDelete,
    	  createUserId,updateUserId,userId,userName,departmentId,
-   	  departmentName,companyId,companyName
+   	  departmentName,companyId,companyName,salesOpportunityName,
+   	  oppoSource
   </sql>
   <insert id="insertSalesOpportunity" parameterType="com.brp.entity.SalesOpportunityEntity" useGeneratedKeys="true" keyProperty="id">
     insert sales_opportunity
@@ -46,14 +49,15 @@
    	  postcode,provinceId,provinceName,cityId,cityName,
    	  areaId,areaName,facsimile,weibo,remark,isDelete,
    	  createUserId,updateUserId,userId,userName,departmentId,
-   	  departmentName,companyId,companyName
+   	  departmentName,companyId,companyName,salesOpportunityName,oppoSource
    		 ) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
     	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
     	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
     	#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},
-    	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR}
+    	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{salesOpportunityName,jdbcType=VARCHAR},
+    	#{oppoSource,jdbcType=INTEGER}
     	)
   </insert>
    <select id="getSalesOpportunityPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.SalesOpportunityQuery" >
