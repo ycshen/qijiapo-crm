@@ -33,6 +33,22 @@
     <result column="companyName" property="companyName" jdbcType="VARCHAR" />
     <result column="salesOpportunityName" property="salesOpportunityName" jdbcType="VARCHAR" />
     <result column="oppoSource" property="oppoSource" jdbcType="INTEGER" />
+    
+    <result column="customerId" property="customerId" jdbcType="VARCHAR" />
+    <result column="customerName" property="customerName" jdbcType="VARCHAR" />
+    <result column="oppotunityType" property="oppotunityType" jdbcType="INTEGER" />
+    <result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />
+    <result column="endOppoTime" property="endOppoTime" jdbcType="TIMESTAMP" />
+    
+    <result column="saleStage" property="saleStage" jdbcType="INTEGER" />
+    <result column="winRate" property="winRate" jdbcType="VARCHAR" />
+    <result column="stageUpdateTime" property="stageUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="marketActivityId" property="marketActivityId" jdbcType="VARCHAR" />
+    <result column="lockStatus" property="lockStatus" jdbcType="INTEGER" />
+    
+    <result column="failStage" property="failStage" jdbcType="INTEGER" />
+    <result column="failOrderReason" property="failOrderReason" jdbcType="INTEGER" />
+    <result column="failDesc" property="failDesc" jdbcType="VARCHAR" />
   </resultMap> 
      
   <sql id="Base_Column_List" >

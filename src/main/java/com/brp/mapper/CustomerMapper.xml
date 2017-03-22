@@ -8,24 +8,182 @@
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
     
-    <result column="customerName" property="customerName" jdbcType="VARCHAR" />
+    <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+    <result column="provinceId" property="provinceId" jdbcType="VARCHAR" />
+    <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+    <result column="cityId" property="cityId" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    
+    <result column="areaId" property="areaId" jdbcType="VARCHAR" />
+    <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+    <result column="facsimile" property="facsimile" jdbcType="VARCHAR" />
+    <result column="weibo" property="weibo" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+    
+    
     <result column="createUserId" property="createUserId" jdbcType="VARCHAR" />
     <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR" />
-    <result column="customerLevel" property="customerLevel" jdbcType="INTEGER" />
-    <result column="trade" property="trade" jdbcType="INTEGER" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
+    
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+    <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    
+    
+    <result column="customerName" property="customerName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="parentCustomerId" property="parentCustomerId" jdbcType="VARCHAR" />
+    
+    <result column="industry" property="industry" jdbcType="INTEGER" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="totalStaff" property="totalStaff" jdbcType="INTEGER" />
+    <result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />
+    <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
   </resultMap> 
      
   <sql id="Base_Column_List" >
 	  id,createUser,updateUser,createTime, updateTime,
-   	  customerName,createUserId,updateUserId,customerLevel,trade
+   	  postcode,provinceId,provinceName,cityId,cityName,
+   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+   	  createUserId,updateUserId,userId,userName,departmentId,
+   	  departmentName,companyId,customerName,address,
+   	  mobile,level,parentCustomerId,industry,
+   	  website,totalStaff,saleMoney,isDelete
+   	  
   </sql>
-  <insert id="insertCustomer" parameterType="com.brp.entity.CustomerEntity" >
+  <insert id="insertCustomer" parameterType="com.brp.entity.CustomerEntity" useGeneratedKeys="true" keyProperty="id">
     insert customer
    		(createUser,updateUser,createTime, updateTime,
-   		 customerName,createUserId,updateUserId,customerLevel,trade) 
+	   	  postcode,provinceId,provinceName,cityId,cityName,
+	   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+	   	  createUserId,updateUserId,userId,userName,departmentId,
+	   	  departmentName,companyId,customerName,address,
+	   	  mobile,level,parentCustomerId,industry,
+	   	  website,totalStaff,saleMoney,isDelete
+   		 ) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
-    	#{customerName,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{customerLevel,jdbcType=INTEGER},#{trade,jdbcType=INTEGER})
+    	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
+    	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+    	#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},
+    	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{salesOpportunityName,jdbcType=VARCHAR},
+    	#{oppoSource,jdbcType=INTEGER}
+    	)
   </insert>
-  
+   <select id="getCustomerPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.CustomerQuery" >
+         select 
+         <include refid="Base_Column_List" />
+         from customer
+         where isDelete = 0
+         <trim prefix=" " suffix="" suffixOverrides="" >
+		     
+		      
+		      <if test="roleType == 1">
+		      	and companyId = #{companyId}
+		      </if>
+		      <if test="roleType == 2">
+		      	and departmentId in (${departmentId})
+		      </if>
+		      <if test="roleType == 3">
+		      	and userId = #{userId}
+		      </if>
+		 </trim>
+		 
+         order by createTime desc
+    </select>
+    
+    <select id="getCustomerById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+         select 
+         <include refid="Base_Column_List" />
+         from customer
+         where 
+         id=#{id} and isDelete=0 
+    </select>
+  	<update id="deleteCustomerById"  parameterType="java.lang.String" >
+         update customer set isDelete=1 where id=#{id} limit 1;
+    </update>
+    <update id="batchDeleteCustomer"  parameterType="java.lang.String">
+         update customer set isDelete=1 where id in (${inId});
+    </update>
+    <update id="updateCustomer" parameterType="com.brp.entity.CustomerEntity">
+    	update customer set 
+    	<if test="createUser != null">
+    		createUser = #{createUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="createUser != null">
+    		createUser = #{createUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="updateUser != null">
+    		updateUser = #{updateUser, jdbcType=VARCHAR},
+    	</if>
+    	<if test="createTime != null">
+    		createTime = #{createTime, jdbcType=TIMESTAMP},
+    	</if>
+    	<if test="updateTime != null">
+    		updateTime = #{updateTime, jdbcType=TIMESTAMP},
+    	</if>
+    	
+    	<if test="postcode != null">
+    		postcode = #{postcode, jdbcType=VARCHAR},
+    	</if>
+    	<if test="provinceId != null">
+    		provinceId = #{provinceId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="provinceName != null">
+    		provinceName = #{provinceName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="cityId != null">
+    		cityId = #{cityId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="cityName != null">
+    		cityName = #{cityName, jdbcType=VARCHAR},
+    	</if>
+    	
+    	<if test="areaId != null">
+    		areaId = #{areaId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="areaName != null">
+    		areaName = #{areaName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="facsimile != null">
+    		facsimile = #{facsimile, jdbcType=VARCHAR},
+    	</if>
+    	<if test="weibo != null">
+    		weibo = #{weibo, jdbcType=VARCHAR},
+    	</if>
+    	<if test="remark != null">
+    		remark = #{remark, jdbcType=VARCHAR},
+    	</if>
+    	<if test="isDelete != null">
+    		isDelete = #{isDelete, jdbcType=INTEGER},
+    	</if>
+    	<if test="departmentId != null">
+    		departmentId = #{departmentId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="departmentName != null">
+    		departmentName = #{departmentName, jdbcType=VARCHAR},
+    	</if>
+    	
+    	
+    	<if test="userId != null">
+    		userId = #{userId, jdbcType=VARCHAR},
+    	</if>
+    	
+    	<if test="userName != null">
+    		userName = #{userName, jdbcType=VARCHAR},
+    	</if>
+    	<if test="companyId != null">
+    		companyId = #{companyId, jdbcType=VARCHAR},
+    	</if>
+    	<if test="companyName != null">
+    		companyName = #{companyName, jdbcType=VARCHAR},
+    	</if>
+    	id = #{id}
+    	where id = #{id} limit 1
+    </update>
 </mapper>

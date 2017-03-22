@@ -12,47 +12,26 @@ import java.sql.Date;
  */
 public class CustomerEntity extends BaseEntity{
 	private String customerName; //客户名称
-	private String createUserId;
-	private String updateUserId;
-	private Integer customerLevel; //客户级别
-	private Integer trade; //行业
-	private String mobile; //联系电话
-	private String companyWebSite; //公司网址
-	private String superCustomer; //上级
-	private String detailAddress; //详细地址
-	private String saleMoney; //销售额
-	private Date lastActivityRecordTime;//最近活动记录时间
-	private Integer lockStatus; //锁定状态
-	private String beyondDepartmentId; //所属部门
+	private String address; //详细地址
+	private String mobile; //电话
+	private Integer level;// 客户级别
+	private String parentCustomerId;//上级客户
+	private Integer industry;  //行业
+	private String website; //公司网址
+	private Integer totalStaff; //总人数
+	private String saleMoney;  //销售额
+	private Integer isDelete; //是否删除
 	public String getCustomerName() {
 		return customerName;
 	}
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public String getCreateUserId() {
-		return createUserId;
+	public String getAddress() {
+		return address;
 	}
-	public void setCreateUserId(String createUserId) {
-		this.createUserId = createUserId;
-	}
-	public String getUpdateUserId() {
-		return updateUserId;
-	}
-	public void setUpdateUserId(String updateUserId) {
-		this.updateUserId = updateUserId;
-	}
-	public Integer getCustomerLevel() {
-		return customerLevel;
-	}
-	public void setCustomerLevel(Integer customerLevel) {
-		this.customerLevel = customerLevel;
-	}
-	public Integer getTrade() {
-		return trade;
-	}
-	public void setTrade(Integer trade) {
-		this.trade = trade;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getMobile() {
 		return mobile;
@@ -60,23 +39,35 @@ public class CustomerEntity extends BaseEntity{
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-	public String getCompanyWebSite() {
-		return companyWebSite;
+	public Integer getLevel() {
+		return level;
 	}
-	public void setCompanyWebSite(String companyWebSite) {
-		this.companyWebSite = companyWebSite;
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
-	public String getSuperCustomer() {
-		return superCustomer;
+	public String getParentCustomerId() {
+		return parentCustomerId;
 	}
-	public void setSuperCustomer(String superCustomer) {
-		this.superCustomer = superCustomer;
+	public void setParentCustomerId(String parentCustomerId) {
+		this.parentCustomerId = parentCustomerId;
 	}
-	public String getDetailAddress() {
-		return detailAddress;
+	public Integer getIndustry() {
+		return industry;
 	}
-	public void setDetailAddress(String detailAddress) {
-		this.detailAddress = detailAddress;
+	public void setIndustry(Integer industry) {
+		this.industry = industry;
+	}
+	public String getWebsite() {
+		return website;
+	}
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+	public Integer getTotalStaff() {
+		return totalStaff;
+	}
+	public void setTotalStaff(Integer totalStaff) {
+		this.totalStaff = totalStaff;
 	}
 	public String getSaleMoney() {
 		return saleMoney;
@@ -84,24 +75,11 @@ public class CustomerEntity extends BaseEntity{
 	public void setSaleMoney(String saleMoney) {
 		this.saleMoney = saleMoney;
 	}
-	public Date getLastActivityRecordTime() {
-		return lastActivityRecordTime;
+	public Integer getIsDelete() {
+		return isDelete;
 	}
-	public void setLastActivityRecordTime(Date lastActivityRecordTime) {
-		this.lastActivityRecordTime = lastActivityRecordTime;
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
 	}
-	public Integer getLockStatus() {
-		return lockStatus;
-	}
-	public void setLockStatus(Integer lockStatus) {
-		this.lockStatus = lockStatus;
-	}
-	public String getBeyondDepartmentId() {
-		return beyondDepartmentId;
-	}
-	public void setBeyondDepartmentId(String beyondDepartmentId) {
-		this.beyondDepartmentId = beyondDepartmentId;
-	}
-	
 }
 
