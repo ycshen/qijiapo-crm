@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.ActivityMapper" >
+    <resultMap id="BaseResultMap" type="com.brp.entity.ActivityEntity">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+        <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+
+        <result column="postcode" property="postcode" jdbcType="VARCHAR" />
+        <result column="provinceId" property="provinceId" jdbcType="VARCHAR" />
+        <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+        <result column="cityId" property="cityId" jdbcType="VARCHAR" />
+        <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+
+        <result column="areaId" property="areaId" jdbcType="VARCHAR" />
+        <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+        <result column="facsimile" property="facsimile" jdbcType="VARCHAR" />
+        <result column="weibo" property="weibo" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+        <result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+        <result column="userId" property="userId" jdbcType="VARCHAR" />
+
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+        <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+
+        <result column="activityType" property="activityType" jdbcType="INTEGER" />
+        <result column="activityStatus" property="activityStatus" jdbcType="INTEGER" />
+        <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="endTime" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="invitationPopulation" property="invitationPopulation" jdbcType="INTEGER" />
+
+        <result column="realNum" property="realNum" jdbcType="INTEGER" />
+        <result column="businessType" property="businessType" jdbcType="INTEGER" />
+        <result column="activityNote" property="activityNote" jdbcType="INTEGER" />
+        <result column="activityCost" property="activityCost" jdbcType="DOUBLE" />
+        <result column="expectedIncome" property="expectedIncome" jdbcType="DOUBLE" />
+        <result column="recordTime" property="recordTime" jdbcType="TIMESTAMP" />
+        <result column="expectedNum" property="expectedNum" jdbcType="INTEGER" />
+        <result column="realActivityCost" property="realActivityCost" jdbcType="DOUBLE" />
+        <result column="realIncome" property="realIncome" jdbcType="DOUBLE" />
+        <result column="activityName" property="activityName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id,createUser,updateUser,createTime, updateTime,
+        postcode,provinceId,provinceName,cityId,cityName,
+        areaId,areaName,facsimile,weibo,remark,isDelete,
+        departmentId,departmentName,userId,
+        userName,companyId,companyName,activityType,activityStatus,
+        startTime,endTime,invitationPopulation,realNum,businessType,
+    activityNote,activityCost,expectedIncome,recordTime,expectedNum,realActivityCost,realIncome,activityName
+    </sql>
+    <insert id="insertActivity" parameterType="com.brp.entity.ActivityEntity" useGeneratedKeys="true" keyProperty="id">
+        insert activity
+        (createUser,updateUser,createTime, updateTime,
+        postcode,provinceId,provinceName,cityId,cityName,
+        areaId,areaName,facsimile,weibo,remark,isDelete,
+        departmentId,departmentName,userId,
+        userName,companyId,companyName,
+        activityType,activityStatus,
+        startTime,endTime,invitationPopulation,realNum,businessType,
+        activityNote,activityCost,expectedIncome,recordTime,
+        expectedNum,realActivityCost,realIncome,activityName
+        )
+        values
+        ( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+        #{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
+        #{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+        #{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},
+        #{activityType,jdbcType=INTEGER},#{activityStatus,jdbcType=INTEGER},
+        #{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{invitationPopulation,jdbcType=INTEGER},#{realNum,jdbcType=INTEGER},#{businessType,jdbcType=INTEGER},
+        #{activityNote,jdbcType=VARCHAR},#{activityCost,jdbcType=DOUBLE},#{expectedIncome,jdbcType=DOUBLE},#{recordTime,jdbcType=TIMESTAMP},
+        #{expectedNum,jdbcType=INTEGER},#{realActivityCost,jdbcType=DOUBLE},#{realIncome,jdbcType=DOUBLE},#{activityName,jdbcType=VARCHAR}
+        )
+    </insert>
+    <select id="getActivityPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ActivityQuery" >
+        select
+        <include refid="Base_Column_List" />
+        from attn
+        where isDelete = 0
+        <trim prefix=" " suffix="" suffixOverrides="" >
+            <!--<if test="areaId != null and areaId != ''" >-->
+                <!--and areaId =  #{areaId}-->
+            <!--</if>-->
+            <!--<if test="cityId != null and cityId != ''" >-->
+                <!--and cityId =  #{cityId}-->
+            <!--</if>-->
+            <!--<if test="provinceId != null and provinceId != ''" >-->
+                <!--and provinceId =  #{provinceId}-->
+            <!--</if>-->
+            <!--<if test="attnName != '' and attnName != null" >-->
+                <!--and attnName like '%${attnName}%'-->
+            <!--</if>-->
+            <if test="roleType == 1">
+                and companyId = #{companyId}
+            </if>
+            <if test="roleType == 2">
+                and departmentId in (${departmentId})
+            </if>
+            <if test="roleType == 3">
+                and userId = #{userId}
+            </if>
+        </trim>
+
+        order by createTime desc
+    </select>
+    <select id="getActivityById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from attn
+        where
+        id=#{id} and isDelete=0
+    </select>
+    <update id="deleteActivityById"  parameterType="java.lang.String" >
+        update attn set isDelete=1 where id=#{id} limit 1;
+    </update>
+    <update id="batchDeleteActivity"  parameterType="java.lang.String">
+        update attn set isDelete=1 where id in (${inId});
+    </update>
+    <update id="updateActivity" parameterType="com.brp.entity.ActivityEntity">
+        update attn set
+        <if test="createUser != null">
+            createUser = #{createUser, jdbcType=VARCHAR},
+        </if>
+        <if test="updateUser != null">
+            updateUser = #{updateUser, jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null">
+            createTime = #{createTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            updateTime = #{updateTime, jdbcType=TIMESTAMP},
+        </if>
+
+        <if test="postcode != null">
+            postcode = #{postcode, jdbcType=VARCHAR},
+        </if>
+        <if test="provinceId != null">
+            provinceId = #{provinceId, jdbcType=VARCHAR},
+        </if>
+        <if test="provinceName != null">
+            provinceName = #{provinceName, jdbcType=VARCHAR},
+        </if>
+        <if test="cityId != null">
+            cityId = #{cityId, jdbcType=VARCHAR},
+        </if>
+        <if test="cityName != null">
+            cityName = #{cityName, jdbcType=VARCHAR},
+        </if>
+
+        <if test="areaId != null">
+            areaId = #{areaId, jdbcType=VARCHAR},
+        </if>
+        <if test="areaName != null">
+            areaName = #{areaName, jdbcType=VARCHAR},
+        </if>
+        <if test="facsimile != null">
+            facsimile = #{facsimile, jdbcType=VARCHAR},
+        </if>
+        <if test="weibo != null">
+            weibo = #{weibo, jdbcType=VARCHAR},
+        </if>
+        <if test="remark != null">
+            remark = #{remark, jdbcType=VARCHAR},
+        </if>
+        <if test="isDelete != null">
+            isDelete = #{isDelete, jdbcType=INTEGER},
+        </if>
+        <if test="departmentId != null">
+            departmentId = #{departmentId, jdbcType=VARCHAR},
+        </if>
+        <if test="departmentName != null">
+            departmentName = #{departmentName, jdbcType=VARCHAR},
+        </if>
+        <if test="email != null">
+            mobile = #{mobile, jdbcType=VARCHAR},
+        </if>
+        <if test="userId != null">
+            userId = #{userId, jdbcType=VARCHAR},
+        </if>
+        <if test="userName != null">
+            userName = #{userName, jdbcType=VARCHAR},
+        </if>
+        <if test="companyId != null">
+            companyId = #{companyId, jdbcType=VARCHAR},
+        </if>
+        <if test="companyName != null">
+            companyName = #{companyName, jdbcType=VARCHAR},
+        </if>
+
+
+        <if test="activityType != null">
+            activityType = #{activityType, jdbcType=INTEGER},
+        </if>
+        <if test="activityStatus != null">
+            activityStatus = #{activityStatus, jdbcType=INTEGER},
+        </if>
+        <if test="startTime != null">
+            startTime = #{startTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="endTime != null">
+            staffNum = #{staffNum, jdbcType=TIMESTAMP},
+        </if>
+        <if test="invitationPopulation != null">
+            invitationPopulation = #{invitationPopulation, jdbcType=INTEGER},
+        </if>
+        <if test="realNum != null">
+            realNum = #{realNum, jdbcType=INTEGER},
+        </if>
+        <if test="businessType != null">
+            businessType = #{businessType, jdbcType=INTEGER},
+        </if>
+        <if test="activityNote != null">
+            activityNote = #{activityNote, jdbcType=INTEGER},
+        </if>
+
+
+        <if test="activityCost != null">
+            activityCost = #{activityCost, jdbcType=DOUBLE},
+        </if>
+        <if test="expectedIncome != null">
+            expectedIncome = #{expectedIncome, jdbcType=DOUBLE},
+        </if>
+        <if test="recordTime != null">
+            recordTime = #{recordTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="expectedNum != null">
+            expectedNum = #{expectedNum, jdbcType=INTEGER},
+        </if>
+        <if test="realActivityCost != null">
+            realActivityCost = #{realActivityCost, jdbcType=DOUBLE},
+        </if>
+        <if test="realIncome != null">
+            realIncome = #{realIncome, jdbcType=DOUBLE},
+        </if>
+        <if test="activityName != null">
+            activityName = #{activityName, jdbcType=VARCHAR},
+        </if>
+        id = #{id}
+        where id = #{id} limit 1
+    </update>
+</mapper>
