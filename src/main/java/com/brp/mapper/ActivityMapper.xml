@@ -30,14 +30,14 @@
         <result column="companyName" property="companyName" jdbcType="VARCHAR" />
 
         <result column="activityType" property="activityType" jdbcType="INTEGER" />
-        <result column="activityStatus" property="activityStatus" jdbcType="INTEGER" />
-        <result column="startTime" property="startTime" jdbcType="TIMESTAMP" />
-        <result column="endTime" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="activityState" property="activityState" jdbcType="INTEGER" />
+        <result column="activityStartTime" property="activityStartTime" jdbcType="TIMESTAMP" />
+        <result column="activityEndTime" property="activityEndTime" jdbcType="TIMESTAMP" />
         <result column="invitationPopulation" property="invitationPopulation" jdbcType="INTEGER" />
 
         <result column="realNum" property="realNum" jdbcType="INTEGER" />
         <result column="businessType" property="businessType" jdbcType="INTEGER" />
-        <result column="activityNote" property="activityNote" jdbcType="INTEGER" />
+        <result column="activityNote" property="activityNote" jdbcType="VARCHAR" />
         <result column="activityCost" property="activityCost" jdbcType="DOUBLE" />
         <result column="expectedIncome" property="expectedIncome" jdbcType="DOUBLE" />
         <result column="recordTime" property="recordTime" jdbcType="TIMESTAMP" />
@@ -52,8 +52,8 @@
         postcode,provinceId,provinceName,cityId,cityName,
         areaId,areaName,facsimile,weibo,remark,isDelete,
         departmentId,departmentName,userId,
-        userName,companyId,companyName,activityType,activityStatus,
-        startTime,endTime,invitationPopulation,realNum,businessType,
+        userName,companyId,companyName,activityType,activityState,
+        activityStartTime,activityEndTime,invitationPopulation,realNum,businessType,
     activityNote,activityCost,expectedIncome,recordTime,expectedNum,realActivityCost,realIncome,activityName
     </sql>
     <insert id="insertActivity" parameterType="com.brp.entity.ActivityEntity" useGeneratedKeys="true" keyProperty="id">
@@ -63,8 +63,8 @@
         areaId,areaName,facsimile,weibo,remark,isDelete,
         departmentId,departmentName,userId,
         userName,companyId,companyName,
-        activityType,activityStatus,
-        startTime,endTime,invitationPopulation,realNum,businessType,
+        activityType,activityState,
+        activityStartTime,activityEndTime,invitationPopulation,realNum,businessType,
         activityNote,activityCost,expectedIncome,recordTime,
         expectedNum,realActivityCost,realIncome,activityName
         )
@@ -74,8 +74,8 @@
         #{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
         #{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
         #{userName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},
-        #{activityType,jdbcType=INTEGER},#{activityStatus,jdbcType=INTEGER},
-        #{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{invitationPopulation,jdbcType=INTEGER},#{realNum,jdbcType=INTEGER},#{businessType,jdbcType=INTEGER},
+        #{activityType,jdbcType=INTEGER},#{activityState,jdbcType=INTEGER},
+        #{activityStartTime,jdbcType=TIMESTAMP},#{activityEndTime,jdbcType=TIMESTAMP},#{invitationPopulation,jdbcType=INTEGER},#{realNum,jdbcType=INTEGER},#{businessType,jdbcType=INTEGER},
         #{activityNote,jdbcType=VARCHAR},#{activityCost,jdbcType=DOUBLE},#{expectedIncome,jdbcType=DOUBLE},#{recordTime,jdbcType=TIMESTAMP},
         #{expectedNum,jdbcType=INTEGER},#{realActivityCost,jdbcType=DOUBLE},#{realIncome,jdbcType=DOUBLE},#{activityName,jdbcType=VARCHAR}
         )
@@ -199,13 +199,13 @@
         <if test="activityType != null">
             activityType = #{activityType, jdbcType=INTEGER},
         </if>
-        <if test="activityStatus != null">
-            activityStatus = #{activityStatus, jdbcType=INTEGER},
+        <if test="activityState != null">
+            activityState = #{activityState, jdbcType=INTEGER},
         </if>
-        <if test="startTime != null">
-            startTime = #{startTime, jdbcType=TIMESTAMP},
+        <if test="activityStartTime != null">
+            activityStartTime = #{activityStartTime, jdbcType=TIMESTAMP},
         </if>
-        <if test="endTime != null">
+        <if test="activityEndTime != null">
             staffNum = #{staffNum, jdbcType=TIMESTAMP},
         </if>
         <if test="invitationPopulation != null">
@@ -218,7 +218,7 @@
             businessType = #{businessType, jdbcType=INTEGER},
         </if>
         <if test="activityNote != null">
-            activityNote = #{activityNote, jdbcType=INTEGER},
+            activityNote = #{activityNote, jdbcType=VARCHAR},
         </if>
 
 

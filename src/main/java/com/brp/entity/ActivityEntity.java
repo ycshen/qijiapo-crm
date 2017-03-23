@@ -9,17 +9,18 @@ import java.util.Date;
  */
 public class ActivityEntity extends BaseEntity{
     private int activityType;//活动类型
-    private int activityStatus;//活动状态
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date startTime;//开始时间
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date endTime;//结束时间
+    private int activityState;//活动状态
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date activityStartTime;//开始时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date activityEndTime;//结束时间
     private int invitationPopulation;//邀请人数
     private int realNum;//时间人数
     private int businessType;//业务类型
-    private int activityNote;//业务说明
+    private String activityNote;//业务说明
     private double activityCost;//活动成本
     private double expectedIncome;//预计收入
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date recordTime;//活动最新记录时间
     private int expectedNum;//预计响应
     private double realActivityCost;//实际成本
@@ -42,28 +43,28 @@ public class ActivityEntity extends BaseEntity{
         this.activityType = activityType;
     }
 
-    public int getActivityStatus() {
-        return activityStatus;
+    public int getActivityState() {
+        return activityState;
     }
 
-    public void setActivityStatus(int activityStatus) {
-        this.activityStatus = activityStatus;
+    public void setActivityState(int activityState) {
+        this.activityState = activityState;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getActivityStartTime() {
+        return activityStartTime;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setActivityStartTime(Date activityStartTime) {
+        this.activityStartTime = activityStartTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getActivityEndTime() {
+        return activityEndTime;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setActivityEndTime(Date activityEndTime) {
+        this.activityEndTime = activityEndTime;
     }
 
     public int getInvitationPopulation() {
@@ -90,11 +91,11 @@ public class ActivityEntity extends BaseEntity{
         this.businessType = businessType;
     }
 
-    public int getActivityNote() {
+    public String getActivityNote() {
         return activityNote;
     }
 
-    public void setActivityNote(int activityNote) {
+    public void setActivityNote(String activityNote) {
         this.activityNote = activityNote;
     }
 
