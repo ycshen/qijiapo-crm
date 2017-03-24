@@ -83,7 +83,7 @@
     <select id="getActivityPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ActivityQuery" >
         select
         <include refid="Base_Column_List" />
-        from attn
+        from activity
         where isDelete = 0
         <trim prefix=" " suffix="" suffixOverrides="" >
             <!--<if test="areaId != null and areaId != ''" >-->
@@ -95,9 +95,9 @@
             <!--<if test="provinceId != null and provinceId != ''" >-->
                 <!--and provinceId =  #{provinceId}-->
             <!--</if>-->
-            <!--<if test="attnName != '' and attnName != null" >-->
-                <!--and attnName like '%${attnName}%'-->
-            <!--</if>-->
+            <if test="activityName != '' and activityName != null" >
+                and activityName like '%${activityName}%'
+            </if>
             <if test="roleType == 1">
                 and companyId = #{companyId}
             </if>
@@ -114,18 +114,18 @@
     <select id="getActivityById" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />
-        from attn
+        from activity
         where
         id=#{id} and isDelete=0
     </select>
     <update id="deleteActivityById"  parameterType="java.lang.String" >
-        update attn set isDelete=1 where id=#{id} limit 1;
+        update activity set isDelete=1 where id=#{id} limit 1;
     </update>
     <update id="batchDeleteActivity"  parameterType="java.lang.String">
-        update attn set isDelete=1 where id in (${inId});
+        update activity set isDelete=1 where id in (${inId});
     </update>
     <update id="updateActivity" parameterType="com.brp.entity.ActivityEntity">
-        update attn set
+        update activity set
         <if test="createUser != null">
             createUser = #{createUser, jdbcType=VARCHAR},
         </if>

@@ -8,4 +8,21 @@ import com.brp.model.pageutil.Page;
  */
 public class ActivityQuery extends Page<ActivityEntity> {
     private Long id;
+    private String activityName;
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
