@@ -43,13 +43,12 @@
     <result column="website" property="website" jdbcType="VARCHAR" />
     <result column="totalStaff" property="totalStaff" jdbcType="INTEGER" />
     <result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />
-    <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
   </resultMap> 
      
   <sql id="Base_Column_List" >
 	  id,createUser,updateUser,createTime, updateTime,
    	  postcode,provinceId,provinceName,cityId,cityName,
-   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+   	  areaId,areaName,facsimile,weibo,remark,
    	  createUserId,updateUserId,userId,userName,departmentId,
    	  departmentName,companyId,customerName,address,
    	  mobile,level,parentCustomerId,industry,
@@ -60,7 +59,7 @@
     insert customer
    		(createUser,updateUser,createTime, updateTime,
 	   	  postcode,provinceId,provinceName,cityId,cityName,
-	   	  areaId,areaName,facsimile,weibo,remark,isDelete,
+	   	  areaId,areaName,facsimile,weibo,remark,
 	   	  createUserId,updateUserId,userId,userName,departmentId,
 	   	  departmentName,companyId,customerName,address,
 	   	  mobile,level,parentCustomerId,industry,
@@ -69,10 +68,11 @@
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
     	#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
-    	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+    	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},
     	#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},
-    	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{salesOpportunityName,jdbcType=VARCHAR},
-    	#{oppoSource,jdbcType=INTEGER}
+    	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{customerName,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},
+    	#{mobile,jdbcType=VARCHAR},#{level,jdbcType=INTEGER},#{parentCustomerId,jdbcType=VARCHAR},#{industry,jdbcType=INTEGER},
+    	#{website,jdbcType=VARCHAR},#{totalStaff,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER}
     	)
   </insert>
    <select id="getCustomerPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.CustomerQuery" >
