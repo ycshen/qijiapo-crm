@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.ContractMapper" >
+	<resultMap id="BaseResultMap" type="com.brp.entity.ContractEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="createUser" property="createUser" jdbcType="VARCHAR" />
+		<result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+
+		<result column="postcode" property="postcode" jdbcType="VARCHAR" />
+		<result column="provinceId" property="provinceId" jdbcType="VARCHAR" />
+		<result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+		<result column="cityId" property="cityId" jdbcType="VARCHAR" />
+		<result column="cityName" property="cityName" jdbcType="VARCHAR" />
+
+		<result column="areaId" property="areaId" jdbcType="VARCHAR" />
+		<result column="areaName" property="areaName" jdbcType="VARCHAR" />
+		<!--<result column="facsimile" property="facsimile" jdbcType="VARCHAR" />-->
+		<!--<result column="weibo" property="weibo" jdbcType="VARCHAR" />-->
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+		<result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
+		<result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+		<result column="userId" property="userId" jdbcType="VARCHAR" />
+
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="companyId" property="companyId" jdbcType="VARCHAR" />
+		<result column="companyName" property="companyName" jdbcType="VARCHAR" />
+
+		<result column="contractType" property="contractType" jdbcType="INTEGER" />
+		<result column="contractName" property="contractName" jdbcType="VARCHAR" />
+		<result column="contractStartTime" property="contractStartTime" jdbcType="TIMESTAMP" />
+		<result column="contractEndTime" property="contractEndTime" jdbcType="TIMESTAMP" />
+
+		<result column="totalPrice" property="totalPrice" jdbcType="DOUBLE" />
+		<result column="contractState" property="contractState" jdbcType="INTEGER" />
+		<result column="paymentMethod" property="paymentMethod" jdbcType="INTEGER" />
+		<result column="contractBody" property="contractBody" jdbcType="VARCHAR" />
+		<result column="contractNum" property="contractNum" jdbcType="VARCHAR" />
+		<result column="customerSigner" property="customerSigner" jdbcType="VARCHAR" />
+		<!--<result column="signerId" property="signerId" jdbcType="DOUBLE" />-->
+		<result column="signTime" property="signTime" jdbcType="TIMESTAMP" />
+		<result column="businessType" property="businessType" jdbcType="INTEGER" />
+
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		id,createUser,updateUser,createTime, updateTime,
+		postcode,provinceId,provinceName,cityId,cityName,
+		areaId,areaName,remark,isDelete,
+		departmentId,departmentName,userId,
+		userName,companyId,companyName,contractType,contractName,
+		contractStartTime,contractEndTime,totalPrice,contractState,paymentMethod,
+		contractBody,contractNum,customerSigner,signTime,businessType
+	</sql>
+	<insert id="insertContract" parameterType="com.brp.entity.ContractEntity" useGeneratedKeys="true" keyProperty="id">
+		insert contract
+		(createUser,updateUser,createTime, updateTime,
+		postcode,provinceId,provinceName,cityId,cityName,
+		areaId,areaName,remark,isDelete,
+		departmentId,departmentName,userId,
+		userName,companyId,companyName,
+		contractType,contractName,
+		contractStartTime,contractEndTime,totalPrice,contractState,paymentMethod,
+		contractBody,contractNum,customerSigner,
+		signTime,businessType
+		)
+		values
+		( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+		#{postcode,jdbcType=VARCHAR},#{provinceId,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR},#{cityId,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},
+		#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+		#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},
+		#{contractType,jdbcType=INTEGER},#{contractName,jdbcType=VARCHAR},
+		#{contractStartTime,jdbcType=TIMESTAMP},#{contractEndTime,jdbcType=TIMESTAMP},#{totalPrice,jdbcType=DOUBLE},#{contractState,jdbcType=INTEGER},#{paymentMethod,jdbcType=INTEGER},
+		#{contractBody,jdbcType=VARCHAR},#{contractNum,jdbcType=VARCHAR},#{customerSigner,jdbcType=VARCHAR},
+		#{signTime,jdbcType=TIMESTAMP},#{businessType,jdbcType=INTEGER}
+		)
+	</insert>
+	<select id="getContractPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ContractQuery" >
+		select
+		<include refid="Base_Column_List" />
+		from contract
+		where isDelete = 0
+		<trim prefix=" " suffix="" suffixOverrides="" >
+			<!--<if test="areaId != null and areaId != ''" >-->
+			<!--and areaId =  #{areaId}-->
+			<!--</if>-->
+			<!--<if test="cityId != null and cityId != ''" >-->
+			<!--and cityId =  #{cityId}-->
+			<!--</if>-->
+			<!--<if test="provinceId != null and provinceId != ''" >-->
+			<!--and provinceId =  #{provinceId}-->
+			<!--</if>-->
+			<if test="contractName != '' and contractName != null" >
+				and contractName like '%${contractName}%'
+			</if>
+			<if test="roleType == 1">
+				and companyId = #{companyId}
+			</if>
+			<if test="roleType == 2">
+				and departmentId in (${departmentId})
+			</if>
+			<if test="roleType == 3">
+				and userId = #{userId}
+			</if>
+		</trim>
+
+		order by createTime desc
+	</select>
+	<select id="getContractById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select
+		<include refid="Base_Column_List" />
+		from contract
+		where
+		id=#{id} and isDelete=0
+	</select>
+	<update id="deleteContractById"  parameterType="java.lang.String" >
+		update contract set isDelete=1 where id=#{id} limit 1;
+	</update>
+	<update id="batchDeleteContract"  parameterType="java.lang.String">
+		update contract set isDelete=1 where id in (${inId});
+	</update>
+	<update id="updateContract" parameterType="com.brp.entity.ContractEntity">
+		update contract set
+		<if test="createUser != null">
+			createUser = #{createUser, jdbcType=VARCHAR},
+		</if>
+		<if test="updateUser != null">
+			updateUser = #{updateUser, jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null">
+			createTime = #{createTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="updateTime != null">
+			updateTime = #{updateTime, jdbcType=TIMESTAMP},
+		</if>
+
+		<if test="postcode != null">
+			postcode = #{postcode, jdbcType=VARCHAR},
+		</if>
+		<if test="provinceId != null">
+			provinceId = #{provinceId, jdbcType=VARCHAR},
+		</if>
+		<if test="provinceName != null">
+			provinceName = #{provinceName, jdbcType=VARCHAR},
+		</if>
+		<if test="cityId != null">
+			cityId = #{cityId, jdbcType=VARCHAR},
+		</if>
+		<if test="cityName != null">
+			cityName = #{cityName, jdbcType=VARCHAR},
+		</if>
+
+		<if test="areaId != null">
+			areaId = #{areaId, jdbcType=VARCHAR},
+		</if>
+		<if test="areaName != null">
+			areaName = #{areaName, jdbcType=VARCHAR},
+		</if>
+
+		<if test="remark != null">
+			remark = #{remark, jdbcType=VARCHAR},
+		</if>
+		<if test="isDelete != null">
+			isDelete = #{isDelete, jdbcType=INTEGER},
+		</if>
+		<if test="departmentId != null">
+			departmentId = #{departmentId, jdbcType=VARCHAR},
+		</if>
+		<if test="departmentName != null">
+			departmentName = #{departmentName, jdbcType=VARCHAR},
+		</if>
+		<if test="email != null">
+			mobile = #{mobile, jdbcType=VARCHAR},
+		</if>
+		<if test="userId != null">
+			userId = #{userId, jdbcType=VARCHAR},
+		</if>
+		<if test="userName != null">
+			userName = #{userName, jdbcType=VARCHAR},
+		</if>
+		<if test="companyId != null">
+			companyId = #{companyId, jdbcType=VARCHAR},
+		</if>
+		<if test="companyName != null">
+			companyName = #{companyName, jdbcType=VARCHAR},
+		</if>
+
+
+		<if test="contractType != null">
+			contractType = #{contractType, jdbcType=INTEGER},
+		</if>
+		<if test="contractState != null">
+			contractState = #{contractState, jdbcType=INTEGER},
+		</if>
+		<if test="contractStartTime != null">
+			contractStartTime = #{contractStartTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="contractEndTime != null">
+			staffNum = #{staffNum, jdbcType=TIMESTAMP},
+		</if>
+		<if test="invitationPopulation != null">
+			invitationPopulation = #{invitationPopulation, jdbcType=INTEGER},
+		</if>
+		<if test="realNum != null">
+			realNum = #{realNum, jdbcType=INTEGER},
+		</if>
+		<if test="businessType != null">
+			businessType = #{businessType, jdbcType=INTEGER},
+		</if>
+		<if test="contractNote != null">
+			contractNote = #{contractNote, jdbcType=VARCHAR},
+		</if>
+
+
+		<if test="contractCost != null">
+			contractCost = #{contractCost, jdbcType=DOUBLE},
+		</if>
+		<if test="expectedIncome != null">
+			expectedIncome = #{expectedIncome, jdbcType=DOUBLE},
+		</if>
+		<if test="recordTime != null">
+			recordTime = #{recordTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="expectedNum != null">
+			expectedNum = #{expectedNum, jdbcType=INTEGER},
+		</if>
+		<if test="realContractCost != null">
+			realContractCost = #{realContractCost, jdbcType=DOUBLE},
+		</if>
+		<if test="realIncome != null">
+			realIncome = #{realIncome, jdbcType=DOUBLE},
+		</if>
+		<if test="contractName != null">
+			contractName = #{contractName, jdbcType=VARCHAR},
+		</if>
+		id = #{id}
+		where id = #{id} limit 1
+	</update>
+</mapper>
