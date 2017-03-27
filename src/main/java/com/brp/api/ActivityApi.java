@@ -85,6 +85,7 @@ public class ActivityApi {
 
         return result;
     }
+
     @RequestMapping(value = "/getActivityPage", method = RequestMethod.POST)
     @ResponseBody
     public String getActivityPage(@RequestBody JSONObject jsonObject){
