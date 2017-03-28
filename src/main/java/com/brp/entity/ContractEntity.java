@@ -13,12 +13,12 @@ public class ContractEntity extends BaseEntity{
     /**
      * 开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractStartTime;
     /**
      * 结束时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date contractEndTime;
     private Double totalPrice;//总金额
     private Integer contractState;//合同状态
