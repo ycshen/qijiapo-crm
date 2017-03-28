@@ -127,6 +127,10 @@ public class CustomerApi {
 					customerQuery.setRoleType(roleTypeStr);
 				}
 				
+				String customerName = customerQuery.getCustomerName();
+				if(StringUtils.isNotBlank(customerName)){
+					customerQuery.setCustomerName("%" + customerName.replaceAll(" ", "") + "%");
+				}
 				Integer page =  customerQuery.getPage();
 				if(page == null){
 					customerQuery.setPage(1);

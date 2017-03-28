@@ -92,6 +92,12 @@
 		      <if test="roleType == 3">
 		      	and userId = #{userId}
 		      </if>
+		      <if test="mobile != null and mobile != ''">
+		      	and mobile = #{mobile}
+		      </if>
+		      <if test="customerName != null and customerName != ''">
+		      	and customerName like '${customerName}'
+		      </if>
 		 </trim>
 		 
          order by createTime desc
