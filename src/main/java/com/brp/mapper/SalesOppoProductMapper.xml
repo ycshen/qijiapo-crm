@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.SalesOppoProductMapper" >
+  <resultMap id="BaseResultMap" type="com.brp.entity.SalesOppoProductEntity" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="salesOppoId" property="salesOppoId" jdbcType="VARCHAR" />
+    <result column="productId" property="productId" jdbcType="VARCHAR" />
+    <result column="saleNum" property="saleNum" jdbcType="INTEGER" />
+    <result column="discount" property="discount" jdbcType="VARCHAR" />
+	  <result column="remark" property="remark" jdbcType="VARCHAR" />
+	  <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	  <result column="userId" property="userId" jdbcType="VARCHAR" />
+	  <result column="userName" property="userName" jdbcType="VARCHAR" />
+	  <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+  </resultMap> 
+     
+  <sql id="Base_Column_List" >
+	  id,salesOppoId,productId,saleNum, discount,
+   	  remark,createTime,userId,userName,isDelete
+  </sql>
+  <insert id="insertSalesOppoProduct" parameterType="com.brp.entity.SalesOppoProductEntity">
+    insert sales_oppo_product
+   		(id,salesOppoId,productId,saleNum, discount,
+   	  	remark,createTime,userId,userName,isDelete
+   		 ) 
+    values
+    	(
+    	#{id,jdbcType=VARCHAR},#{salesOppoId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},#{saleNum,jdbcType=INTEGER},#{discount,jdbcType=VARCHAR},
+    	#{remark,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER}
+    	)
+  </insert>
+</mapper>
