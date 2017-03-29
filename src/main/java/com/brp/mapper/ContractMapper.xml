@@ -43,7 +43,8 @@
 		<!--<result column="signerId" property="signerId" jdbcType="DOUBLE" />-->
 		<result column="signTime" property="signTime" jdbcType="TIMESTAMP" />
 		<result column="businessType" property="businessType" jdbcType="INTEGER" />
-
+		<result column="customerId" property="customerId" jdbcType="VARCHAR" />
+		<result column="customerName" property="customerName" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<sql id="Base_Column_List" >
@@ -53,7 +54,7 @@
 		departmentId,departmentName,userId,
 		userName,companyId,companyName,contractType,contractName,
 		contractStartTime,contractEndTime,totalPrice,contractState,paymentMethod,
-		contractBody,contractNum,customerSigner,signTime,businessType
+		contractBody,contractNum,customerSigner,signTime,businessType,customerId,customerName
 	</sql>
 	<insert id="insertContract" parameterType="com.brp.entity.ContractEntity" useGeneratedKeys="true" keyProperty="id">
 		insert contract
@@ -65,7 +66,7 @@
 		contractType,contractName,
 		contractStartTime,contractEndTime,totalPrice,contractState,paymentMethod,
 		contractBody,contractNum,customerSigner,
-		signTime,businessType
+		signTime,businessType,customerId,customerName
 		)
 		values
 		( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
@@ -76,7 +77,7 @@
 		#{contractType,jdbcType=INTEGER},#{contractName,jdbcType=VARCHAR},
 		#{contractStartTime,jdbcType=TIMESTAMP},#{contractEndTime,jdbcType=TIMESTAMP},#{totalPrice,jdbcType=DOUBLE},#{contractState,jdbcType=INTEGER},#{paymentMethod,jdbcType=INTEGER},
 		#{contractBody,jdbcType=VARCHAR},#{contractNum,jdbcType=VARCHAR},#{customerSigner,jdbcType=VARCHAR},
-		#{signTime,jdbcType=TIMESTAMP},#{businessType,jdbcType=INTEGER}
+		#{signTime,jdbcType=TIMESTAMP},#{businessType,jdbcType=INTEGER},#{customerId,jdbcType=INTEGER},#{customerName,jdbcType=VARCHAR}
 		)
 	</insert>
 	<select id="getContractPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ContractQuery" >
