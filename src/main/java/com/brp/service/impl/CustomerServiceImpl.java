@@ -1,15 +1,14 @@
 package com.brp.service.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.brp.entity.CustomerEntity;
 import com.brp.mapper.CustomerMapper;
 import com.brp.service.CustomerService;
 import com.brp.util.query.CustomerQuery;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -70,10 +69,10 @@ public class CustomerServiceImpl implements CustomerService{
 		customerMapper.updateCustomer(customer);
 	}
 
-	
-	
 
-	
-	
+	@Override
+	public Integer getSelfCustomerCount(CustomerQuery customerQuery) {
+		return customerMapper.getSelfCustomerCount(customerQuery);
+	}
 }
 

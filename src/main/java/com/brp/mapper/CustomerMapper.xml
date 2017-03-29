@@ -102,7 +102,26 @@
 		 
          order by createTime desc
     </select>
-    
+
+	<select id="getSelfCustomerCount" resultType="java.lang.Integer" parameterType="com.brp.util.query.CustomerQuery" >
+		select count(id)
+		from customer
+		where isDelete = 0
+		<trim prefix=" " suffix="" suffixOverrides="" >
+			<if test="roleType == 1">
+				and companyId = #{companyId}
+			</if>
+			<if test="roleType == 2">
+				and departmentId in (${departmentId})
+			</if>
+			<if test="roleType == 3">
+				and userId = #{userId}
+			</if>
+		</trim>
+
+		order by createTime desc
+	</select>
+
     <select id="getCustomerById" resultMap="BaseResultMap" parameterType="java.lang.String" >
          select 
          <include refid="Base_Column_List" />

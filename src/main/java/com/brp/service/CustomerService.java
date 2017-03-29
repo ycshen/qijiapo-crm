@@ -1,9 +1,9 @@
 package com.brp.service;
 
-import java.util.List;
-
 import com.brp.entity.CustomerEntity;
 import com.brp.util.query.CustomerQuery;
+
+import java.util.List;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -20,5 +20,6 @@ public interface CustomerService {
 	CustomerEntity getCustomerById(String id);
 	void deleteCustomerById(String id);
 	void batchDeleteCustomer(List<String> idList);
+	Integer getSelfCustomerCount(CustomerQuery customerQuery);
 }
 

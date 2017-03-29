@@ -1,12 +1,11 @@
 package com.brp.mapper;
 
-import java.util.List;
-
+import com.brp.entity.CustomerEntity;
+import com.brp.util.query.CustomerQuery;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.brp.entity.CustomerEntity;
-import com.brp.util.query.CustomerQuery;
+import java.util.List;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -24,5 +23,6 @@ public interface CustomerMapper {
 	void deleteCustomerById(String id);
 	void batchDeleteCustomer(@Param("inId")String inId);
 	void updateCustomer(CustomerEntity customer);
+	Integer getSelfCustomerCount(CustomerQuery customerQuery);
 }
 
