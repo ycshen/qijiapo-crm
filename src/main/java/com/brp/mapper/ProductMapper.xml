@@ -184,6 +184,12 @@
     	<if test="companyName != null">
     		companyName = #{companyName, jdbcType=VARCHAR},
     	</if>
+		<if test="price != null">
+			price = #{price, jdbcType=VARCHAR},
+		</if>
+		<if test="status != null">
+			`status` = #{status, jdbcType=INTEGER},
+		</if>
     	id = #{id}
     	where id = #{id} limit 1
     </update>
