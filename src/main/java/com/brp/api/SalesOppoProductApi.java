@@ -43,7 +43,7 @@ public class SalesOppoProductApi {
 	public String insertSop(@RequestBody JSONObject jsonObject){
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
-			String product = jsonObject.getString("product");
+			String sop = jsonObject.getString("sop");
 			String secret = jsonObject.getString("secret");
 			String cId = jsonObject.getString("cId");
 			
@@ -51,7 +51,7 @@ public class SalesOppoProductApi {
 			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
 				String mybaseSecret = companyService.getSecretByCid(cId);
 				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("product", product);
+				maps.put("sop", sop);
 				maps.put("secret", mybaseSecret);
 				maps.put("cId", cId);
 				String md5 = SHA1Utils.SHA1(maps);
@@ -66,8 +66,8 @@ public class SalesOppoProductApi {
 				jsonData.setMessage("参数异常");
 			}
 			
-			if(auth && StringUtils.isNotBlank(product)){
-				SalesOppoProductEntity sopObj = JSONObject.parseObject(product, SalesOppoProductEntity.class);
+			if(auth && StringUtils.isNotBlank(sop)){
+				SalesOppoProductEntity sopObj = JSONObject.parseObject(sop, SalesOppoProductEntity.class);
 				sopObj.setIsDelete(0);
 				sopObj.setCreateTime(new Date());
 				String id = UUID.randomUUID().toString().replaceAll("-", "");

@@ -1,6 +1,7 @@
 package com.brp.service.impl;
 
 import com.brp.entity.SalesOppoProductEntity;
+import com.brp.mapper.SalesOppoProductMapper;
 import com.brp.service.SalesOppoProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SalesOppoProductServiceImpl implements SalesOppoProductService{
 	@Autowired
-	private SalesOppoProductService sopService;
+	private SalesOppoProductMapper sopMapper;
 
 
 	@Override
 	public void insertSalesOppoProduct(SalesOppoProductEntity sop) {
-		sopService.insertSalesOppoProduct(sop);
+		sopMapper.insertSalesOppoProduct(sop);
 	}
 }
 
