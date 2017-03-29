@@ -33,6 +33,24 @@ public class ContractEntity extends BaseEntity{
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date signTime;
     private Integer businessType;//业务类型
+    private String customerId; //客户ID
+    private String customerName; //客户名称
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
     public String getContractName() {
         return contractName;
