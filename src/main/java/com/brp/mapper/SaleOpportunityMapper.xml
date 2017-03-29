@@ -57,7 +57,9 @@
    	  areaId,areaName,facsimile,weibo,remark,isDelete,
    	  createUserId,updateUserId,userId,userName,departmentId,
    	  departmentName,companyId,companyName,salesOpportunityName,
-   	  oppoSource
+   	  oppoSource,customerId,customerName,oppotunityType,saleMoney,
+   	  endOppoTime,saleStage,winRate,stageUpdateTime,marketActivityId,
+   	  lockStatus,failStage,failOrderReason,failDesc
   </sql>
   <insert id="insertSalesOpportunity" parameterType="com.brp.entity.SalesOpportunityEntity" useGeneratedKeys="true" keyProperty="id">
     insert sales_opportunity
@@ -65,7 +67,10 @@
    	  postcode,provinceId,provinceName,cityId,cityName,
    	  areaId,areaName,facsimile,weibo,remark,isDelete,
    	  createUserId,updateUserId,userId,userName,departmentId,
-   	  departmentName,companyId,companyName,salesOpportunityName,oppoSource
+   	  departmentName,companyId,companyName,salesOpportunityName,oppoSource,
+   	  customerId,customerName,oppotunityType,saleMoney,
+   	  endOppoTime,saleStage,winRate,stageUpdateTime,marketActivityId,
+   	  lockStatus,failStage,failOrderReason,failDesc
    		 ) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
@@ -73,7 +78,11 @@
     	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
     	#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},
     	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{salesOpportunityName,jdbcType=VARCHAR},
-    	#{oppoSource,jdbcType=INTEGER}
+    	#{oppoSource,jdbcType=INTEGER},
+    	#{customerId,jdbcType=VARCHAR},#{customerName,jdbcType=INTEGER},#{oppotunityType,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},
+    	#{endOppoTime,jdbcType=TIMESTAMP},#{saleStage,jdbcType=INTEGER},#{winRate,jdbcType=VARCHAR},#{stageUpdateTime,jdbcType=TIMESTAMP},#{marketActivityId,jdbcType=VARCHAR},
+    	#{lockStatus,jdbcType=INTEGER},#{failStage,jdbcType=INTEGER},#{failStage,jdbcType=INTEGER},#{failStage,jdbcType=VARCHAR}
+
     	)
   </insert>
    <select id="getSalesOpportunityPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.SalesOpportunityQuery" >
