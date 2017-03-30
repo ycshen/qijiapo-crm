@@ -79,9 +79,9 @@
     	#{createUserId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{departmentId,jdbcType=VARCHAR},
     	#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=INTEGER},#{companyName,jdbcType=VARCHAR},#{salesOpportunityName,jdbcType=VARCHAR},
     	#{oppoSource,jdbcType=INTEGER},
-    	#{customerId,jdbcType=VARCHAR},#{customerName,jdbcType=INTEGER},#{oppotunityType,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},
+    	#{customerId,jdbcType=VARCHAR},#{customerName,jdbcType=VARCHAR},#{oppotunityType,jdbcType=INTEGER},#{saleMoney,jdbcType=VARCHAR},
     	#{endOppoTime,jdbcType=TIMESTAMP},#{saleStage,jdbcType=INTEGER},#{winRate,jdbcType=VARCHAR},#{stageUpdateTime,jdbcType=TIMESTAMP},#{marketActivityId,jdbcType=VARCHAR},
-    	#{lockStatus,jdbcType=INTEGER},#{failStage,jdbcType=INTEGER},#{failStage,jdbcType=INTEGER},#{failStage,jdbcType=VARCHAR}
+    	#{lockStatus,jdbcType=INTEGER},#{failStage,jdbcType=INTEGER},#{failOrderReason,jdbcType=INTEGER},#{failDesc,jdbcType=VARCHAR}
 
     	)
   </insert>
@@ -193,6 +193,53 @@
     	<if test="companyName != null">
     		companyName = #{companyName, jdbcType=VARCHAR},
     	</if>
+		<if test="salesOpportunityName != null">
+			salesOpportunityName = #{salesOpportunityName, jdbcType=VARCHAR},
+		</if>
+		<if test="oppoSource != null">
+			oppoSource = #{oppoSource, jdbcType=INTEGER},
+		</if>
+		<if test="customerId != null">
+			customerId = #{customerId, jdbcType=VARCHAR},
+		</if>
+		<if test="customerName != null">
+			customerName = #{customerName, jdbcType=VARCHAR},
+		</if>
+		<if test="oppotunityType != null">
+			oppotunityType = #{oppotunityType, jdbcType=INTEGER},
+		</if>
+		<if test="saleMoney != null">
+			saleMoney = #{saleMoney, jdbcType=VARCHAR},
+		</if>
+
+		<if test="endOppoTime != null">
+			endOppoTime = #{endOppoTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="saleStage != null">
+			saleStage = #{saleStage, jdbcType=INTEGER},
+		</if>
+
+		<if test="winRate != null">
+			winRate = #{winRate, jdbcType=VARCHAR},
+		</if>
+		<if test="stageUpdateTime != null">
+			stageUpdateTime = #{stageUpdateTime, jdbcType=TIMESTAMP},
+		</if>
+		<if test="marketActivityId != null">
+			marketActivityId = #{marketActivityId, jdbcType=VARCHAR},
+		</if>
+		<if test="lockStatus != null">
+			lockStatus = #{lockStatus, jdbcType=INTEGER},
+		</if>
+		<if test="failStage != null">
+			failStage = #{failStage, jdbcType=INTEGER},
+		</if>
+		<if test="failOrderReason != null">
+			failOrderReason = #{failOrderReason, jdbcType=INTEGER},
+		</if>
+		<if test="failDesc != null">
+			failDesc = #{failDesc, jdbcType=VARCHAR},
+		</if>
     	id = #{id}
     	where id = #{id} limit 1
     </update>
