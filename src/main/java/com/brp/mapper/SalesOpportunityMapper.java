@@ -1,12 +1,11 @@
 package com.brp.mapper;
 
-import java.util.List;
-
+import com.brp.entity.SalesOpportunityEntity;
+import com.brp.util.query.SalesOpportunityQuery;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.brp.entity.SalesOpportunityEntity;
-import com.brp.util.query.SalesOpportunityQuery;
+import java.util.List;
 
 /** 
  * <p>Project: qijiapo-crm</p> 

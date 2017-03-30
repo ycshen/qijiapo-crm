@@ -102,6 +102,9 @@
 		      <if test="roleType == 3">
 		      	and userId = #{userId}
 		      </if>
+			 <if test="customerId != null">
+				 and customerId = #{customerId}
+			 </if>
 		 </trim>
 		 
          order by createTime desc
