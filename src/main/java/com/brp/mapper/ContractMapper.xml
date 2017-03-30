@@ -174,9 +174,6 @@
 		<if test="departmentName != null">
 			departmentName = #{departmentName, jdbcType=VARCHAR},
 		</if>
-		<if test="email != null">
-			mobile = #{mobile, jdbcType=VARCHAR},
-		</if>
 		<if test="userId != null">
 			userId = #{userId, jdbcType=VARCHAR},
 		</if>
@@ -194,6 +191,9 @@
 		<if test="contractType != null">
 			contractType = #{contractType, jdbcType=INTEGER},
 		</if>
+		<if test="contractName != null">
+			contractName = #{contractName, jdbcType=VARCHAR},
+		</if>
 		<if test="contractState != null">
 			contractState = #{contractState, jdbcType=INTEGER},
 		</if>
@@ -201,42 +201,34 @@
 			contractStartTime = #{contractStartTime, jdbcType=TIMESTAMP},
 		</if>
 		<if test="contractEndTime != null">
-			staffNum = #{staffNum, jdbcType=TIMESTAMP},
+			contractEndTime = #{contractEndTime, jdbcType=TIMESTAMP},
 		</if>
-		<if test="invitationPopulation != null">
-			invitationPopulation = #{invitationPopulation, jdbcType=INTEGER},
+		<if test="totalPrice != null">
+			totalPrice = #{totalPrice, jdbcType=DOUBLE},
 		</if>
-		<if test="realNum != null">
-			realNum = #{realNum, jdbcType=INTEGER},
+		<if test="paymentMethod != null">
+			paymentMethod = #{paymentMethod, jdbcType=INTEGER},
 		</if>
 		<if test="businessType != null">
 			businessType = #{businessType, jdbcType=INTEGER},
 		</if>
-		<if test="contractNote != null">
-			contractNote = #{contractNote, jdbcType=VARCHAR},
+		<if test="contractBody != null">
+			contractBody = #{contractBody, jdbcType=VARCHAR},
 		</if>
-
-
-		<if test="contractCost != null">
-			contractCost = #{contractCost, jdbcType=DOUBLE},
+		<if test="contractNum != null">
+			contractNum = #{contractNum, jdbcType=VARCHAR},
 		</if>
-		<if test="expectedIncome != null">
-			expectedIncome = #{expectedIncome, jdbcType=DOUBLE},
+		<if test="customerSigner != null">
+			customerSigner = #{customerSigner, jdbcType=VARCHAR},
 		</if>
-		<if test="recordTime != null">
-			recordTime = #{recordTime, jdbcType=TIMESTAMP},
+		<if test="signTime != null">
+			signTime = #{signTime, jdbcType=TIMESTAMP},
 		</if>
-		<if test="expectedNum != null">
-			expectedNum = #{expectedNum, jdbcType=INTEGER},
+		<if test="customerId != null">
+			customerId = #{customerId, jdbcType=VARCHAR},
 		</if>
-		<if test="realContractCost != null">
-			realContractCost = #{realContractCost, jdbcType=DOUBLE},
-		</if>
-		<if test="realIncome != null">
-			realIncome = #{realIncome, jdbcType=DOUBLE},
-		</if>
-		<if test="contractName != null">
-			contractName = #{contractName, jdbcType=VARCHAR},
+		<if test="customerName != null">
+			customerName = #{customerName, jdbcType=VARCHAR},
 		</if>
 		id = #{id}
 		where id = #{id} limit 1
