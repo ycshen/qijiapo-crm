@@ -182,22 +182,22 @@
             duty = #{duty, jdbcType=VARCHAR},
         </if>
         <if test="phoneNum != null">
-            staffNum = #{staffNum, jdbcType=INTEGER},
+            phoneNum = #{phoneNum, jdbcType=INTEGER},
         </if>
         <if test="mobilePhoneNum != null">
-            saleMoney = #{saleMoney, jdbcType=VARCHAR},
+            mobilePhoneNum = #{mobilePhoneNum, jdbcType=VARCHAR},
         </if>
         <if test="email != null">
-            mobile = #{mobile, jdbcType=VARCHAR},
+            email = #{email, jdbcType=VARCHAR},
         </if>
         <if test="gender != null">
-            staffNum = #{staffNum, jdbcType=INTEGER},
+            gender = #{gender, jdbcType=INTEGER},
         </if>
         <if test="birthDay != null">
-            saleMoney = #{saleMoney, jdbcType=VARCHAR},
+            birthDay = #{birthDay, jdbcType=VARCHAR},
         </if>
         <if test="attnType != null">
-            mobile = #{mobile, jdbcType=VARCHAR},
+            attnType = #{attnType, jdbcType=VARCHAR},
         </if>
 
         <if test="userId != null">

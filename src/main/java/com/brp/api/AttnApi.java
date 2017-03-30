@@ -2,6 +2,7 @@ package com.brp.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.brp.entity.AttnEntity;
+import com.brp.entity.CompetitorEntity;
 import com.brp.service.AttnService;
 import com.brp.service.CompanyService;
 import com.brp.util.JsonUtils;
@@ -325,10 +326,10 @@ public class AttnApi {
             }
 
             if(auth && StringUtils.isNotBlank(attn)){
-                AttnEntity attnObj = JSONObject.parseObject(attn, AttnEntity.class);
-                attnObj.setIsDelete(0);
-                attnObj.setUpdateTime(new Date());
-                attnService.updateAttn(attnObj);
+                AttnEntity attnEntity = JSONObject.parseObject(attn, AttnEntity.class);
+                attnEntity.setIsDelete(0);
+                attnEntity.setUpdateTime(new Date());
+                attnService.updateAttn(attnEntity);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{
