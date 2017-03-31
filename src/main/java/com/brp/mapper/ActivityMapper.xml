@@ -179,9 +179,6 @@
         <if test="departmentName != null">
             departmentName = #{departmentName, jdbcType=VARCHAR},
         </if>
-        <if test="email != null">
-            mobile = #{mobile, jdbcType=VARCHAR},
-        </if>
         <if test="userId != null">
             userId = #{userId, jdbcType=VARCHAR},
         </if>
@@ -220,8 +217,6 @@
         <if test="activityNote != null">
             activityNote = #{activityNote, jdbcType=VARCHAR},
         </if>
-
-
         <if test="activityCost != null">
             activityCost = #{activityCost, jdbcType=DOUBLE},
         </if>
