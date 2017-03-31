@@ -12,21 +12,29 @@
 	  <result column="userId" property="userId" jdbcType="VARCHAR" />
 	  <result column="userName" property="userName" jdbcType="VARCHAR" />
 	  <result column="isDelete" property="isDelete" jdbcType="INTEGER" />
+	  
+	  <result column="productName" property="productName" jdbcType="VARCHAR" />
+	  <result column="salePrice" property="salePrice" jdbcType="VARCHAR" />
+	  <result column="productPrice" property="productPrice" jdbcType="VARCHAR" />
+	  <result column="saleMoney" property="saleMoney" jdbcType="VARCHAR" />
   </resultMap> 
      
   <sql id="Base_Column_List" >
 	  id,salesOppoId,productId,saleNum, discount,
-   	  remark,createTime,userId,userName,isDelete
+   	  remark,createTime,userId,userName,isDelete,
+   	  productName,salePrice,productPrice,saleMoney
   </sql>
   <insert id="insertSalesOppoProduct" parameterType="com.brp.entity.SalesOppoProductEntity">
     insert sales_oppo_product
    		(id,salesOppoId,productId,saleNum, discount,
-   	  	remark,createTime,userId,userName,isDelete
+   	  	remark,createTime,userId,userName,isDelete,
+   	  	productName,salePrice,productPrice,saleMoney
    		 ) 
     values
     	(
     	#{id,jdbcType=VARCHAR},#{salesOppoId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR},#{saleNum,jdbcType=INTEGER},#{discount,jdbcType=VARCHAR},
-    	#{remark,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER}
+    	#{remark,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+    	#{productName,jdbcType=VARCHAR},#{salePrice,jdbcType=VARCHAR},#{productPrice,jdbcType=VARCHAR},#{saleMoney,jdbcType=VARCHAR}
     	)
   </insert>
 </mapper>

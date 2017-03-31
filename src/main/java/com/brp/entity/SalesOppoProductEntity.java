@@ -21,6 +21,7 @@ public class SalesOppoProductEntity {
     private String userId;
     private String userName;
     private Integer isDelete;
+    private String productName;
 
     public String getId() {
         return id;
@@ -125,4 +126,13 @@ public class SalesOppoProductEntity {
     public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+    
 }
