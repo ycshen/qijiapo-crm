@@ -6,6 +6,8 @@ import com.brp.service.SalesOppoProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /** 
  * <p>Project: qijiapo-crm</p> 
  * <p>Title: SalesOppoProductServiceImpl.java</p>
@@ -23,6 +25,11 @@ public class SalesOppoProductServiceImpl implements SalesOppoProductService{
 	@Override
 	public void insertSalesOppoProduct(SalesOppoProductEntity sop) {
 		sopMapper.insertSalesOppoProduct(sop);
+	}
+
+	@Override
+	public List<SalesOppoProductEntity> getSopListBySaleOppoId(String saleOppoId) {
+		return sopMapper.getSopListBySaleOppoId(saleOppoId);
 	}
 }
 

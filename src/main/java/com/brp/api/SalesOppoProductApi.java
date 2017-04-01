@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -88,6 +85,54 @@ public class SalesOppoProductApi {
 		
 		String result = JsonUtils.json2Str(jsonData);
 		
+		return result;
+	}
+
+	@RequestMapping(value = "/getSopBySaleOppoId", method = RequestMethod.POST)
+	@ResponseBody
+	public String getSopBySaleOppoId(@RequestBody JSONObject jsonObject){
+		JsonData<List<SalesOppoProductEntity>> jsonData = new JsonData<List<SalesOppoProductEntity>>();
+		try{
+			String saleOppoId = jsonObject.getString("saleOppoId");
+			String secret = jsonObject.getString("secret");
+			String cId = jsonObject.getString("cId");
+
+			boolean auth = false;
+			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
+				String mybaseSecret = companyService.getSecretByCid(cId);
+				Map<String,Object> maps = new HashMap<String, Object>();
+				maps.put("saleOppoId", saleOppoId);
+				maps.put("secret", mybaseSecret);
+				maps.put("cId", cId);
+				String md5 = SHA1Utils.SHA1(maps);
+				if(md5.equals(secret)){
+					if(StringUtils.isNotBlank(saleOppoId)){
+						List<SalesOppoProductEntity> list = sopService.getSopListBySaleOppoId(saleOppoId);
+						jsonData.setData(list);
+						jsonData.setCode(ApiCode.OK);
+						jsonData.setMessage("操作成功");
+					}else{
+						jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+						jsonData.setMessage("参数异常");
+					}
+				}else{
+					jsonData.setCode(ApiCode.AUTH_FAIL);
+					jsonData.setMessage("验证失败");
+					return JsonUtils.json2Str(jsonData);
+				}
+			}else{
+				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+				jsonData.setMessage("参数异常");
+				return JsonUtils.json2Str(jsonData);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonData.setCode(ApiCode.EXCEPTION);
+			jsonData.setMessage("操作失败");
+		}
+
+		String result = JsonUtils.json2Str(jsonData);
+
 		return result;
 	}
 

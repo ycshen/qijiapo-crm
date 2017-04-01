@@ -3,6 +3,8 @@ package com.brp.mapper;
 import com.brp.entity.SalesOppoProductEntity;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /** 
  * <p>Project: qijiapo-crm</p> 
  * <p>Title: SalesOppoSalesOppoProductMapper.java</p>
@@ -14,5 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SalesOppoProductMapper {
 	void insertSalesOppoProduct(SalesOppoProductEntity sop);
+	List<SalesOppoProductEntity> getSopListBySaleOppoId(String saleOppoId);
 }
 

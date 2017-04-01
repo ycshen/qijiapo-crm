@@ -23,5 +23,6 @@ public interface SalesOpportunityMapper {
 	void deleteSalesOpportunityById(String id);
 	void batchDeleteSalesOpportunity(@Param("inId")String inId);
 	void updateSalesOpportunity(SalesOpportunityEntity salesOpportunity);
+	void updateSaleMoneyById(@Param("id")String id, @Param("saleMoney")String saleMoney);
 }
 

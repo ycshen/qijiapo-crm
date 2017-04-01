@@ -246,4 +246,7 @@
     	id = #{id}
     	where id = #{id} limit 1
     </update>
+    <update id="updateSaleMoneyById">
+        update sales_opportunity set saleMoney=#{saleMoney} where id=#{id} limit 1;
+    </update>
 </mapper>

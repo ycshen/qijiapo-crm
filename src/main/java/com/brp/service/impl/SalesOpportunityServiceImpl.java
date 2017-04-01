@@ -1,16 +1,14 @@
 package com.brp.service.impl;
 
-import java.util.List;
-
+import com.brp.entity.SalesOpportunityEntity;
+import com.brp.mapper.SalesOpportunityMapper;
+import com.brp.service.SalesOpportunityService;
+import com.brp.util.query.SalesOpportunityQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.brp.entity.SalesOpportunityEntity;
-import com.brp.mapper.SalesOpportunityMapper;
-import com.brp.service.SalesOpportunityService;
-import com.brp.service.SalesOpportunityService;
-import com.brp.util.query.SalesOpportunityQuery;
+import java.util.List;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -71,10 +69,9 @@ public class SalesOpportunityServiceImpl implements SalesOpportunityService{
 		salesOpportunityMapper.updateSalesOpportunity(salesOpportunity);
 	}
 
-	
-	
-
-	
-	
+	@Override
+	public void updateSaleMoneyById(String id, String saleMoney) {
+		salesOpportunityMapper.updateSaleMoneyById(id, saleMoney);
+	}
 }
 

@@ -2,6 +2,8 @@ package com.brp.service;
 
 import com.brp.entity.SalesOppoProductEntity;
 
+import java.util.List;
+
 /** 
  * <p>Project: qijiapo-crm</p> 
  * <p>Title: SalesOpportunityService.java</p> 
@@ -12,5 +14,6 @@ import com.brp.entity.SalesOppoProductEntity;
  */
 public interface SalesOppoProductService {
 	void insertSalesOppoProduct(SalesOppoProductEntity sop);
+	List<SalesOppoProductEntity> getSopListBySaleOppoId(String saleOppoId);
 }
 

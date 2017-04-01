@@ -1,9 +1,9 @@
 package com.brp.service;
 
-import java.util.List;
-
 import com.brp.entity.SalesOpportunityEntity;
 import com.brp.util.query.SalesOpportunityQuery;
+
+import java.util.List;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -20,5 +20,6 @@ public interface SalesOpportunityService {
 	SalesOpportunityEntity getSalesOpportunityById(String id);
 	void deleteSalesOpportunityById(String id);
 	void batchDeleteSalesOpportunity(List<String> idList);
+	void updateSaleMoneyById(String id, String saleMoney);
 }
 

@@ -37,4 +37,9 @@
     	#{productName,jdbcType=VARCHAR},#{salePrice,jdbcType=VARCHAR},#{productPrice,jdbcType=VARCHAR},#{saleMoney,jdbcType=VARCHAR}
     	)
   </insert>
+    <select id="getSopListBySaleOppoId" resultMap="BaseResultMap">
+      SELECT  <include refid="Base_Column_List"/>
+        from sales_oppo_product
+        where isDelete=0 and salesOppoId=#{saleOppoId}
+    </select>
 </mapper>
