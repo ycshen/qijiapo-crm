@@ -31,5 +31,10 @@ public class SalesOppoProductServiceImpl implements SalesOppoProductService{
 	public List<SalesOppoProductEntity> getSopListBySaleOppoId(String saleOppoId) {
 		return sopMapper.getSopListBySaleOppoId(saleOppoId);
 	}
+
+	@Override
+	public void deleteSopById(String id) {
+		sopMapper.deleteSopById(id);
+	}
 }
 

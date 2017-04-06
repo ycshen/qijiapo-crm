@@ -42,4 +42,7 @@
         from sales_oppo_product
         where isDelete=0 and salesOppoId=#{saleOppoId}
     </select>
+	<update id="deleteSopById">
+		update sales_oppo_product set isDelete=1 where id=#{id}
+	</update>
 </mapper>

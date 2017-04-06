@@ -15,5 +15,6 @@ import java.util.List;
 public interface SalesOppoProductService {
 	void insertSalesOppoProduct(SalesOppoProductEntity sop);
 	List<SalesOppoProductEntity> getSopListBySaleOppoId(String saleOppoId);
+	void deleteSopById(String id);
 }
 

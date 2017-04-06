@@ -96,8 +96,6 @@ public class SalesOppoProductApi {
 			String saleOppoId = jsonObject.getString("saleOppoId");
 			String secret = jsonObject.getString("secret");
 			String cId = jsonObject.getString("cId");
-
-			boolean auth = false;
 			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
 				String mybaseSecret = companyService.getSecretByCid(cId);
 				Map<String,Object> maps = new HashMap<String, Object>();
@@ -109,6 +107,52 @@ public class SalesOppoProductApi {
 					if(StringUtils.isNotBlank(saleOppoId)){
 						List<SalesOppoProductEntity> list = sopService.getSopListBySaleOppoId(saleOppoId);
 						jsonData.setData(list);
+						jsonData.setCode(ApiCode.OK);
+						jsonData.setMessage("操作成功");
+					}else{
+						jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+						jsonData.setMessage("参数异常");
+					}
+				}else{
+					jsonData.setCode(ApiCode.AUTH_FAIL);
+					jsonData.setMessage("验证失败");
+					return JsonUtils.json2Str(jsonData);
+				}
+			}else{
+				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+				jsonData.setMessage("参数异常");
+				return JsonUtils.json2Str(jsonData);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonData.setCode(ApiCode.EXCEPTION);
+			jsonData.setMessage("操作失败");
+		}
+
+		String result = JsonUtils.json2Str(jsonData);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/deleteSopById", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteSopById(@RequestBody JSONObject jsonObject){
+		JsonData<String> jsonData = new JsonData<String>();
+		try{
+			String id = jsonObject.getString("id");
+			String secret = jsonObject.getString("secret");
+			String cId = jsonObject.getString("cId");
+
+			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
+				String mybaseSecret = companyService.getSecretByCid(cId);
+				Map<String,Object> maps = new HashMap<String, Object>();
+				maps.put("id", id);
+				maps.put("secret", mybaseSecret);
+				maps.put("cId", cId);
+				String md5 = SHA1Utils.SHA1(maps);
+				if(md5.equals(secret)){
+					if(StringUtils.isNotBlank(id)){
+						sopService.deleteSopById(id);
 						jsonData.setCode(ApiCode.OK);
 						jsonData.setMessage("操作成功");
 					}else{
