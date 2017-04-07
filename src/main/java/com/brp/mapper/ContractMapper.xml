@@ -45,6 +45,12 @@
 		<result column="businessType" property="businessType" jdbcType="INTEGER" />
 		<result column="customerId" property="customerId" jdbcType="VARCHAR" />
 		<result column="customerName" property="customerName" jdbcType="VARCHAR" />
+
+		<result column="returnMoney" property="returnMoney" jdbcType="VARCHAR" />
+		<result column="notReturnMoney" property="notReturnMoney" jdbcType="VARCHAR" />
+		<result column="returnMoneyState" property="returnMoneyState" jdbcType="INTEGER" />
+
+
 	</resultMap>
 
 	<sql id="Base_Column_List" >
@@ -54,8 +60,9 @@
 		departmentId,departmentName,userId,
 		userName,companyId,companyName,contractType,contractName,
 		contractStartTime,contractEndTime,totalPrice,contractState,paymentMethod,
-		contractBody,contractNum,customerSigner,signTime,businessType,customerId,customerName
+		contractBody,contractNum,customerSigner,signTime,businessType,customerId,customerName,returnMoneyState
 	</sql>
+
 	<insert id="insertContract" parameterType="com.brp.entity.ContractEntity" useGeneratedKeys="true" keyProperty="id">
 		insert contract
 		(createUser,updateUser,createTime, updateTime,
@@ -66,7 +73,7 @@
 		contractType,contractName,
 		contractStartTime,contractEndTime,totalPrice,contractState,paymentMethod,
 		contractBody,contractNum,customerSigner,
-		signTime,businessType,customerId,customerName
+		signTime,businessType,customerId,customerName,returnMoneyState
 		)
 		values
 		( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
@@ -77,7 +84,8 @@
 		#{contractType,jdbcType=INTEGER},#{contractName,jdbcType=VARCHAR},
 		#{contractStartTime,jdbcType=TIMESTAMP},#{contractEndTime,jdbcType=TIMESTAMP},#{totalPrice,jdbcType=DOUBLE},#{contractState,jdbcType=INTEGER},#{paymentMethod,jdbcType=INTEGER},
 		#{contractBody,jdbcType=VARCHAR},#{contractNum,jdbcType=VARCHAR},#{customerSigner,jdbcType=VARCHAR},
-		#{signTime,jdbcType=TIMESTAMP},#{businessType,jdbcType=INTEGER},#{customerId,jdbcType=INTEGER},#{customerName,jdbcType=VARCHAR}
+		#{signTime,jdbcType=TIMESTAMP},#{businessType,jdbcType=INTEGER},#{customerId,jdbcType=INTEGER},#{customerName,jdbcType=VARCHAR},
+		#{returnMoneyState,jdbcType=INTEGER}
 		)
 	</insert>
 	<select id="getContractPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ContractQuery" >
@@ -230,7 +238,20 @@
 		<if test="customerName != null">
 			customerName = #{customerName, jdbcType=VARCHAR},
 		</if>
+		<if test="returnMoney != null">
+			returnMoney = #{returnMoney, jdbcType=VARCHAR},
+		</if>
+		<if test="notReturnMoney != null">
+			notReturnMoney = #{notReturnMoney, jdbcType=VARCHAR},
+		</if>
+		<if test="returnMoneyState != null">
+			returnMoneyState = #{returnMoneyState, jdbcType=INTEGER},
+		</if>
 		id = #{id}
 		where id = #{id} limit 1
+	</update>
+
+	<update id="updateSaleMoneyById">
+		update contract set returnMoney=#{returnMoney} where id=#{id} limit 1;
 	</update>
 </mapper>

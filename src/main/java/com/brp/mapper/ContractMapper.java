@@ -16,4 +16,5 @@ public interface ContractMapper {
     void deleteContractById(String id);
     void batchDeleteContract(@Param("inId")String inId);
     void updateContract(ContractEntity contract);
+    void updateSaleMoneyById(@Param("id")String id, @Param("returnMoney")String returnMoney);
 }

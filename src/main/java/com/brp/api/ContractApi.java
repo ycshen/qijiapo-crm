@@ -70,6 +70,7 @@ public class ContractApi {
 			if(auth && StringUtils.isNotBlank(contract)){
 				ContractEntity contractObj = JSONObject.parseObject(contract, ContractEntity.class);
 				contractObj.setIsDelete(0);
+				contractObj.setReturnMoneyState(0);
 				contractService.insertContract(contractObj);
 				jsonData.setData(contractObj.getId().toString());
 				jsonData.setCode(ApiCode.OK);
@@ -348,6 +349,53 @@ public class ContractApi {
 		
 		String result = JsonUtils.json2Str(jsonData);
 		
+		return result;
+	}
+
+	@RequestMapping(value = "/updateReturnMoneyById", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateSaleMoneyById(@RequestBody JSONObject jsonObject){
+		JsonData<String> jsonData = new JsonData<String>();
+		try{
+			String returnMoney = jsonObject.getString("returnMoney");
+			String id = jsonObject.getString("id");
+			String secret = jsonObject.getString("secret");
+			String cId = jsonObject.getString("cId");
+			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
+				String mybaseSecret = companyService.getSecretByCid(cId);
+				Map<String,Object> maps = new HashMap<String, Object>();
+				maps.put("returnMoney", returnMoney);
+				maps.put("id", id);
+				maps.put("secret", mybaseSecret);
+				maps.put("cId", cId);
+				String md5 = SHA1Utils.SHA1(maps);
+				if(md5.equals(secret)){
+					if(StringUtils.isNotBlank(id) && StringUtils.isNotBlank(returnMoney)){
+						contractService.updateSaleMoneyById(id, returnMoney);
+						jsonData.setCode(ApiCode.OK);
+						jsonData.setMessage("操作成功");
+					}else{
+						jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+						jsonData.setMessage("参数异常");
+					}
+				}else{
+					jsonData.setCode(ApiCode.AUTH_FAIL);
+					jsonData.setMessage("验证失败");
+					return JsonUtils.json2Str(jsonData);
+				}
+			}else{
+				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+				jsonData.setMessage("参数异常");
+				return JsonUtils.json2Str(jsonData);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonData.setCode(ApiCode.EXCEPTION);
+			jsonData.setMessage("操作失败");
+		}
+
+		String result = JsonUtils.json2Str(jsonData);
+
 		return result;
 	}
 	

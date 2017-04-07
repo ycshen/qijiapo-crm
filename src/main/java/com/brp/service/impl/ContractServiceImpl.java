@@ -19,16 +19,16 @@ import java.util.List;
 public class ContractServiceImpl implements ContractService{
 
     @Autowired
-    private ContractMapper competitorMapper;
+    private ContractMapper contractMapper;
 
     @Override
-    public void insertContract(ContractEntity competitor) {
-        competitorMapper.insertContract(competitor);
+    public void insertContract(ContractEntity contract) {
+        contractMapper.insertContract(contract);
     }
 
     @Override
     public ContractQuery getContractPage(ContractQuery contractQuery) {
-        List<ContractEntity> list = competitorMapper.getContractPage(contractQuery);
+        List<ContractEntity> list = contractMapper.getContractPage(contractQuery);
         if(list != null && list.size() > 0){
             contractQuery.setItems(list);
         }
@@ -39,12 +39,12 @@ public class ContractServiceImpl implements ContractService{
 
     @Override
     public ContractEntity getContractById(String id) {
-        return competitorMapper.getContractById(id);
+        return contractMapper.getContractById(id);
     }
 
     @Override
     public void deleteContractById(String id) {
-        competitorMapper.deleteContractById(id);
+        contractMapper.deleteContractById(id);
     }
 
     @Override
@@ -57,13 +57,18 @@ public class ContractServiceImpl implements ContractService{
 
             if(StringUtils.isNotBlank(inId)){
                 inId = inId.substring(0, inId.length() - 1);
-                competitorMapper.batchDeleteContract(inId);
+                contractMapper.batchDeleteContract(inId);
             }
         }
     }
 
     @Override
+    public void updateSaleMoneyById(String id, String returnMoney) {
+        contractMapper.updateSaleMoneyById(id,returnMoney);
+    }
+
+    @Override
     public void updateContract(ContractEntity contract) {
-        competitorMapper.updateContract(contract);
+        contractMapper.updateContract(contract);
     }
 }

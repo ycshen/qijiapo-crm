@@ -16,4 +16,7 @@ public interface ContractService {
     ContractEntity getContractById(String id);
     void deleteContractById(String id);
     void batchDeleteContract(List<String> idList);
+
+    void updateSaleMoneyById(String id, String returnMoney);
+
 }

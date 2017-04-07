@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.ReturnMoneyDetailMapper" >
+    <resultMap id="BaseResultMap" type="com.brp.entity.ReturnMoneyDetailEntity">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="userId" property="userId" jdbcType="VARCHAR" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="departmentId" property="departmentId" jdbcType="VARCHAR" />
+        <result column="companyId" property="companyId" jdbcType="VARCHAR" />
+
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+        <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR" />
+        <result column="returnMoneyId" property="returnMoneyId" jdbcType="VARCHAR" />
+
+        <result column="money" property="money" jdbcType="VARCHAR" />
+        <result column="startDate" property="startDate" jdbcType="TIMESTAMP" />
+        <result column="payType" property="payType" jdbcType="INTEGER" />
+        <result column="returnMoneyType" property="returnMoneyType" jdbcType="INTEGER" />
+        <result column="taxContent" property="taxContent" jdbcType="VARCHAR" />
+
+        <result column="taxType" property="taxType" jdbcType="INTEGER" />
+        <result column="taxNum" property="taxNum" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id,userId,userName,departmentId, companyId,
+        createTime,updateTime,updateUser,updateUserId,returnMoneyId,
+        money,startDate,payType,returnMoneyType,taxContent,
+        taxType,taxNum,remark,isDelete
+    </sql>
+    <insert id="insertReturnMoneyDetail" parameterType="com.brp.entity.ReturnMoneyDetailEntity" useGeneratedKeys="true" keyProperty="id">
+        insert return_money_detail
+        (userId,userName,departmentId, companyId,
+        createTime,updateTime,updateUser,updateUserId,returnMoneyId,
+        money,startDate,payType,returnMoneyType,taxContent,
+        taxType,taxNum,remark,isDelete
+        )
+        values
+        ( #{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{updateUser,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{returnMoneyId,jdbcType=VARCHAR},
+        #{money,jdbcType=VARCHAR},#{startDate,jdbcType=TIMESTAMP},#{payType,jdbcType=INTEGER},#{returnMoneyType,jdbcType=INTEGER},#{taxContent,jdbcType=VARCHAR},
+        #{taxType,jdbcType=INTEGER},#{taxNum,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <select id="getReturnMoneyDetailListByReturnMoneyDetailId" resultMap="BaseResultMap">
+        SELECT  <include refid="Base_Column_List"/>
+        from return_money_detail
+        where isDelete=0 and returnMoneyId=#{returnMoneyId}
+    </select>
+
+
+    <select id="getReturnMoneyDetailById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from return_money_detail
+        where
+        id=#{id} and isDelete=0
+    </select>
+    <update id="deleteReturnMoneyDetailById"  parameterType="java.lang.String" >
+        update return_money_detail set isDelete=1 where id=#{id} limit 1;
+    </update>
+    <update id="batchDeleteReturnMoneyDetail"  parameterType="java.lang.String">
+        update return_money_detail set isDelete=1 where id in (${inId});
+    </update>
+    <update id="updateReturnMoneyDetail" parameterType="com.brp.entity.ReturnMoneyDetailEntity">
+        update return_money_detail set
+        <if test="updateUser != null">
+            updateUser = #{updateUser, jdbcType=VARCHAR},
+        </if>
+        <if test="updateUserId != null">
+            updateUserId = #{updateUserId, jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null">
+            createTime = #{createTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            updateTime = #{updateTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="isDelete != null">
+            isDelete = #{isDelete, jdbcType=INTEGER},
+        </if>
+        <if test="remark != null">
+            remark = #{remark, jdbcType=VARCHAR},
+        </if>
+        <if test="departmentId != null">
+            departmentId = #{departmentId, jdbcType=VARCHAR},
+        </if>
+        <if test="userId != null">
+            userId = #{userId, jdbcType=VARCHAR},
+        </if>
+        <if test="userName != null">
+            userName = #{userName, jdbcType=VARCHAR},
+        </if>
+        <if test="companyId != null">
+            companyId = #{companyId, jdbcType=VARCHAR},
+        </if>
+        <if test="code != null">
+            code = #{code, jdbcType=VARCHAR},
+        </if>
+
+        <if test="contractId != null">
+            contractId = #{contractId, jdbcType=VARCHAR},
+        </if>
+        <if test="customerId != null">
+            customerId = #{customerId, jdbcType=VARCHAR},
+        </if>
+        <if test="returnMoneyNum != null">
+            returnMoneyNum = #{returnMoneyNum, jdbcType=VARCHAR},
+        </if>
+        <if test="planReturnDate != null">
+            planReturnDate = #{planReturnDate, jdbcType=TIMESTAMP},
+        </if>
+        <if test="planReturnMoneyDetail != null">
+            planReturnMoneyDetail = #{planReturnMoneyDetail, jdbcType=VARCHAR},
+        </if>
+
+        <if test="actualReturnMoneyDetail != null">
+            actualReturnMoneyDetail = #{actualReturnMoneyDetail, jdbcType=VARCHAR},
+        </if>
+        <if test="actualNotReturnMoneyDetail != null">
+            actualNotReturnMoneyDetail = #{actualNotReturnMoneyDetail, jdbcType=VARCHAR},
+        </if>
+        <if test="returnMoneyStatus != null">
+            returnMoneyStatus = #{returnMoneyStatus, jdbcType=INTEGER},
+        </if>
+        <if test="totalMoney != null">
+            totalMoney = #{totalMoney, jdbcType=VARCHAR},
+        </if>
+        <if test="lockStatus != null">
+            lockStatus = #{lockStatus, jdbcType=INTEGER},
+        </if>
+        id = #{id}
+        where id = #{id} limit 1
+    </update>
+</mapper>

@@ -35,6 +35,33 @@ public class ContractEntity extends BaseEntity{
     private Integer businessType;//业务类型
     private String customerId; //客户ID
     private String customerName; //客户名称
+    private String returnMoney;//回款金额
+    private String notReturnMoney;//未回款金额
+    private Integer returnMoneyState;//回款状态（0未回款，1部分回款，2全部回款）
+
+    public String getReturnMoney() {
+        return returnMoney;
+    }
+
+    public void setReturnMoney(String returnMoney) {
+        this.returnMoney = returnMoney;
+    }
+
+    public String getNotReturnMoney() {
+        return notReturnMoney;
+    }
+
+    public void setNotReturnMoney(String notReturnMoney) {
+        this.notReturnMoney = notReturnMoney;
+    }
+
+    public Integer getReturnMoneyState() {
+        return returnMoneyState;
+    }
+
+    public void setReturnMoneyState(Integer returnMoneyState) {
+        this.returnMoneyState = returnMoneyState;
+    }
 
     public String getCustomerId() {
         return customerId;
