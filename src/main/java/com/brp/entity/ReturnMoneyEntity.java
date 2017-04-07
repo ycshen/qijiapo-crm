@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author yuchuanshen
@@ -36,6 +37,7 @@ public class ReturnMoneyEntity {
     private String remark; //备注
     private Integer lockStatus; //锁定状态（0-未锁定， 1-锁定）
     private Integer isDelete;
+    List<ReturnMoneyDetailEntity> detailList; //回款详情信息
 
     public Date getActualReturnDate() {
         return actualReturnDate;
@@ -227,6 +229,14 @@ public class ReturnMoneyEntity {
 
     public void setLockStatus(Integer lockStatus) {
         this.lockStatus = lockStatus;
+    }
+
+    public List<ReturnMoneyDetailEntity> getDetailList() {
+        return detailList;
+    }
+
+    public void setDetailList(List<ReturnMoneyDetailEntity> detailList) {
+        this.detailList = detailList;
     }
 
     /**

@@ -10,5 +10,6 @@ import java.util.List;
 public interface ReturnMoneyDetailService {
 
     void insertReturnMoneyDetail(ReturnMoneyDetailEntity returnMoneyDetailEntity);
+    void batchInsertReturnMoneyDetail(List<ReturnMoneyDetailEntity> list);
     List<ReturnMoneyDetailEntity> getRMDByReturnMoneyId(String returnMoneyId);
 }

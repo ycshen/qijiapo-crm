@@ -18,4 +18,9 @@ public class ReturnMoneyDetailServiceImpl implements ReturnMoneyDetailService {
     public List<ReturnMoneyDetailEntity> getRMDByReturnMoneyId(String returnMoneyId) {
         return null;
     }
+
+    @Override
+    public void batchInsertReturnMoneyDetail(List<ReturnMoneyDetailEntity> list) {
+
+    }
 }

@@ -1,8 +1,10 @@
 package com.brp.api;
 
 import com.alibaba.fastjson.JSONObject;
+import com.brp.entity.ReturnMoneyDetailEntity;
 import com.brp.entity.ReturnMoneyEntity;
 import com.brp.service.CompanyService;
+import com.brp.service.ReturnMoneyDetailService;
 import com.brp.service.ReturnMoneyService;
 import com.brp.util.JsonUtils;
 import com.brp.util.SHA1Utils;
@@ -17,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by fengyue on 2017/4/5.
@@ -32,7 +32,8 @@ public class ReturnMoneyApi {
     private ReturnMoneyService returnMoneyService;
     @Autowired
     private CompanyService companyService;
-
+    @Autowired
+    private ReturnMoneyDetailService returnMoneyDetailService;
     @RequestMapping(value = "/insertReturnMoney", method = RequestMethod.POST)
     @ResponseBody
     public String insertReturnMoney(@RequestBody JSONObject jsonObject){
@@ -64,7 +65,17 @@ public class ReturnMoneyApi {
             if(auth && StringUtils.isNotBlank(returnMoney)){
                 ReturnMoneyEntity returnMoneyObj = JSONObject.parseObject(returnMoney, ReturnMoneyEntity.class);
                 returnMoneyObj.setIsDelete(0);
+                String returnMoneyId = UUID.randomUUID().toString().replaceAll("-", "");
+                returnMoneyObj.setId(returnMoneyId);
                 returnMoneyService.insertReturnMoney(returnMoneyObj);
+                List<ReturnMoneyDetailEntity> detailList = returnMoneyObj.getDetailList();
+                if(detailList != null && detailList.size() > 0){
+                    for (ReturnMoneyDetailEntity detail: detailList) {
+                        detail.setId(returnMoneyId);
+                    }
+
+                    returnMoneyDetailService.batchInsertReturnMoneyDetail(detailList);
+                }
                 jsonData.setData(returnMoneyObj.getId().toString());
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
