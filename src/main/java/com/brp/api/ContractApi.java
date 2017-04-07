@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.brp.entity.ContractEntity;
 import com.brp.service.CompanyService;
 import com.brp.service.ContractService;
+import com.brp.util.AuthUtils;
 import com.brp.util.JsonUtils;
 import com.brp.util.SHA1Utils;
 import com.brp.util.TryParseUtils;
@@ -44,29 +45,8 @@ public class ContractApi {
 	public String insertContract(@RequestBody JSONObject jsonObject){
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
+			boolean auth = AuthUtils.auth(jsonObject);
 			String contract = jsonObject.getString("contract");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("contract", contract);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
 			if(auth && StringUtils.isNotBlank(contract)){
 				ContractEntity contractObj = JSONObject.parseObject(contract, ContractEntity.class);
 				contractObj.setIsDelete(0);
