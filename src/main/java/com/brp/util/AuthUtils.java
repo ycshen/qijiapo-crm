@@ -18,8 +18,8 @@ import java.util.Set;
 @Component
 public class AuthUtils {
     private static CompanyService companyService;
-    @Autowired
-    public static void setCompanyService(CompanyService companyService){
+    @Autowired(required = true)
+    public void setCompanyService(CompanyService companyService){
         AuthUtils.companyService = companyService;
     }
 
@@ -39,7 +39,11 @@ public class AuthUtils {
                 Iterator<String> it = keySet.iterator();
                 while (it.hasNext()) {
                     String key = it.next();
-                    maps.put(key, jsonObject.getString(key));
+                    if("secret".equals(key)){
+                        maps.put(key, mybaseSecret);
+                    }else{
+                        maps.put(key, jsonObject.getString(key));
+                    }
                 }
 
                 String md5 = SHA1Utils.SHA1(maps);
