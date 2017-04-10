@@ -47,6 +47,21 @@
         #{taxType,jdbcType=INTEGER},#{taxNum,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER}
         )
     </insert>
+    <insert id="batchInsertReturnMoneyDetail" parameterType="java.util.List">
+        insert into return_money_detail (userId,userName,departmentId, companyId,
+        createTime,updateTime,updateUser,updateUserId,returnMoneyId,
+        money,startDate,payType,returnMoneyType,taxContent,
+        taxType,taxNum,remark,isDelete
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.userId,jdbcType=VARCHAR},#{item.userName,jdbcType=VARCHAR}, #{item.departmentId,jdbcType=VARCHAR},#{item.companyId,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},#{item.updateTime,jdbcType=TIMESTAMP},#{item.updateUser,jdbcType=VARCHAR},#{item.updateUserId,jdbcType=VARCHAR},#{item.returnMoneyId,jdbcType=VARCHAR},
+            #{item.money,jdbcType=VARCHAR},#{item.startDate,jdbcType=TIMESTAMP},#{item.payType,jdbcType=INTEGER},#{item.returnMoneyType,jdbcType=INTEGER},#{item.taxContent,jdbcType=VARCHAR},
+            #{item.taxType,jdbcType=INTEGER},#{item.taxNum,jdbcType=VARCHAR},#{item.isDelete,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
 
     <select id="getReturnMoneyDetailListByReturnMoneyDetailId" resultMap="BaseResultMap">
         SELECT  <include refid="Base_Column_List"/>
