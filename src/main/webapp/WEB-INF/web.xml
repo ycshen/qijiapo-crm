@@ -36,4 +36,13 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <filter>
+    <filter-name>interfaceAuthFilter</filter-name>
+    <filter-class>com.brp.interceptors.InterfaceAuthFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>interfaceAuthFilter</filter-name>
+    <url-pattern>/api-crm/*</url-pattern>
+  </filter-mapping>
 </web-app>
