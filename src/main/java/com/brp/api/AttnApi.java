@@ -2,11 +2,9 @@ package com.brp.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.brp.entity.AttnEntity;
-import com.brp.entity.CompetitorEntity;
 import com.brp.service.AttnService;
 import com.brp.service.CompanyService;
 import com.brp.util.JsonUtils;
-import com.brp.util.SHA1Utils;
 import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
 import com.brp.util.api.model.JsonData;
@@ -20,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by fengyue on 2017/3/9.
@@ -41,29 +37,7 @@ public class AttnApi {
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String attn = jsonObject.getString("attn");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("attn", attn);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth && StringUtils.isNotBlank(attn)){
+            if(StringUtils.isNotBlank(attn)){
                 AttnEntity attnObj = JSONObject.parseObject(attn, AttnEntity.class);
                 attnObj.setIsDelete(0);
                 attnService.insertAttn(attnObj);
@@ -91,29 +65,7 @@ public class AttnApi {
         JsonData<List<AttnEntity>> jsonData = new JsonData<List<AttnEntity>>();
         try{
             String query = jsonObject.getString("query");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("query", query);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth){
+            if(StringUtils.isNotBlank(query)){
                 AttnQuery AttnQuery = JSONObject.parseObject(query, AttnQuery.class);
                 String roleTypeStr = AttnQuery.getRoleType();
                 if(StringUtils.isBlank(roleTypeStr)){
@@ -157,29 +109,7 @@ public class AttnApi {
         JsonData<AttnEntity> jsonData = new JsonData<AttnEntity>();
         try{
             String id = jsonObject.getString("id");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("id", id);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+            if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 
                 AttnEntity attn = attnService.getAttnById(id);
                 jsonData.setCode(ApiCode.OK);
@@ -206,29 +136,7 @@ public class AttnApi {
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String id = jsonObject.getString("id");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("id", id);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+            if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 
                 attnService.deleteAttnById(id);
                 jsonData.setCode(ApiCode.OK);
@@ -255,29 +163,7 @@ public class AttnApi {
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String idList = jsonObject.getString("idList");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("idList", idList);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth && StringUtils.isNotBlank(idList)){
+            if(StringUtils.isNotBlank(idList)){
                 List<String> list = JSONObject.parseArray(idList, String.class);
                 attnService.batchDeleteAttn(list);
                 jsonData.setCode(ApiCode.OK);
@@ -303,29 +189,7 @@ public class AttnApi {
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String attn = jsonObject.getString("attn");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("attn", attn);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth && StringUtils.isNotBlank(attn)){
+            if(StringUtils.isNotBlank(attn)){
                 AttnEntity attnEntity = JSONObject.parseObject(attn, AttnEntity.class);
                 attnEntity.setIsDelete(0);
                 attnEntity.setUpdateTime(new Date());

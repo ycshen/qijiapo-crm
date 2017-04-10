@@ -5,7 +5,6 @@ import com.brp.entity.CustomerEntity;
 import com.brp.service.CompanyService;
 import com.brp.service.CustomerService;
 import com.brp.util.JsonUtils;
-import com.brp.util.SHA1Utils;
 import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
 import com.brp.util.api.model.JsonData;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -45,29 +42,7 @@ public class CustomerApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String customer = jsonObject.getString("customer");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("customer", customer);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(customer)){
+			if(StringUtils.isNotBlank(customer)){
 				CustomerEntity customerObj = JSONObject.parseObject(customer, CustomerEntity.class);
 				customerObj.setIsDelete(0);
 				customerService.insertCustomer(customerObj);
@@ -95,29 +70,7 @@ public class CustomerApi {
 		JsonData<List<CustomerEntity>> jsonData = new JsonData<List<CustomerEntity>>();
 		try{
 			String query = jsonObject.getString("query");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("query", query);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth){
+			if(StringUtils.isNotBlank(query)){
 				CustomerQuery customerQuery = JSONObject.parseObject(query, CustomerQuery.class);
 				String roleTypeStr = customerQuery.getRoleType();
 				if(StringUtils.isBlank(roleTypeStr)){
@@ -165,29 +118,7 @@ public class CustomerApi {
 		JsonData<Integer> jsonData = new JsonData<Integer>();
 		try{
 			String query = jsonObject.getString("query");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("query", query);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-
-			if(auth){
+			if(StringUtils.isNotBlank(query)){
 				CustomerQuery customerQuery = JSONObject.parseObject(query, CustomerQuery.class);
 				String roleTypeStr = customerQuery.getRoleType();
 				if(StringUtils.isBlank(roleTypeStr)){
@@ -221,29 +152,7 @@ public class CustomerApi {
 		JsonData<CustomerEntity> jsonData = new JsonData<CustomerEntity>();
 		try{
 			String id = jsonObject.getString("id");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("id", id);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+			if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 				
 				CustomerEntity customer = customerService.getCustomerById(id);
 				jsonData.setCode(ApiCode.OK);
@@ -270,29 +179,7 @@ public class CustomerApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String id = jsonObject.getString("id");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("id", id);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+			if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 				
 				customerService.deleteCustomerById(id);
 				jsonData.setCode(ApiCode.OK);
@@ -319,29 +206,7 @@ public class CustomerApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String idList = jsonObject.getString("idList");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("idList", idList);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(idList)){
+			if(StringUtils.isNotBlank(idList)){
 				List<String> list = JSONObject.parseArray(idList, String.class);
 				customerService.batchDeleteCustomer(list);
 				jsonData.setCode(ApiCode.OK);
@@ -367,29 +232,7 @@ public class CustomerApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String customer = jsonObject.getString("customer");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("customer", customer);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(customer)){
+			if(StringUtils.isNotBlank(customer)){
 				CustomerEntity customerObj = JSONObject.parseObject(customer, CustomerEntity.class);
 				customerObj.setIsDelete(0);
 				customerObj.setUpdateTime(new Date());
