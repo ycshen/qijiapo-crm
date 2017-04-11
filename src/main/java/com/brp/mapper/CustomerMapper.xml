@@ -211,4 +211,7 @@
     	id = #{id}
     	where id = #{id} limit 1
     </update>
+	<select id="getAllCustomer" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select customerName,id from customer where isDelete=0 and companyId=#{companyId}
+	</select>
 </mapper>

@@ -24,5 +24,6 @@ public interface CustomerMapper {
 	void batchDeleteCustomer(@Param("inId")String inId);
 	void updateCustomer(CustomerEntity customer);
 	Integer getSelfCustomerCount(CustomerQuery customerQuery);
+	List<CustomerEntity> getAllCustomer(String companyId);
 }
 

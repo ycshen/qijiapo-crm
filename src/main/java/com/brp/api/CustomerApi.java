@@ -253,6 +253,31 @@ public class CustomerApi {
 		
 		return result;
 	}
-	
+
+	@RequestMapping(value = "/getAllCustomer", method = RequestMethod.POST)
+	@ResponseBody
+	public String getAllCustomer(@RequestBody JSONObject jsonObject){
+		JsonData<List<CustomerEntity>> jsonData = new JsonData<List<CustomerEntity>>();
+		try{
+			String companyId = jsonObject.getString("companyId");
+			if(StringUtils.isNotBlank(companyId)){
+				List<CustomerEntity> list = customerService.getAllCustomer(companyId);
+				jsonData.setCode(ApiCode.OK);
+				jsonData.setMessage("操作成功");
+				jsonData.setData(list);
+			}else{
+				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+				jsonData.setMessage("参数异常");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonData.setCode(ApiCode.EXCEPTION);
+			jsonData.setMessage("操作失败");
+		}
+
+		String result = JsonUtils.json2Str(jsonData);
+
+		return result;
+	}
 }
 

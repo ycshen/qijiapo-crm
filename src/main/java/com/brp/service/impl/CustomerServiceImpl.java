@@ -74,5 +74,10 @@ public class CustomerServiceImpl implements CustomerService{
 	public Integer getSelfCustomerCount(CustomerQuery customerQuery) {
 		return customerMapper.getSelfCustomerCount(customerQuery);
 	}
+
+	@Override
+	public List<CustomerEntity> getAllCustomer(String companyId) {
+		return customerMapper.getAllCustomer(companyId);
+	}
 }
 
