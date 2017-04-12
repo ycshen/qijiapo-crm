@@ -41,7 +41,17 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public CustomerEntity getCustomerById(String id) {
-		return customerMapper.getCustomerById(id);
+		CustomerEntity customer = customerMapper.getCustomerById(id);
+		if(customer != null){
+			String customerPId = customer.getParentCustomerId();
+			if(StringUtils.isNotBlank(customerPId)){
+				CustomerEntity parentCustomer = customerMapper.getCustomerById(customerPId);
+				if(parentCustomer != null){
+					customer.setParentCustomerName(parentCustomer.getCustomerName());
+				}
+			}
+		}
+		return customer;
 	}
 
 	@Override
