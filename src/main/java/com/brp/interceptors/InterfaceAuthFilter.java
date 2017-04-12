@@ -31,7 +31,7 @@ public class InterfaceAuthFilter implements Filter {
                     "application/json;charset=utf-8")) {
                 requestWrapper = new BodyReaderHttpServletRequestWrapper(
                         (HttpServletRequest) req);
-                String jsonStr = IOUtils.toString(requestWrapper.getInputStream());
+                String jsonStr = IOUtils.toString(requestWrapper.getInputStream(), "UTF-8");
                 JSONObject jsonObject = JSONArray.parseObject(jsonStr);
                 Boolean auth = AuthUtils.auth(jsonObject);
                 JsonData<String> jsonData = new JsonData<String>();
