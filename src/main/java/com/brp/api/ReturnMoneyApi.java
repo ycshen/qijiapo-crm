@@ -40,42 +40,18 @@ public class ReturnMoneyApi {
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String returnMoney = jsonObject.getString("returnMoney");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("returnMoney", returnMoney);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth && StringUtils.isNotBlank(returnMoney)){
+            if(StringUtils.isNotBlank(returnMoney)){
                 ReturnMoneyEntity returnMoneyObj = JSONObject.parseObject(returnMoney, ReturnMoneyEntity.class);
                 returnMoneyObj.setIsDelete(0);
                 String returnMoneyId = UUID.randomUUID().toString().replaceAll("-", "");
                 returnMoneyObj.setId(returnMoneyId);
                 returnMoneyService.insertReturnMoney(returnMoneyObj);
-                List<ReturnMoneyDetailEntity> detailList = returnMoneyObj.getDetailList();
-                if(detailList != null && detailList.size() > 0){
-                    for (ReturnMoneyDetailEntity detail: detailList) {
-                        detail.setId(returnMoneyId);
-                    }
-
-                    returnMoneyDetailService.batchInsertReturnMoneyDetail(detailList);
+                ReturnMoneyDetailEntity returnMoneyDetail = returnMoneyObj.getReturnMoneyDetail();
+                if(returnMoneyDetail != null){
+                    returnMoneyDetail.setReturnMoneyId(returnMoneyId);
+                    returnMoneyDetailService.insertReturnMoneyDetail(returnMoneyDetail);
                 }
+
                 jsonData.setData(returnMoneyObj.getId().toString());
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
