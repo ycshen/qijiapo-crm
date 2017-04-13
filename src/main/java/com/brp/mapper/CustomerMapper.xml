@@ -205,9 +205,6 @@
     	<if test="companyId != null">
     		companyId = #{companyId, jdbcType=VARCHAR},
     	</if>
-    	<if test="companyName != null">
-    		companyName = #{companyName, jdbcType=VARCHAR},
-    	</if>
     	id = #{id}
     	where id = #{id} limit 1
     </update>
