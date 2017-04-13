@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.WorkAttendanceMapper">
+    <resultMap id="BaseResultMap" type="com.brp.entity.WorkAttendanceEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="departmentId" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="createUser" property="createUser" jdbcType="VARCHAR"/>
+
+        <result column="createUserId" property="createUserId" jdbcType="VARCHAR"/>
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="location" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="attendanceTime" property="attendanceTime" jdbcType="TIMESTAMP"/>
+
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="lateCause" property="lateCause" jdbcType="VARCHAR"/>
+        <result column="leaveEarlyReason" property="leaveEarlyReason" jdbcType="VARCHAR"/>
+        <result column="onWorkAttendanceLocation" property="onWorkAttendanceLocation" jdbcType="VARCHAR"/>
+        <result column="offWorkAttendanceLocation" property="offWorkAttendanceLocation" jdbcType="VARCHAR"/>
+
+        <result column="onWorkTime" property="onWorkTime" jdbcType="TIMESTAMP"/>
+        <result column="offWorkTime" property="offWorkTime" jdbcType="TIMESTAMP"/>
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id,userId,userName,departmentId,createUser,
+      createUserId,departmentName,createTime,location,attendanceTime,
+      state,lateCause,leaveEarlyReason,onWorkAttendanceLocation,offWorkAttendanceLocation,
+      isDelete,onWorkTime,offWorkTime
+  </sql>
+    <insert id="insertWorkAttendance" parameterType="com.brp.entity.WorkAttendanceEntity" useGeneratedKeys="true"
+            keyProperty="id">
+    insert work_attendance
+   		(userId,userName,departmentId,createUser,
+      createUserId,departmentName,createTime,location,attendanceTime,
+      state,lateCause,leaveEarlyReason,onWorkAttendanceLocation,offWorkAttendanceLocation,
+      isDelete,onWorkTime,offWorkTime
+   		 ) 
+    values
+    	( #{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR},
+    	#{createUserId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{location,jdbcType=VARCHAR},#{attendanceTime,jdbcType=TIMESTAMP},
+    	#{state,jdbcType=INTEGER},#{lateCause,jdbcType=VARCHAR},#{leaveEarlyReason,jdbcType=VARCHAR},#{onWorkAttendanceLocation,jdbcType=VARCHAR},#{offWorkAttendanceLocation,jdbcType=VARCHAR},
+    	#{isDelete,jdbcType=INTEGER},#{onWorkTime,jdbcType=TIMESTAMP},#{offWorkTime,jdbcType=TIMESTAMP}
+
+    	)
+  </insert>
+    <select id="getWorkAttendancePage" resultMap="BaseResultMap"
+            parameterType="com.brp.util.query.WorkAttendanceQuery">
+        select
+        <include refid="Base_Column_List"/>
+        from work_attendance
+        where isDelete = 0
+        <trim prefix=" " suffix="" suffixOverrides="">
+
+            <if test="roleType == 1">
+                and companyId = #{companyId}
+            </if>
+            <if test="roleType == 2">
+                and departmentId in (${departmentId})
+            </if>
+            <if test="roleType == 3">
+                and userId = #{userId}
+            </if>
+            <if test="customerId != null">
+                and customerId = #{customerId}
+            </if>
+        </trim>
+
+        order by createTime desc
+    </select>
+
+    <select id="getWorkAttendanceById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from work_attendance
+        where
+        id=#{id} and isDelete=0
+    </select>
+    <update id="deleteWorkAttendanceById" parameterType="java.lang.String">
+         update work_attendance set isDelete=1 where id=#{id} limit 1;
+    </update>
+    <update id="batchDeleteWorkAttendance" parameterType="java.lang.String">
+         update work_attendance set isDelete=1 where id in (${inId});
+    </update>
+
+</mapper>

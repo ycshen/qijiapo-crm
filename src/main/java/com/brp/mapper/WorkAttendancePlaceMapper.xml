@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.brp.mapper.WorkAttendancePlaceMapper">
+    <resultMap id="BaseResultMap" type="com.brp.entity.WorkAttendancePlaceEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="createUser" property="createUser" jdbcType="VARCHAR"/>
+        <result column="updateUser" property="updateUser" jdbcType="VARCHAR"/>
+
+        <result column="departmentId" property="departmentId" jdbcType="VARCHAR"/>
+        <result column="departmentName" property="departmentName" jdbcType="VARCHAR"/>
+        <result column="companyId" property="companyId" jdbcType="VARCHAR"/>
+        <result column="companyName" property="companyName" jdbcType="VARCHAR"/>
+        <result column="createUserId" property="createUserId" jdbcType="VARCHAR"/>
+
+        <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR"/>
+        <result column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="placeName" property="placeName" jdbcType="VARCHAR"/>
+
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="workTime" property="workTime" jdbcType="VARCHAR"/>
+        <result column="onWorkTime" property="onWorkTime" jdbcType="TIMESTAMP"/>
+        <result column="offWorkTime" property="offWorkTime" jdbcType="TIMESTAMP"/>
+        <result column="errorRange" property="errorRange" jdbcType="errorRange"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+	  id,createUser,updateUser,createTime, updateTime,
+   	  departmentId,departmentName,companyId,companyName,createUserId,
+   	  isDelete,userId,updateUserId,userName,placeName,
+   	  address,workTime,onWorkTime,offWorkTime,errorRange,state
+  </sql>
+    <insert id="insertWorkAttendancePlace" parameterType="com.brp.entity.WorkAttendancePlaceEntity" useGeneratedKeys="true" keyProperty="id">
+    insert work_attendance_place
+   		(createUser,updateUser,createTime, updateTime,
+   	  departmentId,departmentName,companyId,companyName,createUserId,
+   	  isDelete,userId,updateUserId,userName,placeName,
+   	  address,workTime,onWorkTime,offWorkTime,errorRange,state
+   		 ) 
+    values
+    	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
+    	#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},
+    	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
+    	#{isDelete,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{placeName,jdbcType=VARCHAR},
+    	#{address,jdbcType=VARCHAR},#{workTime,jdbcType=VARCHAR},#{onWorkTime,jdbcType=TIMESTAMP},#{offWorkTime,jdbcType=TIMESTAMP},#{errorRange,jdbcType=VARCHAR},
+    	#{state,jdbcType=INTERGER}
+    	)
+  </insert>
+    <select id="getWorkAttendancePlacePage" resultMap="BaseResultMap" parameterType="com.brp.util.query.WorkAttendancePlaceQuery">
+        select
+        <include refid="Base_Column_List"/>
+        from work_attendance_place
+        where isDelete = 0
+        <trim prefix=" " suffix="" suffixOverrides="">
+
+            <if test="work_attendance_placeName != '' and work_attendance_placeName != null">
+                and work_attendance_placeName like '%${work_attendance_placeName}%'
+            </if>
+            <if test="roleType == 1">
+                and companyId = #{companyId}
+            </if>
+            <if test="roleType == 2">
+                and departmentId in (${departmentId})
+            </if>
+            <if test="roleType == 3">
+                and userId = #{userId}
+            </if>
+        </trim>
+
+        order by createTime desc
+    </select>
+
+    <select id="getWorkAttendancePlaceById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from work_attendance_place
+        where
+        id=#{id} and isDelete=0
+    </select>
+    <update id="deleteWorkAttendancePlaceById" parameterType="java.lang.String">
+         update work_attendance_place set isDelete=1 where id=#{id} limit 1;
+    </update>
+    <update id="batchDeleteWorkAttendancePlace" parameterType="java.lang.String">
+         update work_attendance_place set isDelete=1 where id in (${inId});
+    </update>
+    <update id="enableOrDisableWorkAttendancePlaceById" parameterType="java.lang.String">
+        UPDATE work_attendance_place SET state = (case state when 1 then 0 when 0 then 1 else state end)
+        where id=#{id} limit 1;
+    </update>
+    <update id="updateWorkAttendancePlace" parameterType="com.brp.entity.WorkAttendancePlaceEntity">
+        update work_attendance_place set
+
+        <if test="createTime != null">
+            createTime = #{createTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+            updateTime = #{updateTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="createUser != null">
+            createUser = #{createUser, jdbcType=VARCHAR},
+        </if>
+        <if test="updateUser != null">
+            updateUser = #{updateUser, jdbcType=VARCHAR},
+        </if>
+        <if test="departmentId != null">
+            departmentId = #{departmentId, jdbcType=VARCHAR},
+        </if>
+
+        <if test="departmentName != null">
+            departmentName = #{departmentName, jdbcType=VARCHAR},
+        </if>
+        <if test="companyId != null">
+            companyId = #{companyId, jdbcType=VARCHAR},
+        </if>
+        <if test="companyName != null">
+            companyName = #{companyName, jdbcType=VARCHAR},
+        </if>
+        <if test="createUserId != null">
+            createUserId = #{createUserId, jdbcType=VARCHAR},
+        </if>
+        <if test="updateUserId != null">
+            updateUserId = #{updateUserId, jdbcType=VARCHAR},
+        </if>
+
+        <if test="userId != null">
+            userId = #{userId, jdbcType=VARCHAR},
+        </if>
+        <if test="userName != null">
+            userName = #{userName, jdbcType=VARCHAR},
+        </if>
+        <if test="isDelete != null">
+            isDelete = #{isDelete, jdbcType=INTEGER},
+        </if>
+        <if test="placeName != null">
+            placeName = #{placeName, jdbcType=VARCHAR},
+        </if>
+        <if test="address != null">
+            address = #{address, jdbcType=VARCHAR},
+        </if>
+        <if test="workTime != null">
+            workTime = #{workTime, jdbcType=VARCHAR},
+        </if>
+        <if test="onWorkTime != null">
+            onWorkTime = #{onWorkTime, jdbcType=TIMESTAMP},
+        </if>
+
+        <if test="offWorkTime != null">
+            offWorkTime = #{offWorkTime, jdbcType=TIMESTAMP},
+        </if>
+        <if test="errorRange != null">
+            errorRange = #{errorRange, jdbcType=VARCHAR},
+        </if>
+        <if test="state != null">
+            state = #{state, jdbcType=INTEGER},
+        </if>
+
+        id = #{id}
+        where id = #{id} limit 1
+    </update>
+</mapper>

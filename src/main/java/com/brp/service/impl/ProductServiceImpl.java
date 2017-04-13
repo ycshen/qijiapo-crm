@@ -22,32 +22,32 @@ import com.brp.util.query.ProductQuery;
 @Service
 public class ProductServiceImpl implements ProductService{
 	@Autowired
-	private ProductMapper competitorMapper;
+	private ProductMapper productMapper;
 
 	@Override
-	public void insertProduct(ProductEntity competitor) {
-		competitorMapper.insertProduct(competitor);
+	public void insertProduct(ProductEntity product) {
+		productMapper.insertProduct(product);
 	}
 
 	@Override
-	public ProductQuery getProductPage(ProductQuery competitorQuery) {
-		List<ProductEntity> list = competitorMapper.getProductPage(competitorQuery);
+	public ProductQuery getProductPage(ProductQuery productQuery) {
+		List<ProductEntity> list = productMapper.getProductPage(productQuery);
 		if(list != null && list.size() > 0){
-			competitorQuery.setItems(list);
+			productQuery.setItems(list);
 		}
 		
 		
-		return competitorQuery;
+		return productQuery;
 	}
 
 	@Override
 	public ProductEntity getProductById(String id) {
-		return competitorMapper.getProductById(id);
+		return productMapper.getProductById(id);
 	}
 
 	@Override
 	public void deleteProductById(String id) {
-		competitorMapper.deleteProductById(id);
+		productMapper.deleteProductById(id);
 	}
 
 	@Override
@@ -60,14 +60,14 @@ public class ProductServiceImpl implements ProductService{
 			
 			if(StringUtils.isNotBlank(inId)){
 				inId = inId.substring(0, inId.length() - 1);
-				competitorMapper.batchDeleteProduct(inId);
+				productMapper.batchDeleteProduct(inId);
 			}
 		}
 	}
 
 	@Override
-	public void updateProduct(ProductEntity competitor) {
-		competitorMapper.updateProduct(competitor);
+	public void updateProduct(ProductEntity product) {
+		productMapper.updateProduct(product);
 	}
 
 	
