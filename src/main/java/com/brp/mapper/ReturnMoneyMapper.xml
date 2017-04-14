@@ -11,7 +11,6 @@
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
         <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
-        <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR" />
         <result column="code" property="code" jdbcType="VARCHAR" />
 
         <result column="contractId" property="contractId" jdbcType="VARCHAR" />
@@ -42,16 +41,16 @@
     </sql>
     <insert id="insertReturnMoney" parameterType="com.brp.entity.ReturnMoneyEntity" useGeneratedKeys="true" keyProperty="id">
         insert return_money
-        (userId,userName,departmentId, companyId,
-        createTime,updateTime,updateUser,updateUserId,code,
+        (id,userId,userName,departmentId, companyId,
+        createTime,updateTime,updateUser,code,
         contractId,customerId,returnMoneyNum,planReturnDate,planReturnMoney,
         actualReturnMoney,actualNotReturnMoney,returnMoneyStatus,totalMoney,lockStatus,
         remark,isDelete,actualReturnDate
         )
         values
-        ( #{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{updateUser,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},
-        #{contractId,jdbcType=VARCHAR},#{customerId,jdbcType=VARCHAR},#{returnMoneyNum,jdbcType=VARCHAR},#{planReturnDate,jdbcType=TIMESTAMP},#{remark,jdbcType=VARCHAR},#{planReturnMoney,jdbcType=VARCHAR},
+        (#{id,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{updateUser,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},
+        #{contractId,jdbcType=VARCHAR},#{customerId,jdbcType=VARCHAR},#{returnMoneyNum,jdbcType=VARCHAR},#{planReturnDate,jdbcType=TIMESTAMP},#{planReturnMoney,jdbcType=VARCHAR},
         #{actualReturnMoney,jdbcType=VARCHAR},#{actualNotReturnMoney,jdbcType=VARCHAR},#{returnMoneyStatus,jdbcType=INTEGER},#{totalMoney,jdbcType=VARCHAR},#{lockStatus,jdbcType=INTEGER},
         #{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},#{actualReturnDate,jdbcType=TIMESTAMP}
         )

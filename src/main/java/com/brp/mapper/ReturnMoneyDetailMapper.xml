@@ -11,11 +11,10 @@
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
         <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
-        <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR" />
         <result column="returnMoneyId" property="returnMoneyId" jdbcType="VARCHAR" />
 
         <result column="money" property="money" jdbcType="VARCHAR" />
-        <result column="startDate" property="startDate" jdbcType="TIMESTAMP" />
+        <result column="returnMoneyTime" property="returnMoneyTime" jdbcType="TIMESTAMP" />
         <result column="payType" property="payType" jdbcType="INTEGER" />
         <result column="returnMoneyType" property="returnMoneyType" jdbcType="INTEGER" />
         <result column="taxContent" property="taxContent" jdbcType="VARCHAR" />
@@ -29,22 +28,35 @@
 
     <sql id="Base_Column_List" >
         id,userId,userName,departmentId, companyId,
-        createTime,updateTime,updateUser,updateUserId,returnMoneyId,
-        money,startDate,payType,returnMoneyType,taxContent,
+        createTime,updateTime,updateUser,returnMoneyId,
+        money,returnMoneyTime,payType,returnMoneyType,taxContent,
         taxType,taxNum,remark,isDelete
     </sql>
     <insert id="insertReturnMoneyDetail" parameterType="com.brp.entity.ReturnMoneyDetailEntity" useGeneratedKeys="true" keyProperty="id">
         insert return_money_detail
         (userId,userName,departmentId, companyId,
-        createTime,updateTime,updateUser,updateUserId,returnMoneyId,
-        money,startDate,payType,returnMoneyType,taxContent,
+        createTime,updateTime,updateUser,returnMoneyId,
+        money,returnMoneyTime,payType,returnMoneyType,taxContent,
         taxType,taxNum,remark,isDelete
         )
         values
         ( #{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{updateUser,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{returnMoneyId,jdbcType=VARCHAR},
-        #{money,jdbcType=VARCHAR},#{startDate,jdbcType=TIMESTAMP},#{payType,jdbcType=INTEGER},#{returnMoneyType,jdbcType=INTEGER},#{taxContent,jdbcType=VARCHAR},
-        #{taxType,jdbcType=INTEGER},#{taxNum,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER}
+        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{updateUser,jdbcType=VARCHAR},#{returnMoneyId,jdbcType=VARCHAR},
+        #{money,jdbcType=VARCHAR},#{returnMoneyTime,jdbcType=TIMESTAMP},#{payType,jdbcType=INTEGER},#{returnMoneyType,jdbcType=INTEGER},#{taxContent,jdbcType=VARCHAR},
+        #{taxType,jdbcType=INTEGER},#{taxNum,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="batchInsertReturnMoneyDetail" parameterType="java.util.List">
+        insert return_money_detail (userId,userName,departmentId, companyId,
+        createTime,updateTime,updateUser,updateUserId,returnMoneyId,
+        money,startDate,payType,returnMoneyType,taxContent,
+        taxType,taxNum,remark,isDelete
+        )
+        value
+        ( #{item.userId,jdbcType=VARCHAR},#{item.userName,jdbcType=VARCHAR}, #{item.departmentId,jdbcType=VARCHAR},#{item.companyId,jdbcType=VARCHAR},
+        #{item.createTime,jdbcType=TIMESTAMP},#{item.updateTime,jdbcType=TIMESTAMP},#{item.updateUser,jdbcType=VARCHAR},#{item.updateUserId,jdbcType=VARCHAR},#{item.returnMoneyId,jdbcType=VARCHAR},
+        #{item.money,jdbcType=VARCHAR},#{item.startDate,jdbcType=TIMESTAMP},#{item.payType,jdbcType=INTEGER},#{item.returnMoneyType,jdbcType=INTEGER},#{item.taxContent,jdbcType=VARCHAR},
+        #{item.taxType,jdbcType=INTEGER},#{item.taxNum,jdbcType=VARCHAR},#{item.isDelete,jdbcType=INTEGER}
         )
     </insert>
 

@@ -1,14 +1,14 @@
 package com.brp.api;
 
 import com.alibaba.fastjson.JSONObject;
-import com.brp.entity.AttnEntity;
-import com.brp.service.AttnService;
+import com.brp.entity.WorkAttendancePlaceEntity;
 import com.brp.service.CompanyService;
+import com.brp.service.WorkAttendancePlaceService;
 import com.brp.util.JsonUtils;
 import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
 import com.brp.util.api.model.JsonData;
-import com.brp.util.query.AttnQuery;
+import com.brp.util.query.WorkAttendancePlaceQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,27 +21,26 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by fengyue on 2017/3/9.
+ * Created by fengyue on 2017/4/13.
  */
 @Controller
-@RequestMapping("/api-crm/attn")
-public class AttnApi {
+@RequestMapping("/api-crm/workAttendancePlace")
+public class WorkAttendancePlaceApi{
     @Autowired
-    private AttnService attnService;
+    private WorkAttendancePlaceService workAttendancePlaceService;
     @Autowired
     private CompanyService companyService;
-
-    @RequestMapping(value = "/insertAttn", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertWorkAttendancePlace", method = RequestMethod.POST)
     @ResponseBody
-    public String insertAttn(@RequestBody JSONObject jsonObject){
+    public String insertWorkAttendancePlace(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
-            String attn = jsonObject.getString("attn");
-            if(StringUtils.isNotBlank(attn)){
-                AttnEntity attnObj = JSONObject.parseObject(attn, AttnEntity.class);
-                attnObj.setIsDelete(0);
-                attnService.insertAttn(attnObj);
-                jsonData.setData(attnObj.getId().toString());
+            String workAttendancePlace = jsonObject.getString("workAttendancePlace");
+            if(StringUtils.isNotBlank(workAttendancePlace)){
+                WorkAttendancePlaceEntity workAttendancePlaceObj = JSONObject.parseObject(workAttendancePlace, WorkAttendancePlaceEntity.class);
+                workAttendancePlaceObj.setIsDelete(0);
+                workAttendancePlaceService.insertWorkAttendancePlace(workAttendancePlaceObj);
+                jsonData.setData(workAttendancePlaceObj.getId().toString());
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{
@@ -59,35 +58,35 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/getAttnPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/getWorkAttendancePlacePage", method = RequestMethod.POST)
     @ResponseBody
-    public String getAttnPage(@RequestBody JSONObject jsonObject){
-        JsonData<List<AttnEntity>> jsonData = new JsonData<List<AttnEntity>>();
+    public String getWorkAttendancePlacePage(@RequestBody JSONObject jsonObject){
+        JsonData<List<WorkAttendancePlaceEntity>> jsonData = new JsonData<List<WorkAttendancePlaceEntity>>();
         try{
             String query = jsonObject.getString("query");
             if(StringUtils.isNotBlank(query)){
-                AttnQuery AttnQuery = JSONObject.parseObject(query, AttnQuery.class);
-                String roleTypeStr = AttnQuery.getRoleType();
+                WorkAttendancePlaceQuery workAttendancePlaceQuery = JSONObject.parseObject(query, WorkAttendancePlaceQuery.class);
+                String roleTypeStr = workAttendancePlaceQuery.getRoleType();
                 if(StringUtils.isBlank(roleTypeStr)){
                     roleTypeStr = "3";
-                    AttnQuery.setRoleType(roleTypeStr);
+                    workAttendancePlaceQuery.setRoleType(roleTypeStr);
                 }
 
-                Integer page =  AttnQuery.getPage();
+                Integer page =  workAttendancePlaceQuery.getPage();
                 if(page == null){
-                    AttnQuery.setPage(1);
+                    workAttendancePlaceQuery.setPage(1);
                 }
 
-                Integer size =  AttnQuery.getSize();
+                Integer size =  workAttendancePlaceQuery.getSize();
                 if(size == null){
-                    AttnQuery.setSize(10);
+                    workAttendancePlaceQuery.setSize(10);
                 }
 
-                AttnQuery = attnService.getAttnPage(AttnQuery);
+                workAttendancePlaceQuery = workAttendancePlaceService.getWorkAttendancePlacePage(workAttendancePlaceQuery);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
-                jsonData.setData(AttnQuery.getItems());
-                jsonData.setCount(AttnQuery.getCount());
+                jsonData.setData(workAttendancePlaceQuery.getItems());
+                jsonData.setCount(workAttendancePlaceQuery.getCount());
             }else{
                 jsonData.setCode(ApiCode.ARGS_EXCEPTION);
                 jsonData.setMessage("参数异常");
@@ -103,18 +102,18 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/getAttnById", method = RequestMethod.POST)
+    @RequestMapping(value = "/getWorkAttendancePlaceById", method = RequestMethod.POST)
     @ResponseBody
-    public String getAttnById(@RequestBody JSONObject jsonObject){
-        JsonData<AttnEntity> jsonData = new JsonData<AttnEntity>();
+    public String getWorkAttendancePlaceById(@RequestBody JSONObject jsonObject){
+        JsonData<WorkAttendancePlaceEntity> jsonData = new JsonData<WorkAttendancePlaceEntity>();
         try{
             String id = jsonObject.getString("id");
             if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 
-                AttnEntity attn = attnService.getAttnById(id);
+                WorkAttendancePlaceEntity workAttendancePlace = workAttendancePlaceService.getWorkAttendancePlaceById(id);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
-                jsonData.setData(attn);
+                jsonData.setData(workAttendancePlace);
             }else{
                 jsonData.setCode(ApiCode.ARGS_EXCEPTION);
                 jsonData.setMessage("参数异常");
@@ -130,15 +129,15 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/deleteAttnById", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteWorkAttendancePlaceById", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteAttnById(@RequestBody JSONObject jsonObject){
+    public String deleteWorkAttendancePlaceById(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String id = jsonObject.getString("id");
             if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 
-                attnService.deleteAttnById(id);
+                workAttendancePlaceService.deleteWorkAttendancePlaceById(id);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{
@@ -157,15 +156,15 @@ public class AttnApi {
     }
 
 
-    @RequestMapping(value = "/batchDeleteAttn", method = RequestMethod.POST)
+    @RequestMapping(value = "/batchDeleteWorkAttendancePlace", method = RequestMethod.POST)
     @ResponseBody
-    public String batchDeleteAttn(@RequestBody JSONObject jsonObject){
+    public String batchDeleteWorkAttendancePlace(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String idList = jsonObject.getString("idList");
             if(StringUtils.isNotBlank(idList)){
                 List<String> list = JSONObject.parseArray(idList, String.class);
-                attnService.batchDeleteAttn(list);
+                workAttendancePlaceService.batchDeleteWorkAttendancePlace(list);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{
@@ -183,17 +182,17 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/updateAttn", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateWorkAttendancePlace", method = RequestMethod.POST)
     @ResponseBody
-    public String updateAttn(@RequestBody JSONObject jsonObject){
+    public String updateWorkAttendancePlace(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
-            String attn = jsonObject.getString("attn");
-            if(StringUtils.isNotBlank(attn)){
-                AttnEntity attnEntity = JSONObject.parseObject(attn, AttnEntity.class);
-                attnEntity.setIsDelete(0);
-                attnEntity.setUpdateTime(new Date());
-                attnService.updateAttn(attnEntity);
+            String workAttendancePlace = jsonObject.getString("workAttendancePlace");
+            if(StringUtils.isNotBlank(workAttendancePlace)){
+                WorkAttendancePlaceEntity workAttendancePlaceObj = JSONObject.parseObject(workAttendancePlace, WorkAttendancePlaceEntity.class);
+                workAttendancePlaceObj.setIsDelete(0);
+                workAttendancePlaceObj.setUpdateTime(new Date());
+                workAttendancePlaceService.updateWorkAttendancePlace(workAttendancePlaceObj);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{

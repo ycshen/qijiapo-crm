@@ -1,10 +1,14 @@
 package com.brp.api;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSONObject;
+import com.brp.entity.ProductEntity;
+import com.brp.service.CompanyService;
+import com.brp.service.ProductService;
+import com.brp.util.JsonUtils;
+import com.brp.util.TryParseUtils;
+import com.brp.util.api.model.ApiCode;
+import com.brp.util.api.model.JsonData;
+import com.brp.util.query.ProductQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,17 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
-import com.brp.base.RoleEnum;
-import com.brp.entity.ProductEntity;
-import com.brp.service.CompanyService;
-import com.brp.service.ProductService;
-import com.brp.util.JsonUtils;
-import com.brp.util.SHA1Utils;
-import com.brp.util.TryParseUtils;
-import com.brp.util.api.model.ApiCode;
-import com.brp.util.api.model.JsonData;
-import com.brp.util.query.ProductQuery;
+import java.util.Date;
+import java.util.List;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -47,29 +42,7 @@ public class ProductApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String product = jsonObject.getString("product");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("product", product);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(product)){
+			if(StringUtils.isNotBlank(product)){
 				ProductEntity productObj = JSONObject.parseObject(product, ProductEntity.class);
 				productObj.setIsDelete(0);
 				productService.insertProduct(productObj);
@@ -97,29 +70,7 @@ public class ProductApi {
 		JsonData<List<ProductEntity>> jsonData = new JsonData<List<ProductEntity>>();
 		try{
 			String query = jsonObject.getString("query");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("query", query);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth){
+			if(StringUtils.isNotBlank(query)){
 				ProductQuery productQuery = JSONObject.parseObject(query, ProductQuery.class);
 				String roleTypeStr = productQuery.getRoleType();
 				if(StringUtils.isBlank(roleTypeStr)){
@@ -163,29 +114,7 @@ public class ProductApi {
 		JsonData<ProductEntity> jsonData = new JsonData<ProductEntity>();
 		try{
 			String id = jsonObject.getString("id");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("id", id);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+			if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 				
 				ProductEntity product = productService.getProductById(id);
 				jsonData.setCode(ApiCode.OK);
@@ -212,29 +141,7 @@ public class ProductApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String id = jsonObject.getString("id");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("id", id);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+			if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 				
 				productService.deleteProductById(id);
 				jsonData.setCode(ApiCode.OK);
@@ -261,29 +168,7 @@ public class ProductApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String idList = jsonObject.getString("idList");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("idList", idList);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(idList)){
+			if(StringUtils.isNotBlank(idList)){
 				List<String> list = JSONObject.parseArray(idList, String.class);
 				productService.batchDeleteProduct(list);
 				jsonData.setCode(ApiCode.OK);
@@ -309,29 +194,7 @@ public class ProductApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String product = jsonObject.getString("product");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("product", product);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(product)){
+			if(StringUtils.isNotBlank(product)){
 				ProductEntity productObj = JSONObject.parseObject(product, ProductEntity.class);
 				productObj.setIsDelete(0);
 				productObj.setUpdateTime(new Date());

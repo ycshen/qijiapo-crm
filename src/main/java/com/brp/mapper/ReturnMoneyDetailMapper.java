@@ -12,4 +12,6 @@ public interface ReturnMoneyDetailMapper {
     void insertReturnMoneyDetail(ReturnMoneyDetailEntity returnMoneyDetailEntity);
 
     List<ReturnMoneyDetailEntity> getRMDByReturnMoneyId(String returnMoneyId);
+
+    void batchInsertReturnMoneyDetail(List<ReturnMoneyDetailEntity> list);
 }

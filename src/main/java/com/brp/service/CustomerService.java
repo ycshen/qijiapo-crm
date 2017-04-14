@@ -21,5 +21,6 @@ public interface CustomerService {
 	void deleteCustomerById(String id);
 	void batchDeleteCustomer(List<String> idList);
 	Integer getSelfCustomerCount(CustomerQuery customerQuery);
+	List<CustomerEntity> getAllCustomer(String companyId);
 }
 

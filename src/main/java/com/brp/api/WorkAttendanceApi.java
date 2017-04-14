@@ -1,14 +1,15 @@
 package com.brp.api;
 
 import com.alibaba.fastjson.JSONObject;
-import com.brp.entity.AttnEntity;
-import com.brp.service.AttnService;
+import com.brp.entity.WorkAttendanceEntity;
+import com.brp.entity.WorkAttendanceEntity;
 import com.brp.service.CompanyService;
+import com.brp.service.WorkAttendanceService;
 import com.brp.util.JsonUtils;
 import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
 import com.brp.util.api.model.JsonData;
-import com.brp.util.query.AttnQuery;
+import com.brp.util.query.WorkAttendanceQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,27 +22,28 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by fengyue on 2017/3/9.
+ * Created by fengyue on 2017/4/13.
  */
 @Controller
-@RequestMapping("/api-crm/attn")
-public class AttnApi {
+@RequestMapping("/api-crm/workAttendance")
+public class WorkAttendanceApi {
+
     @Autowired
-    private AttnService attnService;
+    private WorkAttendanceService workAttendanceService;
+
     @Autowired
     private CompanyService companyService;
-
-    @RequestMapping(value = "/insertAttn", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertWorkAttendance", method = RequestMethod.POST)
     @ResponseBody
     public String insertAttn(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String attn = jsonObject.getString("attn");
             if(StringUtils.isNotBlank(attn)){
-                AttnEntity attnObj = JSONObject.parseObject(attn, AttnEntity.class);
-                attnObj.setIsDelete(0);
-                attnService.insertAttn(attnObj);
-                jsonData.setData(attnObj.getId().toString());
+                WorkAttendanceEntity workAttendanceEntity = JSONObject.parseObject(attn, WorkAttendanceEntity.class);
+                workAttendanceEntity.setIsDelete(0);
+                workAttendanceService.insertWorkAttendance(workAttendanceEntity);
+                jsonData.setData(workAttendanceEntity.getId().toString());
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{
@@ -59,35 +61,35 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/getAttnPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/getWorkAttendancePage", method = RequestMethod.POST)
     @ResponseBody
     public String getAttnPage(@RequestBody JSONObject jsonObject){
-        JsonData<List<AttnEntity>> jsonData = new JsonData<List<AttnEntity>>();
+        JsonData<List<WorkAttendanceEntity>> jsonData = new JsonData<List<WorkAttendanceEntity>>();
         try{
             String query = jsonObject.getString("query");
             if(StringUtils.isNotBlank(query)){
-                AttnQuery AttnQuery = JSONObject.parseObject(query, AttnQuery.class);
-                String roleTypeStr = AttnQuery.getRoleType();
+                WorkAttendanceQuery WorkAttendanceQuery = JSONObject.parseObject(query, WorkAttendanceQuery.class);
+                String roleTypeStr = WorkAttendanceQuery.getRoleType();
                 if(StringUtils.isBlank(roleTypeStr)){
                     roleTypeStr = "3";
-                    AttnQuery.setRoleType(roleTypeStr);
+                    WorkAttendanceQuery.setRoleType(roleTypeStr);
                 }
 
-                Integer page =  AttnQuery.getPage();
+                Integer page =  WorkAttendanceQuery.getPage();
                 if(page == null){
-                    AttnQuery.setPage(1);
+                    WorkAttendanceQuery.setPage(1);
                 }
 
-                Integer size =  AttnQuery.getSize();
+                Integer size =  WorkAttendanceQuery.getSize();
                 if(size == null){
-                    AttnQuery.setSize(10);
+                    WorkAttendanceQuery.setSize(10);
                 }
 
-                AttnQuery = attnService.getAttnPage(AttnQuery);
+                WorkAttendanceQuery = workAttendanceService.getWorkAttendancePage(WorkAttendanceQuery);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
-                jsonData.setData(AttnQuery.getItems());
-                jsonData.setCount(AttnQuery.getCount());
+                jsonData.setData(WorkAttendanceQuery.getItems());
+                jsonData.setCount(WorkAttendanceQuery.getCount());
             }else{
                 jsonData.setCode(ApiCode.ARGS_EXCEPTION);
                 jsonData.setMessage("参数异常");
@@ -103,15 +105,15 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/getAttnById", method = RequestMethod.POST)
+    @RequestMapping(value = "/getWorkAttendanceById", method = RequestMethod.POST)
     @ResponseBody
     public String getAttnById(@RequestBody JSONObject jsonObject){
-        JsonData<AttnEntity> jsonData = new JsonData<AttnEntity>();
+        JsonData<WorkAttendanceEntity> jsonData = new JsonData<WorkAttendanceEntity>();
         try{
             String id = jsonObject.getString("id");
             if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 
-                AttnEntity attn = attnService.getAttnById(id);
+                WorkAttendanceEntity attn = workAttendanceService.getWorkAttendanceById(id);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
                 jsonData.setData(attn);
@@ -130,7 +132,7 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/deleteAttnById", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteWorkAttendanceById", method = RequestMethod.POST)
     @ResponseBody
     public String deleteAttnById(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
@@ -138,7 +140,7 @@ public class AttnApi {
             String id = jsonObject.getString("id");
             if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 
-                attnService.deleteAttnById(id);
+                workAttendanceService.deleteWorkAttendanceById(id);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{
@@ -157,7 +159,7 @@ public class AttnApi {
     }
 
 
-    @RequestMapping(value = "/batchDeleteAttn", method = RequestMethod.POST)
+    @RequestMapping(value = "/batchDeleteWorkAttendance", method = RequestMethod.POST)
     @ResponseBody
     public String batchDeleteAttn(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
@@ -165,7 +167,7 @@ public class AttnApi {
             String idList = jsonObject.getString("idList");
             if(StringUtils.isNotBlank(idList)){
                 List<String> list = JSONObject.parseArray(idList, String.class);
-                attnService.batchDeleteAttn(list);
+                workAttendanceService.batchDeleteWorkAttendance(list);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{
@@ -183,31 +185,4 @@ public class AttnApi {
         return result;
     }
 
-    @RequestMapping(value = "/updateAttn", method = RequestMethod.POST)
-    @ResponseBody
-    public String updateAttn(@RequestBody JSONObject jsonObject){
-        JsonData<String> jsonData = new JsonData<String>();
-        try{
-            String attn = jsonObject.getString("attn");
-            if(StringUtils.isNotBlank(attn)){
-                AttnEntity attnEntity = JSONObject.parseObject(attn, AttnEntity.class);
-                attnEntity.setIsDelete(0);
-                attnEntity.setUpdateTime(new Date());
-                attnService.updateAttn(attnEntity);
-                jsonData.setCode(ApiCode.OK);
-                jsonData.setMessage("操作成功");
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            jsonData.setCode(ApiCode.EXCEPTION);
-            jsonData.setMessage("操作失败");
-        }
-
-        String result = JsonUtils.json2Str(jsonData);
-
-        return result;
-    }
 }

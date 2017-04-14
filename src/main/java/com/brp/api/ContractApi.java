@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.brp.entity.ContractEntity;
 import com.brp.service.CompanyService;
 import com.brp.service.ContractService;
-import com.brp.util.AuthUtils;
 import com.brp.util.JsonUtils;
-import com.brp.util.SHA1Utils;
 import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
 import com.brp.util.api.model.JsonData;
@@ -20,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /** 
  * <p>Project: qijiapo-crm</p> 
@@ -45,9 +41,8 @@ public class ContractApi {
 	public String insertContract(@RequestBody JSONObject jsonObject){
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
-			boolean auth = AuthUtils.auth(jsonObject);
 			String contract = jsonObject.getString("contract");
-			if(auth && StringUtils.isNotBlank(contract)){
+			if(StringUtils.isNotBlank(contract)){
 				ContractEntity contractObj = JSONObject.parseObject(contract, ContractEntity.class);
 				contractObj.setIsDelete(0);
 				contractObj.setReturnMoneyState(0);
@@ -75,30 +70,36 @@ public class ContractApi {
 	public String getContractPage(@RequestBody JSONObject jsonObject){
 		JsonData<List<ContractEntity>> jsonData = new JsonData<List<ContractEntity>>();
 
-		String query = jsonObject.getString("query");			
-		ContractQuery contractQuery = JSONObject.parseObject(query, ContractQuery.class);
-		String roleTypeStr = contractQuery.getRoleType();
-		if(StringUtils.isBlank(roleTypeStr)){
-			roleTypeStr = "3";
-			contractQuery.setRoleType(roleTypeStr);
+		try{
+			String query = jsonObject.getString("query");
+			ContractQuery contractQuery = JSONObject.parseObject(query, ContractQuery.class);
+			String roleTypeStr = contractQuery.getRoleType();
+			if(StringUtils.isBlank(roleTypeStr)){
+				roleTypeStr = "3";
+				contractQuery.setRoleType(roleTypeStr);
+			}
+
+			Integer page =  contractQuery.getPage();
+			if(page == null){
+				contractQuery.setPage(1);
+			}
+
+			Integer size =  contractQuery.getSize();
+			if(size == null){
+				contractQuery.setSize(10);
+			}
+
+			contractQuery = contractService.getContractPage(contractQuery);
+			jsonData.setCode(ApiCode.OK);
+			jsonData.setMessage("操作成功");
+			jsonData.setData(contractQuery.getItems());
+			jsonData.setCount(contractQuery.getCount());
+
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonData.setCode(ApiCode.EXCEPTION);
+			jsonData.setMessage("操作失败");
 		}
-		
-		Integer page =  contractQuery.getPage();
-		if(page == null){
-			contractQuery.setPage(1);
-		}
-		
-		Integer size =  contractQuery.getSize();
-		if(size == null){
-			contractQuery.setSize(10);
-		}
-		
-		contractQuery = contractService.getContractPage(contractQuery);
-		jsonData.setCode(ApiCode.OK);
-		jsonData.setMessage("操作成功");
-		jsonData.setData(contractQuery.getItems());
-		jsonData.setCount(contractQuery.getCount());
-			
 		
 		String result = JsonUtils.json2Str(jsonData);
 		
@@ -111,30 +112,7 @@ public class ContractApi {
 		JsonData<ContractEntity> jsonData = new JsonData<ContractEntity>();
 		try{
 			String id = jsonObject.getString("id");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("id", id);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
-				
+			if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 				ContractEntity contract = contractService.getContractById(id);
 				jsonData.setCode(ApiCode.OK);
 				jsonData.setMessage("操作成功");
@@ -160,29 +138,7 @@ public class ContractApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String id = jsonObject.getString("id");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("id", id);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+			if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
 				
 				contractService.deleteContractById(id);
 				jsonData.setCode(ApiCode.OK);
@@ -209,29 +165,7 @@ public class ContractApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String idList = jsonObject.getString("idList");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("idList", idList);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(idList)){
+			if(StringUtils.isNotBlank(idList)){
 				List<String> list = JSONObject.parseArray(idList, String.class);
 				contractService.batchDeleteContract(list);
 				jsonData.setCode(ApiCode.OK);
@@ -257,29 +191,7 @@ public class ContractApi {
 		JsonData<String> jsonData = new JsonData<String>();
 		try{
 			String contract = jsonObject.getString("contract");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			
-			boolean auth = false;
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("contract", contract);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					auth = true;
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-				}
-			}else{
-				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-				jsonData.setMessage("参数异常");
-			}
-			
-			if(auth && StringUtils.isNotBlank(contract)){
+			if(StringUtils.isNotBlank(contract)){
 				ContractEntity contractObj = JSONObject.parseObject(contract, ContractEntity.class);
 				contractObj.setIsDelete(0);
 				contractObj.setUpdateTime(new Date());
@@ -308,34 +220,13 @@ public class ContractApi {
 		try{
 			String returnMoney = jsonObject.getString("returnMoney");
 			String id = jsonObject.getString("id");
-			String secret = jsonObject.getString("secret");
-			String cId = jsonObject.getString("cId");
-			if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-				String mybaseSecret = companyService.getSecretByCid(cId);
-				Map<String,Object> maps = new HashMap<String, Object>();
-				maps.put("returnMoney", returnMoney);
-				maps.put("id", id);
-				maps.put("secret", mybaseSecret);
-				maps.put("cId", cId);
-				String md5 = SHA1Utils.SHA1(maps);
-				if(md5.equals(secret)){
-					if(StringUtils.isNotBlank(id) && StringUtils.isNotBlank(returnMoney)){
-						contractService.updateSaleMoneyById(id, returnMoney);
-						jsonData.setCode(ApiCode.OK);
-						jsonData.setMessage("操作成功");
-					}else{
-						jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-						jsonData.setMessage("参数异常");
-					}
-				}else{
-					jsonData.setCode(ApiCode.AUTH_FAIL);
-					jsonData.setMessage("验证失败");
-					return JsonUtils.json2Str(jsonData);
-				}
+			if(StringUtils.isNotBlank(id) && StringUtils.isNotBlank(returnMoney)){
+				contractService.updateSaleMoneyById(id, returnMoney);
+				jsonData.setCode(ApiCode.OK);
+				jsonData.setMessage("操作成功");
 			}else{
 				jsonData.setCode(ApiCode.ARGS_EXCEPTION);
 				jsonData.setMessage("参数异常");
-				return JsonUtils.json2Str(jsonData);
 			}
 		}catch(Exception e){
 			e.printStackTrace();

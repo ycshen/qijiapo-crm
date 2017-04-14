@@ -59,10 +59,10 @@
 			<mvc:exclude-mapping path="/api-crm/**"/>
 			<bean id="loginInterceptor" class="com.brp.interceptors.LoginInterceptor"></bean>
 		</mvc:interceptor>
-		<mvc:interceptor>
+		<!--<mvc:interceptor>
 			<mvc:mapping path="/api-crm/**"/>
 			<bean id="interfaceAuthInterceptor" class="com.brp.interceptors.InterfaceAuthInterceptor"></bean>
-		</mvc:interceptor>
+		</mvc:interceptor>-->
 	</mvc:interceptors>
 
 
