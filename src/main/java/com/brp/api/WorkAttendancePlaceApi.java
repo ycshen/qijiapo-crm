@@ -39,6 +39,7 @@ public class WorkAttendancePlaceApi{
             if(StringUtils.isNotBlank(workAttendancePlace)){
                 WorkAttendancePlaceEntity workAttendancePlaceObj = JSONObject.parseObject(workAttendancePlace, WorkAttendancePlaceEntity.class);
                 workAttendancePlaceObj.setIsDelete(0);
+                workAttendancePlaceObj.setState(0);
                 workAttendancePlaceService.insertWorkAttendancePlace(workAttendancePlaceObj);
                 jsonData.setData(workAttendancePlaceObj.getId().toString());
                 jsonData.setCode(ApiCode.OK);
@@ -187,12 +188,37 @@ public class WorkAttendancePlaceApi{
     public String updateWorkAttendancePlace(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
-            String workAttendancePlace = jsonObject.getString("workAttendancePlace");
+            String workAttendancePlace = jsonObject.getString("WorkAttendancePlace");
             if(StringUtils.isNotBlank(workAttendancePlace)){
                 WorkAttendancePlaceEntity workAttendancePlaceObj = JSONObject.parseObject(workAttendancePlace, WorkAttendancePlaceEntity.class);
                 workAttendancePlaceObj.setIsDelete(0);
                 workAttendancePlaceObj.setUpdateTime(new Date());
                 workAttendancePlaceService.updateWorkAttendancePlace(workAttendancePlaceObj);
+                jsonData.setCode(ApiCode.OK);
+                jsonData.setMessage("操作成功");
+            }else{
+                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
+                jsonData.setMessage("参数异常");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            jsonData.setCode(ApiCode.EXCEPTION);
+            jsonData.setMessage("操作失败");
+        }
+
+        String result = JsonUtils.json2Str(jsonData);
+
+        return result;
+    }
+
+    @RequestMapping(value = "/enableOrDisableWorkAttendancePlaceById", method = RequestMethod.POST)
+    @ResponseBody
+    public String enableOrDisableWorkAttendancePlaceById(@RequestBody JSONObject jsonObject){
+        JsonData<String> jsonData = new JsonData<String>();
+        try{
+            String id = jsonObject.getString("id");
+            if(StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
+                workAttendancePlaceService.enableOrDisableWorkAttendancePlaceById(id);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
             }else{

@@ -10,6 +10,16 @@ public class WorkAttendancePlaceQuery extends Page<WorkAttendancePlaceEntity> {
 
     private Long id;
 
+    private String placeName;
+
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    public void setPlaceName(String placeName) {
+        this.placeName = placeName;
+    }
+
     public Long getId() {
         return id;
     }

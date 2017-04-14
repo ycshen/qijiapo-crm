@@ -18,7 +18,7 @@ public class WorkAttendanceEntity {
     private String departmentName;
     private String location;
     private Date attendanceTime;
-    private Integer state;
+    private Integer state;//签到状态（0正常，1迟到，2早退）
     private String lateCause;
     private String leaveEarlyReason;
     private String onWorkAttendanceLocation;
@@ -29,6 +29,24 @@ public class WorkAttendanceEntity {
     private String companyId;
     private String companyName;
     private Integer isDelete;
+    private String latitude;
+    private String longitude;
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     public Integer getIsDelete() {
         return isDelete;

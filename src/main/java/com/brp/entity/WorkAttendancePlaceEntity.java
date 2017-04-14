@@ -32,9 +32,26 @@ public class WorkAttendancePlaceEntity {
     private String createUserId;
     private String userId;
     private String userName;
-
+    private String latitude;
+    private String longitude;
     private Integer state;//状态（启用，1停用）
     private Integer isDelete;
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     public Long getId() {
         return id;

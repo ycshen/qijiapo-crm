@@ -3,8 +3,10 @@ package com.brp.api;
 import com.alibaba.fastjson.JSONObject;
 import com.brp.entity.WorkAttendanceEntity;
 import com.brp.entity.WorkAttendanceEntity;
+import com.brp.entity.WorkAttendancePlaceEntity;
 import com.brp.service.CompanyService;
 import com.brp.service.WorkAttendanceService;
+import com.brp.util.DateUtils;
 import com.brp.util.JsonUtils;
 import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
@@ -35,13 +37,19 @@ public class WorkAttendanceApi {
     private CompanyService companyService;
     @RequestMapping(value = "/insertWorkAttendance", method = RequestMethod.POST)
     @ResponseBody
-    public String insertAttn(@RequestBody JSONObject jsonObject){
+    public String insertWorkAttendance(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String attn = jsonObject.getString("attn");
             if(StringUtils.isNotBlank(attn)){
                 WorkAttendanceEntity workAttendanceEntity = JSONObject.parseObject(attn, WorkAttendanceEntity.class);
                 workAttendanceEntity.setIsDelete(0);
+                WorkAttendancePlaceEntity workAttendancePlaceEntity = new WorkAttendancePlaceEntity();
+                Long startTime = DateUtils.getLong(workAttendanceEntity.getOnWorkTime());
+                Long endTime = DateUtils.getLong(workAttendanceEntity.getOnWorkTime());
+                Long checkTime = DateUtils.getLong(workAttendanceEntity.getOnWorkTime());
+                workAttendanceEntity.setState(DateUtils.getState(startTime,endTime,checkTime));
+
                 workAttendanceService.insertWorkAttendance(workAttendanceEntity);
                 jsonData.setData(workAttendanceEntity.getId().toString());
                 jsonData.setCode(ApiCode.OK);
@@ -63,7 +71,7 @@ public class WorkAttendanceApi {
 
     @RequestMapping(value = "/getWorkAttendancePage", method = RequestMethod.POST)
     @ResponseBody
-    public String getAttnPage(@RequestBody JSONObject jsonObject){
+    public String getWorkAttendancePage(@RequestBody JSONObject jsonObject){
         JsonData<List<WorkAttendanceEntity>> jsonData = new JsonData<List<WorkAttendanceEntity>>();
         try{
             String query = jsonObject.getString("query");
@@ -107,7 +115,7 @@ public class WorkAttendanceApi {
 
     @RequestMapping(value = "/getWorkAttendanceById", method = RequestMethod.POST)
     @ResponseBody
-    public String getAttnById(@RequestBody JSONObject jsonObject){
+    public String getWorkAttendanceById(@RequestBody JSONObject jsonObject){
         JsonData<WorkAttendanceEntity> jsonData = new JsonData<WorkAttendanceEntity>();
         try{
             String id = jsonObject.getString("id");
@@ -134,7 +142,7 @@ public class WorkAttendanceApi {
 
     @RequestMapping(value = "/deleteWorkAttendanceById", method = RequestMethod.POST)
     @ResponseBody
-    public String deleteAttnById(@RequestBody JSONObject jsonObject){
+    public String deleteWorkAttendanceById(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String id = jsonObject.getString("id");
@@ -161,7 +169,7 @@ public class WorkAttendanceApi {
 
     @RequestMapping(value = "/batchDeleteWorkAttendance", method = RequestMethod.POST)
     @ResponseBody
-    public String batchDeleteAttn(@RequestBody JSONObject jsonObject){
+    public String batchDeleteWorkAttendance(@RequestBody JSONObject jsonObject){
         JsonData<String> jsonData = new JsonData<String>();
         try{
             String idList = jsonObject.getString("idList");

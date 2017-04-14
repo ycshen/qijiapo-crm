@@ -1014,4 +1014,23 @@ public class DateUtils {
 		
 		return date;
 	}
+
+	private static final String formatStr = "HH:mm";
+	private static SimpleDateFormat sdf=new SimpleDateFormat(formatStr);
+
+	public static boolean isInZone(long tStart,long tEnd,long t) throws ParseException {
+		return tStart <= t && t <= tEnd;
+	}
+
+	public static Integer getState(long tStart,long tEnd,long t) throws ParseException {
+		if (tStart >= t && t >= tEnd)
+			return 0;
+		else if (t > tStart)
+			return 1;
+		else return 2;
+	}
+
+	public static long getLong(Date timeStr) throws ParseException {
+		return sdf.parse(sdf.format(timeStr)).getTime();
+	}
 }

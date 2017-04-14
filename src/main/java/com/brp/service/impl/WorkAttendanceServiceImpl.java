@@ -1,8 +1,11 @@
 package com.brp.service.impl;
 
+import com.brp.entity.AttnEntity;
 import com.brp.entity.WorkAttendanceEntity;
+import com.brp.mapper.WorkAttendanceMapper;
 import com.brp.service.WorkAttendanceService;
 import com.brp.util.query.WorkAttendanceQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,19 +15,27 @@ import java.util.List;
  */
 @Service
 public class WorkAttendanceServiceImpl implements WorkAttendanceService {
+
+    @Autowired
+    private WorkAttendanceMapper workAttendanceMapper;
+
     @Override
     public void insertWorkAttendance(WorkAttendanceEntity workAttendance) {
-
+        workAttendanceMapper.insertWorkAttendance(workAttendance);
     }
 
     @Override
     public WorkAttendanceQuery getWorkAttendancePage(WorkAttendanceQuery workAttendanceQuery) {
-        return null;
+        List<WorkAttendanceEntity> workAttendanceEntities = workAttendanceMapper.getWorkAttendancePage(workAttendanceQuery);
+        if (workAttendanceEntities != null && workAttendanceEntities.size() > 0){
+            workAttendanceQuery.setItems(workAttendanceEntities);
+        }
+        return workAttendanceQuery;
     }
 
     @Override
     public WorkAttendanceEntity getWorkAttendanceById(String id) {
-        return null;
+        return workAttendanceMapper.getWorkAttendanceById(id);
     }
 
     @Override

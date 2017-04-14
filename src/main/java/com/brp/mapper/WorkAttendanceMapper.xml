@@ -23,13 +23,15 @@
         <result column="onWorkTime" property="onWorkTime" jdbcType="TIMESTAMP"/>
         <result column="offWorkTime" property="offWorkTime" jdbcType="TIMESTAMP"/>
         <result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
       id,userId,userName,departmentId,createUser,
       createUserId,departmentName,createTime,location,attendanceTime,
       state,lateCause,leaveEarlyReason,onWorkAttendanceLocation,offWorkAttendanceLocation,
-      isDelete,onWorkTime,offWorkTime
+      isDelete,onWorkTime,offWorkTime,longitude,latitude
   </sql>
     <insert id="insertWorkAttendance" parameterType="com.brp.entity.WorkAttendanceEntity" useGeneratedKeys="true"
             keyProperty="id">
@@ -37,13 +39,13 @@
    		(userId,userName,departmentId,createUser,
       createUserId,departmentName,createTime,location,attendanceTime,
       state,lateCause,leaveEarlyReason,onWorkAttendanceLocation,offWorkAttendanceLocation,
-      isDelete,onWorkTime,offWorkTime
+      isDelete,onWorkTime,offWorkTime,longitude,latitude
    		 )
     values
     	( #{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR},
     	#{createUserId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{location,jdbcType=VARCHAR},#{attendanceTime,jdbcType=TIMESTAMP},
     	#{state,jdbcType=INTEGER},#{lateCause,jdbcType=VARCHAR},#{leaveEarlyReason,jdbcType=VARCHAR},#{onWorkAttendanceLocation,jdbcType=VARCHAR},#{offWorkAttendanceLocation,jdbcType=VARCHAR},
-    	#{isDelete,jdbcType=INTEGER},#{onWorkTime,jdbcType=TIMESTAMP},#{offWorkTime,jdbcType=TIMESTAMP}
+    	#{isDelete,jdbcType=INTEGER},#{onWorkTime,jdbcType=TIMESTAMP},#{offWorkTime,jdbcType=TIMESTAMP},#{longitude,jdbcType=VARCHAR},#{latitude,jdbcType=VARCHAR}
 
     	)
   </insert>

@@ -26,28 +26,29 @@
         <result column="offWorkTime" property="offWorkTime" jdbcType="VARCHAR"/>
         <result column="errorRange" property="errorRange" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
 	  id,createUser,updateUser,createTime, updateTime,
    	  departmentId,departmentName,companyId,companyName,createUserId,
    	  isDelete,userId,updateUserId,userName,placeName,
-   	  address,workTime,onWorkTime,offWorkTime,errorRange,state
+   	  address,workTime,onWorkTime,offWorkTime,errorRange,state,latitude,longitude
   </sql>
     <insert id="insertWorkAttendancePlace" parameterType="com.brp.entity.WorkAttendancePlaceEntity" useGeneratedKeys="true" keyProperty="id">
     insert work_attendance_place
    		(createUser,updateUser,createTime, updateTime,
    	  departmentId,departmentName,companyId,companyName,createUserId,
    	  isDelete,userId,updateUserId,userName,placeName,
-   	  address,workTime,onWorkTime,offWorkTime,errorRange,state
+   	  address,workTime,onWorkTime,offWorkTime,errorRange,state,latitude,longitude
    		 ) 
     values
     	( #{createUser,jdbcType=VARCHAR},#{updateUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},
     	#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},
-    	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
     	#{isDelete,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{placeName,jdbcType=VARCHAR},
     	#{address,jdbcType=VARCHAR},#{workTime,jdbcType=VARCHAR},#{onWorkTime,jdbcType=VARCHAR},#{offWorkTime,jdbcType=VARCHAR},#{errorRange,jdbcType=VARCHAR},
-    	#{state,jdbcType=INTEGER}
+    	#{state,jdbcType=INTEGER},#{longitude,jdbcType=VARCHAR},#{latitude,jdbcType=VARCHAR}
     	)
   </insert>
     <select id="getWorkAttendancePlacePage" resultMap="BaseResultMap" parameterType="com.brp.util.query.WorkAttendancePlaceQuery">
@@ -57,8 +58,8 @@
         where isDelete = 0
         <trim prefix=" " suffix="" suffixOverrides="">
 
-            <if test="work_attendance_placeName != '' and work_attendance_placeName != null">
-                and work_attendance_placeName like '%${work_attendance_placeName}%'
+            <if test="placeName != '' and placeName != null">
+                and placeName like '%${placeName}%'
             </if>
             <if test="roleType == 1">
                 and companyId = #{companyId}
@@ -157,7 +158,12 @@
         <if test="state != null">
             state = #{state, jdbcType=INTEGER},
         </if>
-
+        <if test="longitude != null">
+            errorRange = #{errorRange, jdbcType=VARCHAR},
+        </if>
+        <if test="latitude != null">
+            state = #{state, jdbcType=VARCHAR},
+        </if>
         id = #{id}
         where id = #{id} limit 1
     </update>
