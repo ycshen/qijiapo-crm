@@ -17,10 +17,8 @@ public class WorkAttendancePlaceEntity {
     private String placeName;
     private String address;
     private String workTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date onWorkTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date offWorkTime;
+    private String onWorkTime;
+    private String offWorkTime;
     private String departmentName;
     private String departmentId;
     private String errorRange;
@@ -86,19 +84,19 @@ public class WorkAttendancePlaceEntity {
         this.workTime = workTime;
     }
 
-    public Date getOnWorkTime() {
+    public String getOnWorkTime() {
         return onWorkTime;
     }
 
-    public void setOnWorkTime(Date onWorkTime) {
+    public void setOnWorkTime(String onWorkTime) {
         this.onWorkTime = onWorkTime;
     }
 
-    public Date getOffWorkTime() {
+    public String getOffWorkTime() {
         return offWorkTime;
     }
 
-    public void setOffWorkTime(Date offWorkTime) {
+    public void setOffWorkTime(String offWorkTime) {
         this.offWorkTime = offWorkTime;
     }
 

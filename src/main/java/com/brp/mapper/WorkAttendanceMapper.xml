@@ -38,7 +38,7 @@
       createUserId,departmentName,createTime,location,attendanceTime,
       state,lateCause,leaveEarlyReason,onWorkAttendanceLocation,offWorkAttendanceLocation,
       isDelete,onWorkTime,offWorkTime
-   		 ) 
+   		 )
     values
     	( #{userId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR},
     	#{createUserId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{location,jdbcType=VARCHAR},#{attendanceTime,jdbcType=TIMESTAMP},

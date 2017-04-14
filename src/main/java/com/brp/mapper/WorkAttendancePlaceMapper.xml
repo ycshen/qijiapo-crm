@@ -22,9 +22,9 @@
 
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="workTime" property="workTime" jdbcType="VARCHAR"/>
-        <result column="onWorkTime" property="onWorkTime" jdbcType="TIMESTAMP"/>
-        <result column="offWorkTime" property="offWorkTime" jdbcType="TIMESTAMP"/>
-        <result column="errorRange" property="errorRange" jdbcType="errorRange"/>
+        <result column="onWorkTime" property="onWorkTime" jdbcType="VARCHAR"/>
+        <result column="offWorkTime" property="offWorkTime" jdbcType="VARCHAR"/>
+        <result column="errorRange" property="errorRange" jdbcType="VARCHAR"/>
         <result column="state" property="state" jdbcType="INTEGER"/>
     </resultMap>
 
@@ -46,8 +46,8 @@
     	#{departmentId,jdbcType=VARCHAR},#{departmentName,jdbcType=VARCHAR},#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},
     	#{areaId,jdbcType=VARCHAR},#{areaName,jdbcType=VARCHAR},#{facsimile,jdbcType=VARCHAR},#{weibo,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},
     	#{isDelete,jdbcType=INTEGER},#{userId,jdbcType=VARCHAR},#{updateUserId,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{placeName,jdbcType=VARCHAR},
-    	#{address,jdbcType=VARCHAR},#{workTime,jdbcType=VARCHAR},#{onWorkTime,jdbcType=TIMESTAMP},#{offWorkTime,jdbcType=TIMESTAMP},#{errorRange,jdbcType=VARCHAR},
-    	#{state,jdbcType=INTERGER}
+    	#{address,jdbcType=VARCHAR},#{workTime,jdbcType=VARCHAR},#{onWorkTime,jdbcType=VARCHAR},#{offWorkTime,jdbcType=VARCHAR},#{errorRange,jdbcType=VARCHAR},
+    	#{state,jdbcType=INTEGER}
     	)
   </insert>
     <select id="getWorkAttendancePlacePage" resultMap="BaseResultMap" parameterType="com.brp.util.query.WorkAttendancePlaceQuery">
@@ -145,11 +145,11 @@
             workTime = #{workTime, jdbcType=VARCHAR},
         </if>
         <if test="onWorkTime != null">
-            onWorkTime = #{onWorkTime, jdbcType=TIMESTAMP},
+            onWorkTime = #{onWorkTime, jdbcType=VARCHAR},
         </if>
 
         <if test="offWorkTime != null">
-            offWorkTime = #{offWorkTime, jdbcType=TIMESTAMP},
+            offWorkTime = #{offWorkTime, jdbcType=VARCHAR},
         </if>
         <if test="errorRange != null">
             errorRange = #{errorRange, jdbcType=VARCHAR},
