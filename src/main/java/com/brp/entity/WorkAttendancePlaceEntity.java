@@ -21,7 +21,7 @@ public class WorkAttendancePlaceEntity {
     private String offWorkTime;
     private String departmentName;
     private String departmentId;
-    private String errorRange;
+    private String errorRange = "300";
 
     private String companyId;
     private String companyName;
