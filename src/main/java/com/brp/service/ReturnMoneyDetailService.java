@@ -1,6 +1,7 @@
 package com.brp.service;
 
 import com.brp.entity.ReturnMoneyDetailEntity;
+import com.brp.util.query.ReturnMoneyDetailQuery;
 
 import java.util.List;
 
@@ -11,5 +12,8 @@ public interface ReturnMoneyDetailService {
 
     void insertReturnMoneyDetail(ReturnMoneyDetailEntity returnMoneyDetailEntity);
     void batchInsertReturnMoneyDetail(List<ReturnMoneyDetailEntity> list);
-    List<ReturnMoneyDetailEntity> getRMDByReturnMoneyId(String returnMoneyId);
+    ReturnMoneyDetailEntity getReturnMoneyDetailById(String id);
+    ReturnMoneyDetailQuery getRMDByReturnMoneyId(ReturnMoneyDetailQuery returnMoneyDetailQuery);
+    void updateReturnMoneyDetail(ReturnMoneyDetailEntity returnMoney);
+    void deleteReturnMoneyDetailById(String id);
 }

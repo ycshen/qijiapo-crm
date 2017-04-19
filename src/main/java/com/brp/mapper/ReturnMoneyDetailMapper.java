@@ -1,6 +1,7 @@
 package com.brp.mapper;
 
 import com.brp.entity.ReturnMoneyDetailEntity;
+import com.brp.util.query.ReturnMoneyDetailQuery;
 
 import java.util.List;
 
@@ -11,7 +12,13 @@ public interface ReturnMoneyDetailMapper {
 
     void insertReturnMoneyDetail(ReturnMoneyDetailEntity returnMoneyDetailEntity);
 
-    List<ReturnMoneyDetailEntity> getRMDByReturnMoneyId(String returnMoneyId);
+    List<ReturnMoneyDetailEntity> getRMDByReturnMoneyId(ReturnMoneyDetailQuery returnMoneyDetailQuery);
+
+    ReturnMoneyDetailEntity getReturnMoneyDetailById(String id);
 
     void batchInsertReturnMoneyDetail(List<ReturnMoneyDetailEntity> list);
+
+    void updateReturnMoneyDetail(ReturnMoneyDetailEntity returnMoneyDetailEntity);
+
+    void deleteReturnMoneyDetailById(String id);
 }

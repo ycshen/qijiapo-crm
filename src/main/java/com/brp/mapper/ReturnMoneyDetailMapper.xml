@@ -60,10 +60,17 @@
         )
     </insert>
 
-    <select id="getReturnMoneyDetailListByReturnMoneyDetailId" resultMap="BaseResultMap">
+    <select id="getRMDByReturnMoneyId" resultMap="BaseResultMap" parameterType="com.brp.util.query.ReturnMoneyDetailQuery">
         SELECT  <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from return_money_detail
-        where isDelete=0 and returnMoneyId=#{returnMoneyId}
+        where isDelete = 0
+        <trim prefix=" " suffix="" suffixOverrides="" >
+
+            <if test="returnMoneyId != '' and returnMoneyId != null" >
+                and returnMoneyId=#{returnMoneyId}
+            </if>
+        </trim>
     </select>
 
 

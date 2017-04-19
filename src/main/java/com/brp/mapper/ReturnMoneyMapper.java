@@ -15,4 +15,5 @@ public interface ReturnMoneyMapper {
     void insertReturnMoney(ReturnMoneyEntity returnMoneyEntity);
     ReturnMoneyEntity getReturnMoneyById(String id);
     List<ReturnMoneyEntity> getReturnMoneyListByReturnMoneyId(String contractId);
+
 }
