@@ -1,6 +1,7 @@
 package com.brp.service;
 
 import com.brp.entity.ReturnMoneyEntity;
+import com.brp.util.query.ReturnMoneyQuery;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface ReturnMoneyService {
     void insertReturnMoney(ReturnMoneyEntity returnMoney);
-    List<ReturnMoneyEntity> getReturnMoneyByContractId(String contractId);
+    ReturnMoneyQuery getReturnMoneyByContractId(ReturnMoneyQuery returnMoneyQuery);
     void updateReturnMoney(ReturnMoneyEntity returnMoney);
 //    ReturnMoneyQuery getReturnMoneyPage(ReturnMoneyQuery returnMoneyQuery);
     ReturnMoneyEntity getReturnMoneyById(String id);

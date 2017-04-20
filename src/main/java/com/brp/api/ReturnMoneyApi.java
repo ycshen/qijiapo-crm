@@ -11,6 +11,7 @@ import com.brp.util.SHA1Utils;
 import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
 import com.brp.util.api.model.JsonData;
+import com.brp.util.query.ReturnMoneyQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -116,42 +117,38 @@ public class ReturnMoneyApi {
         return result;
     }
 
-    @RequestMapping(value = "/getReturnMoneyByContractId", method = RequestMethod.POST)
+    @RequestMapping(value = "/getReturnMoneyPageByContractId", method = RequestMethod.POST)
     @ResponseBody
-    public String getSopBySaleOppoId(@RequestBody JSONObject jsonObject){
+    public String getReturnMoneyPageByContractId(@RequestBody JSONObject jsonObject){
         JsonData<List<ReturnMoneyEntity>> jsonData = new JsonData<List<ReturnMoneyEntity>>();
         try{
-            String contractId = jsonObject.getString("contractId");
-            String secret = jsonObject.getString("secret");
-            String cId = jsonObject.getString("cId");
-
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("contractId", contractId);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    if(StringUtils.isNotBlank(contractId)){
-                        List<ReturnMoneyEntity> list = returnMoneyService.getReturnMoneyByContractId(contractId);
-                        jsonData.setData(list);
-                        jsonData.setCode(ApiCode.OK);
-                        jsonData.setMessage("操作成功");
-                    }else{
-                        jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                        jsonData.setMessage("参数异常");
-                    }
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                    return JsonUtils.json2Str(jsonData);
+            String query = jsonObject.getString("query");
+            if(StringUtils.isNotBlank(query)){
+                ReturnMoneyQuery returnMoneyQuery = JSONObject.parseObject(query, ReturnMoneyQuery.class);
+                String roleTypeStr = returnMoneyQuery.getRoleType();
+                if(StringUtils.isBlank(roleTypeStr)){
+                    roleTypeStr = "3";
+                    returnMoneyQuery.setRoleType(roleTypeStr);
                 }
+
+                Integer page =  returnMoneyQuery.getPage();
+                if(page == null){
+                    returnMoneyQuery.setPage(1);
+                }
+
+                Integer size =  returnMoneyQuery.getSize();
+                if(size == null){
+                    returnMoneyQuery.setSize(10);
+                }
+
+                returnMoneyQuery = returnMoneyService.getReturnMoneyByContractId(returnMoneyQuery);
+                jsonData.setCode(ApiCode.OK);
+                jsonData.setMessage("操作成功");
+                jsonData.setData(returnMoneyQuery.getItems());
+                jsonData.setCount(returnMoneyQuery.getCount());
             }else{
                 jsonData.setCode(ApiCode.ARGS_EXCEPTION);
                 jsonData.setMessage("参数异常");
-                return JsonUtils.json2Str(jsonData);
             }
         }catch(Exception e){
             e.printStackTrace();

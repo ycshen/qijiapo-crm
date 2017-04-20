@@ -1,8 +1,10 @@
 package com.brp.service.impl;
 
+import com.brp.entity.ProductEntity;
 import com.brp.entity.ReturnMoneyEntity;
 import com.brp.mapper.ReturnMoneyMapper;
 import com.brp.service.ReturnMoneyService;
+import com.brp.util.query.ReturnMoneyQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,12 @@ public class ReturnMoneyServiceImpl implements ReturnMoneyService {
     }
 
     @Override
-    public List<ReturnMoneyEntity> getReturnMoneyByContractId(String contractId) {
-        return returnMoneyMapper.getReturnMoneyListByReturnMoneyId(contractId);
+    public ReturnMoneyQuery getReturnMoneyByContractId(ReturnMoneyQuery returnMoneyQuery) {
+        List<ReturnMoneyEntity> list = returnMoneyMapper.getReturnMoneyListByContractId(returnMoneyQuery);
+        if(list != null && list.size() > 0){
+            returnMoneyQuery.setItems(list);
+        }
+        return returnMoneyQuery;
     }
 
     @Override

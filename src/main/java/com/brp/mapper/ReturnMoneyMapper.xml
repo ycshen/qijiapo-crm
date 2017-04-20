@@ -55,11 +55,19 @@
         #{remark,jdbcType=VARCHAR},#{isDelete,jdbcType=INTEGER},#{actualReturnDate,jdbcType=TIMESTAMP}
         )
     </insert>
+    <select id="getReturnMoneyListByContractId" resultMap="BaseResultMap" parameterType="com.brp.util.query.ReturnMoneyQuery" >
+        select
+        <include refid="Base_Column_List" />
+        from product
+        where isDelete = 0
+        <trim prefix=" " suffix="" suffixOverrides="" >
 
-    <select id="getReturnMoneyListByReturnMoneyId" resultMap="BaseResultMap">
-        SELECT  <include refid="Base_Column_List"/>
-        from return_money
-        where isDelete=0 and contractId=#{contractId}
+            <if test="contractId != '' and contractId != null" >
+                and contractId=#{contractId}
+            </if>
+        </trim>
+
+        order by createTime desc
     </select>
 
     <select id="getReturnMoneyPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ReturnMoneyQuery" >
