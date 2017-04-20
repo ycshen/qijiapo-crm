@@ -34,7 +34,7 @@
 
     <sql id="Base_Column_List" >
         id,userId,userName,departmentId, companyId,
-        createTime,updateTime,updateUser,updateUserId,code,
+        createTime,updateTime,updateUser,code,
         contractId,customerId,returnMoneyNum,planReturnDate,planReturnMoney,
         actualReturnMoney,actualNotReturnMoney,returnMoneyStatus,totalMoney,lockStatus,
         remark,isDelete,actualReturnDate
@@ -58,7 +58,7 @@
     <select id="getReturnMoneyListByContractId" resultMap="BaseResultMap" parameterType="com.brp.util.query.ReturnMoneyQuery" >
         select
         <include refid="Base_Column_List" />
-        from product
+        from return_money
         where isDelete = 0
         <trim prefix=" " suffix="" suffixOverrides="" >
 
@@ -70,37 +70,6 @@
         order by createTime desc
     </select>
 
-    <select id="getReturnMoneyPage" resultMap="BaseResultMap" parameterType="com.brp.util.query.ReturnMoneyQuery" >
-        select
-        <include refid="Base_Column_List" />
-        from return_money
-        where isDelete = 0
-        <trim prefix=" " suffix="" suffixOverrides="" >
-            <!--<if test="areaId != null and areaId != ''" >-->
-                <!--and areaId =  #{areaId}-->
-            <!--</if>-->
-            <!--<if test="cityId != null and cityId != ''" >-->
-                <!--and cityId =  #{cityId}-->
-            <!--</if>-->
-            <!--<if test="provinceId != null and provinceId != ''" >-->
-                <!--and provinceId =  #{provinceId}-->
-            <!--</if>-->
-            <if test="customerName != '' and customerName != null" >
-                and salesLeadsName like '%${customerName}%'
-            </if>
-            <if test="roleType == 1">
-                and companyId = #{companyId}
-            </if>
-            <if test="roleType == 2">
-                and departmentId in (${departmentId})
-            </if>
-            <if test="roleType == 3">
-                and userId = #{userId}
-            </if>
-        </trim>
-
-        order by createTime desc
-    </select>
     <select id="getReturnMoneyById" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />
@@ -119,9 +88,9 @@
         <if test="updateUser != null">
             updateUser = #{updateUser, jdbcType=VARCHAR},
         </if>
-        <if test="updateUserId != null">
-            updateUserId = #{updateUserId, jdbcType=VARCHAR},
-        </if>
+        <!--<if test="updateUserId != null">-->
+            <!--updateUserId = #{updateUserId, jdbcType=VARCHAR},-->
+        <!--</if>-->
         <if test="createTime != null">
             createTime = #{createTime, jdbcType=TIMESTAMP},
         </if>
