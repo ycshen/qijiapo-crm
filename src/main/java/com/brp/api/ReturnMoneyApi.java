@@ -7,8 +7,6 @@ import com.brp.service.CompanyService;
 import com.brp.service.ReturnMoneyDetailService;
 import com.brp.service.ReturnMoneyService;
 import com.brp.util.JsonUtils;
-import com.brp.util.SHA1Utils;
-import com.brp.util.TryParseUtils;
 import com.brp.util.api.model.ApiCode;
 import com.brp.util.api.model.JsonData;
 import com.brp.util.query.ReturnMoneyQuery;
@@ -20,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by fengyue on 2017/4/5.
@@ -72,33 +71,11 @@ public class ReturnMoneyApi {
     }
     @RequestMapping(value = "/getReturnMoneyById", method = RequestMethod.POST)
     @ResponseBody
-    public String getReturnMoneyById(JSONObject jsonObject){
+    public String getReturnMoneyById(@RequestBody JSONObject jsonObject){
         JsonData<ReturnMoneyEntity> jsonData = new JsonData<>();
         try {
             String id = jsonObject.getString("id");
-            String secret = jsonObject.getString("srcret");
-            String cId = jsonObject.getString("cId");
-            boolean auth = false;
-            if(StringUtils.isNotBlank(cId) && TryParseUtils.tryParse(cId, Long.class)){
-                String mybaseSecret = companyService.getSecretByCid(cId);
-                Map<String,Object> maps = new HashMap<String, Object>();
-                maps.put("id", id);
-                maps.put("secret", mybaseSecret);
-                maps.put("cId", cId);
-                String md5 = SHA1Utils.SHA1(maps);
-                if(md5.equals(secret)){
-                    auth = true;
-                }else{
-                    jsonData.setCode(ApiCode.AUTH_FAIL);
-                    jsonData.setMessage("验证失败");
-                }
-            }else{
-                jsonData.setCode(ApiCode.ARGS_EXCEPTION);
-                jsonData.setMessage("参数异常");
-            }
-
-            if(auth && StringUtils.isNotBlank(id) && TryParseUtils.tryParse(id, Long.class)){
-
+            if( StringUtils.isNotBlank(id)){
                 ReturnMoneyEntity returnMoneyEntity = returnMoneyService.getReturnMoneyById(id);
                 jsonData.setCode(ApiCode.OK);
                 jsonData.setMessage("操作成功");
